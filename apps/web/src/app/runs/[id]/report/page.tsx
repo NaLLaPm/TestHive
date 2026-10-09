@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useReport } from "@/lib/queries";
-import { Streamdown } from "streamdown";
 import { FunnelView } from "@/components/report/funnel-view";
 import { FrictionHeatmap } from "@/components/report/friction-heatmap";
 import { ImpactRankedIssues } from "@/components/report/impact-ranked-issues";
 import { ClusterBreakdown } from "@/components/report/cluster-breakdown";
 import { ExportToolbar } from "@/components/report/export-toolbar";
+import { MarkdownSourceViewer } from "@/components/report/markdown-source-viewer";
 import { Badge } from "@/components/ui/badge";
 
 export default function ReportPage() {
@@ -251,18 +251,12 @@ export default function ReportPage() {
           )}
         </div>
       ) : (
-        /* TAB 2: RAW MARKDOWN DOCUMENT (RENDERED VIA STREAMDOWN) */
-        <div className="bg-panel border border-border rounded-3xl p-8 max-w-4xl shadow-sm leading-relaxed text-text">
-          <Streamdown
-            className="prose prose-stone max-w-none text-text prose-headings:text-text prose-headings:tracking-tight prose-a:text-purple prose-code:bg-panel2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-xs"
-            controls={{
-              table: { copy: true },
-              code: { copy: true },
-            }}
-          >
-            {report.markdown}
-          </Streamdown>
-        </div>
+        /* TAB 2: MARKDOWN SOURCE SECTION (MINIMAL DESIGN, INTERACTIVE UI, PROPER CONTENT DISTRIBUTION) */
+        <MarkdownSourceViewer
+          markdown={report.markdown}
+          runId={id}
+          title={report.title}
+        />
       )}
     </div>
   );

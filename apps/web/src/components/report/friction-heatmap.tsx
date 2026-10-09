@@ -14,22 +14,22 @@ const TYPE_CONFIG: Record<
   button: {
     label: "Button CTA",
     icon: "🔘",
-    badgeClass: "text-purple bg-lavender/25 border-purple/30",
+    badgeClass: "text-white bg-purple border-purple/80",
   },
   form_field: {
     label: "Form Input",
     icon: "📝",
-    badgeClass: "text-[#1C5B66] bg-cyan/25 border-cyan/40",
+    badgeClass: "text-white bg-[#1C5B66] border-[#1C5B66]/80",
   },
   load_delay: {
     label: "Load Delay / Latency",
     icon: "⏳",
-    badgeClass: "text-[#8D6B00] bg-[#FDD663]/25 border-[#FDD663]/40",
+    badgeClass: "text-white bg-[#B28900] border-[#B28900]/80",
   },
   navigation: {
     label: "Navigation",
     icon: "🧭",
-    badgeClass: "text-purple bg-lavender/25 border-purple/30",
+    badgeClass: "text-white bg-purple border-purple/80",
   },
 };
 
@@ -113,7 +113,7 @@ export function FrictionHeatmap({ elements }: FrictionHeatmapProps) {
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-semibold text-text flex items-center gap-1.5">
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-xl border flex items-center gap-1.5 shadow-2xs ${typeConf.badgeClass}`}>
                     <span>{typeConf.icon}</span>
                     <span>{typeConf.label}</span>
                   </span>

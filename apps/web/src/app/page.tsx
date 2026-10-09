@@ -24,7 +24,7 @@ import { AdoptionCurve } from "@/components/charts/adoption-curve";
 import { FunnelView } from "@/components/report/funnel-view";
 import { FrictionHeatmap } from "@/components/report/friction-heatmap";
 import { ExportToolbar } from "@/components/report/export-toolbar";
-import { Streamdown } from "streamdown";
+import { MarkdownSourceViewer } from "@/components/report/markdown-source-viewer";
 import { BenchmarkLiveModal } from "@/components/benchmark-live-modal";
 
 type TabId =
@@ -769,18 +769,12 @@ export default function PixelDashboardPage() {
                   )}
                 </div>
               ) : (
-                /* Markdown Source Summary (Rendered via Streamdown) */
-                <div className="bg-white border border-border rounded-3xl p-8 max-w-4xl shadow-xs leading-relaxed text-text">
-                  <Streamdown
-                    className="prose prose-stone max-w-none text-text prose-headings:text-text prose-headings:tracking-tight prose-a:text-purple prose-code:bg-panel2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-xs"
-                    controls={{
-                      table: { copy: true },
-                      code: { copy: true },
-                    }}
-                  >
-                    {report.markdown}
-                  </Streamdown>
-                </div>
+                /* Markdown Source Section (Minimal design, interactive UI, proper content distribution) */
+                <MarkdownSourceViewer
+                  markdown={report.markdown}
+                  runId={selectedRunId}
+                  title={report.title}
+                />
               )}
             </div>
           ) : (
