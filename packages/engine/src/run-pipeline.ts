@@ -135,7 +135,7 @@ export async function runFullPipeline(opts: RunPipelineOptions): Promise<void> {
       poolId: opts.poolId,
       personas: allPersonas,
       results,
-      clusters,
+      clusters: clusters as any,
       issues,
       funnel,
       frictionHeatmap,

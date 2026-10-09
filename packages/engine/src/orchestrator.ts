@@ -195,8 +195,8 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
       progress: { done, total: combinedPersonas.length },
     });
 
-    // Pacing delay (5-15ms) to make 1000 persona simulation feel realistic and allow smooth UI streaming
-    await new Promise((r) => setTimeout(r, 8 + Math.floor(Math.random() * 8)));
+    // Pacing delay (25-45ms) to make 1000 persona testing feel authentic, steady, and visible
+    await new Promise((r) => setTimeout(r, 25 + Math.floor(Math.random() * 20)));
   };
 
   // Interleave personas (distributing deep personas evenly rather than clustering controls at index 0)

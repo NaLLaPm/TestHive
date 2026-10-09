@@ -71,6 +71,9 @@ export default function PixelDashboardPage() {
     expectedPersonas: number;
   } | null>(null);
 
+  // Report view mode: interactive vs markdown source
+  const [reportViewMode, setReportViewMode] = useState<"interactive" | "markdown">("interactive");
+
   // Persona filter in Results/Analytics tab
   const [personaFilter, setPersonaFilter] = useState<"all" | "success" | "failure" | "partial">("all");
 
@@ -273,11 +276,19 @@ export default function PixelDashboardPage() {
                   <button
                     type="submit"
                     disabled={createRun.isPending}
-                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple via-lavender to-cyan text-cream font-bold text-sm tracking-wide shadow-md hover:opacity-95 disabled:opacity-50 transition transform active:scale-[0.99]"
+                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple via-lavender to-cyan text-cream font-bold text-sm tracking-wide shadow-md hover:opacity-95 disabled:opacity-50 transition transform active:scale-[0.99] flex items-center justify-center gap-2"
                   >
-                    {createRun.isPending
-                      ? "Executing Benchmark Run…"
-                      : `Launch Benchmark Run (${activeSelectedPool?.size ?? 1000} Prebuilt Personas)`}
+                    {createRun.isPending ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-cream border-t-transparent rounded-full animate-spin" />
+                        <span>Building Run & Launching Parallel Agents…</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>🚀</span>
+                        <span>Launch Parallel Agents ({activeSelectedPool?.size ?? 1000} Personas)</span>
+                      </>
+                    )}
                   </button>
                 </form>
               )}
@@ -711,32 +722,66 @@ export default function PixelDashboardPage() {
 
           {report ? (
             <div className="space-y-6">
-              {/* Funnel Overview */}
-              {report.funnel && report.funnel.length > 0 && (
-                <div className="bg-white border border-border rounded-3xl p-6 shadow-xs">
-                  <FunnelView steps={report.funnel} />
+              {/* View Mode Switcher */}
+              <div className="flex items-center justify-between border-b border-border/60 pb-3">
+                <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-border text-xs font-semibold shadow-xs">
+                  <button
+                    onClick={() => setReportViewMode("interactive")}
+                    className={`px-4 py-1.5 rounded-xl transition ${
+                      reportViewMode === "interactive"
+                        ? "bg-purple text-cream font-bold shadow-xs"
+                        : "text-muted hover:text-text hover:bg-lavender/20"
+                    }`}
+                  >
+                    📊 Visual Executive Insights
+                  </button>
+                  <button
+                    onClick={() => setReportViewMode("markdown")}
+                    className={`px-4 py-1.5 rounded-xl transition ${
+                      reportViewMode === "markdown"
+                        ? "bg-purple text-cream font-bold shadow-xs"
+                        : "text-muted hover:text-text hover:bg-lavender/20"
+                    }`}
+                  >
+                    📝 Markdown Source
+                  </button>
                 </div>
-              )}
 
-              {/* Friction Heatmap */}
-              {report.frictionHeatmap && report.frictionHeatmap.length > 0 && (
-                <div className="bg-white border border-border rounded-3xl p-6 shadow-xs">
-                  <FrictionHeatmap elements={report.frictionHeatmap} />
+                <div className="text-xs text-muted font-mono hidden sm:block">
+                  Export available in .md, .json & .pdf
                 </div>
-              )}
-
-              {/* Markdown Source Summary (Rendered via Streamdown) */}
-              <div className="bg-white border border-border rounded-3xl p-8 max-w-4xl shadow-xs leading-relaxed text-text">
-                <Streamdown
-                  className="prose prose-stone max-w-none text-text prose-headings:text-text prose-headings:tracking-tight prose-a:text-purple prose-code:bg-panel2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-xs"
-                  controls={{
-                    table: { copy: true },
-                    code: { copy: true },
-                  }}
-                >
-                  {report.markdown}
-                </Streamdown>
               </div>
+
+              {reportViewMode === "interactive" ? (
+                <div className="space-y-6">
+                  {/* Funnel Overview */}
+                  {report.funnel && report.funnel.length > 0 && (
+                    <div className="bg-white border border-border rounded-3xl p-6 shadow-xs">
+                      <FunnelView steps={report.funnel} />
+                    </div>
+                  )}
+
+                  {/* Friction Heatmap by Page Element */}
+                  {report.frictionHeatmap && report.frictionHeatmap.length > 0 && (
+                    <div className="bg-white border border-border rounded-3xl p-6 shadow-xs">
+                      <FrictionHeatmap elements={report.frictionHeatmap} />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* Markdown Source Summary (Rendered via Streamdown) */
+                <div className="bg-white border border-border rounded-3xl p-8 max-w-4xl shadow-xs leading-relaxed text-text">
+                  <Streamdown
+                    className="prose prose-stone max-w-none text-text prose-headings:text-text prose-headings:tracking-tight prose-a:text-purple prose-code:bg-panel2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-xs"
+                    controls={{
+                      table: { copy: true },
+                      code: { copy: true },
+                    }}
+                  >
+                    {report.markdown}
+                  </Streamdown>
+                </div>
+              )}
             </div>
           ) : (
             <div className="p-8 rounded-3xl bg-panel2 border border-border text-center text-muted text-sm">

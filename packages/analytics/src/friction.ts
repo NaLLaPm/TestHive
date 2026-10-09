@@ -40,12 +40,28 @@ export function computeElementFriction(
     return buckets.get(key)!;
   }
 
+  function isSystemError(text: string): boolean {
+    const lower = text.toLowerCase();
+    return (
+      lower.includes("fatal execution error") ||
+      lower.includes("browsertype") ||
+      lower.includes("playwright") ||
+      lower.includes("chrome-headless") ||
+      lower.includes("executable doesn't exist") ||
+      lower.includes("looks like playwright was just installed") ||
+      lower.includes("run the following command to download") ||
+      lower.includes("error: connect econnrefused") ||
+      lower.includes("execution failed on repeat")
+    );
+  }
+
   // 1. Process recorded steps with action details
   for (const s of steps) {
     const act = (s.action ?? {}) as Record<string, unknown>;
     const selector = typeof act.selector === "string" ? act.selector : undefined;
     const text = typeof act.text === "string" ? act.text : "";
     const note = s.note || "";
+    if (isSystemError(note)) continue;
     const isStuck = act.action === "give_up" || Boolean(act.confused) || Boolean(act.error) || note.length > 5;
 
     if (!isStuck) continue;
@@ -55,64 +71,69 @@ export function computeElementFriction(
     if (lower.includes("card") || lower.includes("cvv") || lower.includes("credit") || lower.includes("expir")) {
       const b = getOrCreate("field-card-number", "Credit Card Input (#card-number)", "form_field", "#card-number");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     } else if (lower.includes("address") || lower.includes("zip") || lower.includes("shipping") || lower.includes("postal")) {
       const b = getOrCreate("field-shipping-address", "Shipping Address Form (#shipping-address)", "form_field", "#shipping-address");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     } else if (lower.includes("delay") || lower.includes("slow") || lower.includes("timeout") || lower.includes("spinner") || lower.includes("wait")) {
       const b = getOrCreate("delay-order-processing", "Checkout Processing Load Delay", "load_delay");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     } else if (lower.includes("cart") || lower.includes("basket")) {
       const b = getOrCreate("btn-add-to-cart", "Add to Cart CTA (.add-to-cart)", "button", ".add-to-cart");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     } else if (lower.includes("checkout") || lower.includes("pay") || lower.includes("order")) {
       const b = getOrCreate("btn-checkout", "Proceed to Checkout Button (#checkout-btn)", "button", "#checkout-btn");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     } else if (lower.includes("nav") || lower.includes("menu") || lower.includes("search") || lower.includes("filter")) {
       const b = getOrCreate("nav-search-filter", "Catalog Filter & Search Bar (#search-filter)", "navigation", "#search-filter");
       b.affectedPersonas.add(s.personaId);
-      if (note && b.quotes.length < 3) b.quotes.push(note);
+      if (note && !isSystemError(note) && b.quotes.length < 3) b.quotes.push(note);
     }
   }
 
   // 2. Process results dropOffReason and friction notes
   for (const r of results) {
     if (r.outcome === "success" && !r.dropOffReason && r.frictionNotes.length === 0) continue;
-    const combinedNotes = [r.dropOffReason, ...r.frictionNotes].filter(Boolean).join(" ").toLowerCase();
+    const cleanNotes = (r.frictionNotes || []).filter((fn) => !isSystemError(fn));
+    const cleanDropOff = r.dropOffReason && !isSystemError(r.dropOffReason) ? r.dropOffReason : null;
+    const combinedNotes = [cleanDropOff, ...cleanNotes].filter(Boolean).join(" ").toLowerCase();
+
+    if (!combinedNotes) continue;
 
     if (combinedNotes.includes("card") || combinedNotes.includes("cvv") || combinedNotes.includes("payment")) {
       const b = getOrCreate("field-card-number", "Credit Card Input (#card-number)", "form_field", "#card-number");
       b.affectedPersonas.add(r.personaId);
-      if (r.dropOffReason && b.quotes.length < 3) b.quotes.push(r.dropOffReason);
+      if (cleanDropOff && b.quotes.length < 3) b.quotes.push(cleanDropOff);
     }
     if (combinedNotes.includes("address") || combinedNotes.includes("zip") || combinedNotes.includes("form") || combinedNotes.includes("field")) {
       const b = getOrCreate("field-shipping-address", "Shipping Address Form (#shipping-address)", "form_field", "#shipping-address");
       b.affectedPersonas.add(r.personaId);
-      if (r.dropOffReason && b.quotes.length < 3) b.quotes.push(r.dropOffReason);
+      if (cleanDropOff && b.quotes.length < 3) b.quotes.push(cleanDropOff);
     }
     if (combinedNotes.includes("delay") || combinedNotes.includes("slow") || combinedNotes.includes("wait") || combinedNotes.includes("load") || combinedNotes.includes("stuck")) {
       const b = getOrCreate("delay-order-processing", "Checkout Processing Load Delay", "load_delay");
       b.affectedPersonas.add(r.personaId);
-      if (r.dropOffReason && b.quotes.length < 3) b.quotes.push(r.dropOffReason);
+      if (cleanDropOff && b.quotes.length < 3) b.quotes.push(cleanDropOff);
     }
     if (combinedNotes.includes("checkout") || combinedNotes.includes("pay") || combinedNotes.includes("button")) {
       const b = getOrCreate("btn-checkout", "Proceed to Checkout Button (#checkout-btn)", "button", "#checkout-btn");
       b.affectedPersonas.add(r.personaId);
-      if (r.dropOffReason && b.quotes.length < 3) b.quotes.push(r.dropOffReason);
+      if (cleanDropOff && b.quotes.length < 3) b.quotes.push(cleanDropOff);
     }
     if (combinedNotes.includes("cart") || combinedNotes.includes("product") || combinedNotes.includes("add")) {
       const b = getOrCreate("btn-add-to-cart", "Add to Cart CTA (.add-to-cart)", "button", ".add-to-cart");
       b.affectedPersonas.add(r.personaId);
-      if (r.dropOffReason && b.quotes.length < 3) b.quotes.push(r.dropOffReason);
+      if (cleanDropOff && b.quotes.length < 3) b.quotes.push(cleanDropOff);
     }
   }
 
   // 3. Process additional FrictionNotes passed directly
   for (const n of notes) {
+    if (isSystemError(n.note)) continue;
     const text = n.note.toLowerCase();
     if (text.includes("card") || text.includes("payment")) {
       const b = getOrCreate("field-card-number", "Credit Card Input (#card-number)", "form_field", "#card-number");
@@ -137,7 +158,7 @@ export function computeElementFriction(
       const b2 = getOrCreate("delay-order-processing", "Checkout Processing Load Delay", "load_delay");
       for (const p of failedPersonas) {
         b1.affectedPersonas.add(p.personaId);
-        if (p.dropOffReason) b1.quotes.push(p.dropOffReason);
+        if (p.dropOffReason && !isSystemError(p.dropOffReason)) b1.quotes.push(p.dropOffReason);
       }
     }
   }

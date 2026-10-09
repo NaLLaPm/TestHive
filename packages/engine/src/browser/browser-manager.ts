@@ -1,4 +1,5 @@
 import { chromium, type Browser } from "playwright";
+import fs from "node:fs";
 
 let sharedBrowser: Browser | null = null;
 
@@ -10,7 +11,7 @@ export async function getSharedBrowser(): Promise<Browser> {
     };
     if (process.env.CHROMIUM_PATH) {
       launchOpts.executablePath = process.env.CHROMIUM_PATH;
-    } else if (require("node:fs").existsSync("/usr/bin/chromium")) {
+    } else if (fs.existsSync("/usr/bin/chromium")) {
       launchOpts.executablePath = "/usr/bin/chromium";
     }
     sharedBrowser = await chromium.launch(launchOpts);

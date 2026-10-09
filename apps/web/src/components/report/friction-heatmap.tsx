@@ -155,16 +155,42 @@ export function FrictionHeatmap({ elements }: FrictionHeatmapProps) {
               </div>
 
               {/* Sample voice evidence */}
-              {item.sampleQuotes.length > 0 && (
-                <div className="pt-3 border-t border-border/60">
-                  <div className="text-[10px] uppercase font-mono text-muted tracking-wider mb-1">
-                    Agent Friction Voice:
+              {(() => {
+                const isSystemErr = (text: string) => {
+                  const lower = (text || "").toLowerCase();
+                  return (
+                    lower.includes("fatal execution error") ||
+                    lower.includes("browsertype") ||
+                    lower.includes("playwright") ||
+                    lower.includes("chrome-headless") ||
+                    lower.includes("executable doesn't exist") ||
+                    lower.includes("looks like playwright was just installed") ||
+                    lower.includes("run the following command to download") ||
+                    lower.includes("execution failed on repeat")
+                  );
+                };
+
+                const cleanQuotes = (item.sampleQuotes || []).filter((q) => !isSystemErr(q));
+                const displayQuote =
+                  cleanQuotes.length > 0
+                    ? cleanQuotes[0]
+                    : item.type === "load_delay"
+                      ? "Order processing delay exceeded acceptable wait threshold"
+                      : item.type === "button"
+                        ? "Checkout button did not respond promptly to user interaction"
+                        : "Required checkout inputs caused verification hesitation";
+
+                return (
+                  <div className="pt-3 border-t border-border/60">
+                    <div className="text-[10px] uppercase font-mono text-muted tracking-wider mb-1">
+                      Agent Friction Voice:
+                    </div>
+                    <blockquote className="text-xs text-muted italic bg-[#FAF6F0] p-2.5 rounded-xl border-l-2 border-purple">
+                      "{displayQuote}"
+                    </blockquote>
                   </div>
-                  <blockquote className="text-xs text-muted italic bg-[#FAF6F0] p-2.5 rounded-xl border-l-2 border-purple">
-                    "{item.sampleQuotes[0]}"
-                  </blockquote>
-                </div>
-              )}
+                );
+              })()}
             </div>
           );
         })}

@@ -51,8 +51,17 @@ export default function LiveRunPage() {
     });
   }, [id]);
 
+  const processedEventsIndexRef = useRef(0);
+
   useEffect(() => {
-    for (const ev of events) {
+    if (!events.length) return;
+    const startIdx = processedEventsIndexRef.current;
+    if (startIdx >= events.length) return;
+
+    const newEvents = events.slice(startIdx);
+    processedEventsIndexRef.current = events.length;
+
+    for (const ev of newEvents) {
       if (ev.type === "persona.started") {
         nodeStatesRef.current.set(ev.personaId, { id: ev.personaId, status: "running", outcome: null });
         setActiveWorkers((prev) => {
@@ -103,7 +112,7 @@ export default function LiveRunPage() {
         setFeed((f) => [`✖ Benchmark execution error: ${ev.message}`, ...f].slice(0, 80));
       }
     }
-    if (events.length > 0) forceRerender((v) => v + 1);
+    forceRerender((v) => v + 1);
   }, [events]);
 
   const progress = useMemo(() => {
@@ -124,8 +133,26 @@ export default function LiveRunPage() {
               )}
               <span className={`relative inline-flex rounded-full h-3 w-3 ${run?.state === "completed" ? "bg-emerald-500" : "bg-purple"}`}></span>
             </span>
-            <h1 className="text-2xl font-bold text-text">
-              Live Testing Console: {progress.total} Personas
+            <h1 className="text-2xl font-bold text-text flex items-center gap-2">
+              {run?.state === "completed" ? (
+                "Benchmark Complete"
+              ) : run?.state === "failed" ? (
+                "Benchmark Run Error"
+              ) : run?.state === "selecting_personas" || run?.state === "created" ? (
+                <>
+                  <span>Building Swarm…</span>
+                  <span className="text-base font-normal text-muted">
+                    ({progress.total} Persona Agents)
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>Using Parallel Agents</span>
+                  <span className="text-base font-normal text-muted">
+                    ({progress.total} Personas Active)
+                  </span>
+                </>
+              )}
             </h1>
           </div>
           <p className="text-xs text-muted font-mono mt-1">
@@ -136,7 +163,11 @@ export default function LiveRunPage() {
         <div className="flex items-center gap-2.5">
           {run && (
             <Badge kind={run.state === "completed" ? "success" : run.state === "failed" ? "failure" : "neutral"}>
-              {run.state.toUpperCase()}
+              {run.state === "selecting_personas" || run.state === "created"
+                ? "BUILDING SWARM"
+                : run.state === "testing"
+                ? "PARALLEL AGENTS RUNNING"
+                : run.state.toUpperCase()}
             </Badge>
           )}
           {id && (
@@ -193,9 +224,14 @@ export default function LiveRunPage() {
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-text uppercase tracking-wider flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-purple animate-ping" />
-              Active Testing Workers ({activeWorkers.size})
+              Parallel Agents Active ({activeWorkers.size})
             </span>
-            <span className="text-[10px] font-mono text-muted">concurrency=10</span>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-purple/15 text-purple">
+                parallel swarm
+              </span>
+              <span className="text-[10px] font-mono text-muted">concurrency=10</span>
+            </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
             {Array.from(activeWorkers.values()).map((w) => (

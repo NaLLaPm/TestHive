@@ -66,50 +66,89 @@ export function BenchmarkLiveModal({
 
   const events = useSSE(`/api/runs/${runId}/stream`);
 
+  // Track processed SSE events index to prevent duplicate increments
+  const processedEventsIndexRef = useRef(0);
+
   // Fetch initial graph
   useEffect(() => {
     if (!poolId) return;
     api.getGraph(poolId).then(setGraph).catch(() => undefined);
   }, [poolId]);
 
-  // Initial node states check
+  // Periodic polling fallback to stay 100% in sync with backend database status
   useEffect(() => {
     if (!runId) return;
-    api.getNodeStates(runId).then((states) => {
-      let d = 0;
-      let s = 0;
-      let p = 0;
-      let f = 0;
-      for (const st of states) {
-        nodeStatesRef.current.set(st.id, st);
-        if (st.status === "done") {
-          d++;
-          if (st.outcome === "success") s++;
-          else if (st.outcome === "partial") p++;
-          else if (st.outcome === "failure") f++;
+
+    let active = true;
+    const syncRunAndNodes = async () => {
+      try {
+        const [run, states] = await Promise.all([
+          api.getRun(runId),
+          api.getNodeStates(runId),
+        ]);
+        if (!active) return;
+
+        if (run) {
+          setRunState(run.state);
+          if (run.totalPersonas > 0) setTotalCount(run.totalPersonas);
+          if (run.donePersonas !== undefined && run.donePersonas !== null) {
+            setDoneCount(run.donePersonas);
+          }
         }
+
+        let d = 0;
+        let s = 0;
+        let p = 0;
+        let f = 0;
+        for (const st of states) {
+          nodeStatesRef.current.set(st.id, st);
+          if (st.status === "done") {
+            d++;
+            if (st.outcome === "success") s++;
+            else if (st.outcome === "partial") p++;
+            else if (st.outcome === "failure") f++;
+          }
+        }
+        if (d > 0) {
+          setDoneCount((prev) => Math.max(prev, d));
+          setSuccessCount(s);
+          setPartialCount(p);
+          setFailureCount(f);
+        }
+        forceRerender((v) => v + 1);
+      } catch {
+        // ignore polling errors
       }
-      if (d > 0) {
-        setDoneCount(d);
-        setSuccessCount(s);
-        setPartialCount(p);
-        setFailureCount(f);
-      }
-      forceRerender((v) => v + 1);
-    });
+    };
+
+    syncRunAndNodes();
+    const interval = setInterval(syncRunAndNodes, 1500);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, [runId]);
 
-  // Handle SSE events
+  // Handle SSE events incrementally
   useEffect(() => {
     if (!events.length) return;
+    const startIndex = processedEventsIndexRef.current;
+    if (startIndex >= events.length) return;
 
-    for (const ev of events) {
+    const newEvents = events.slice(startIndex);
+    processedEventsIndexRef.current = events.length;
+
+    for (const ev of newEvents) {
       const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
       if (ev.type === "run.state") {
         setRunState(ev.state);
-        if (ev.progress?.total) setTotalCount(ev.progress.total);
-        if (ev.progress?.done !== undefined) setDoneCount(ev.progress.done);
+        if (ev.state === "testing") {
+          if (ev.progress?.total) setTotalCount(ev.progress.total);
+          if (ev.progress?.done !== undefined) setDoneCount((prev) => Math.max(prev, ev.progress.done));
+        } else if (ev.state === "completed") {
+          setDoneCount((prev) => (totalCount > 0 ? totalCount : prev));
+        }
 
         const item: LogItem = {
           id: Math.random().toString(),
@@ -215,6 +254,7 @@ export function BenchmarkLiveModal({
         setFeed((f) => [item, ...f].slice(0, 100));
       } else if (ev.type === "run.completed") {
         setRunState("completed");
+        setDoneCount((prev) => (totalCount > 0 ? totalCount : prev));
         const item: LogItem = {
           id: Math.random().toString(),
           time: timeStr,
@@ -235,7 +275,7 @@ export function BenchmarkLiveModal({
     }
 
     forceRerender((v) => v + 1);
-  }, [events, targetUrl]);
+  }, [events, targetUrl, totalCount]);
 
   // Compute progress percentage
   const pct = Math.min(100, Math.round(((doneCount || 0) / Math.max(1, totalCount)) * 100));
@@ -264,12 +304,26 @@ export function BenchmarkLiveModal({
                   }`}
                 ></span>
               </span>
-              <h2 className="text-lg sm:text-xl font-bold text-text tracking-tight">
-                {isComplete
-                  ? "Benchmark Run Complete"
-                  : isFailed
-                  ? "Benchmark Run Encountered Error"
-                  : `Testing in Progress: ${totalCount} Personas`}
+              <h2 className="text-lg sm:text-xl font-bold text-text tracking-tight flex items-center gap-2">
+                {isComplete ? (
+                  "Benchmark Complete"
+                ) : isFailed ? (
+                  "Benchmark Run Error"
+                ) : runState === "selecting_personas" || runState === "initializing" || runState === "created" ? (
+                  <>
+                    <span>Building Swarm…</span>
+                    <span className="text-sm font-normal text-muted">
+                      ({totalCount} Persona Agents)
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span>Using Parallel Agents</span>
+                    <span className="text-sm font-normal text-muted">
+                      ({totalCount} Personas Active)
+                    </span>
+                  </>
+                )}
               </h2>
               <Badge
                 kind={
@@ -282,7 +336,11 @@ export function BenchmarkLiveModal({
                     : "neutral"
                 }
               >
-                {runState.replace(/_/g, " ").toUpperCase()}
+                {runState === "selecting_personas" || runState === "initializing" || runState === "created"
+                  ? "BUILDING SWARM"
+                  : runState === "testing"
+                  ? "PARALLEL AGENTS RUNNING"
+                  : runState.replace(/_/g, " ").toUpperCase()}
               </Badge>
             </div>
             <p className="text-xs text-muted font-mono truncate max-w-xl">
@@ -324,10 +382,18 @@ export function BenchmarkLiveModal({
         <div className="bg-panel2 px-4 sm:px-6 pb-4 pt-1 border-b border-border shrink-0 space-y-2">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-3">
-              <span className="font-semibold text-text">
+              <span className="font-semibold text-text flex items-center gap-1.5">
+                {!isComplete && !isFailed && (
+                  <span className="w-2 h-2 rounded-full bg-purple animate-ping shrink-0" />
+                )}
                 Testing Progress: <strong className="font-mono text-purple">{doneCount}</strong> / {totalCount} personas
               </span>
-              <span className="text-muted">({pct}%)</span>
+              <span className="text-muted font-mono font-medium">({pct}%)</span>
+              {!isComplete && !isFailed && (
+                <span className="hidden sm:inline-block text-[11px] font-mono text-purple/80 italic">
+                  {pct >= 95 ? "Synthesizing final personas & control baselines..." : "Parallel swarm active..."}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-3 font-mono text-[11px]">
               <span className="text-emerald-700 font-semibold flex items-center gap-1">
@@ -342,19 +408,23 @@ export function BenchmarkLiveModal({
             </div>
           </div>
 
-          <div className="h-3.5 w-full bg-white rounded-full overflow-hidden border border-border relative p-0.5 shadow-inner">
+          <div
+            className={`h-4 w-full bg-white rounded-full overflow-hidden border border-border relative p-0.5 shadow-inner ${
+              !isComplete && !isFailed ? "animate-panel-shiver" : ""
+            }`}
+          >
             <div
-              className={`h-full bg-gradient-to-r from-purple via-lavender to-cyan rounded-full transition-all duration-300 relative overflow-hidden shadow-xs ${
+              className={`h-full bg-gradient-to-r from-purple via-lavender to-cyan rounded-full transition-all duration-300 relative overflow-hidden shadow-sm ${
                 !isComplete && !isFailed ? "animate-progress-shiver" : ""
               }`}
-              style={{ width: `${pct}%` }}
+              style={{ width: `${Math.max(pct, isComplete ? 100 : 1)}%` }}
             >
               {/* Glass shimmer sweep highlight */}
               <div
-                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none animate-shimmer-sweep"
+                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none animate-shimmer-sweep"
               />
               {/* Subtle continuous micro-pulse */}
-              <div className="absolute inset-0 bg-white/15 animate-pulse pointer-events-none" />
+              <div className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none" />
             </div>
           </div>
         </div>
@@ -409,10 +479,15 @@ export function BenchmarkLiveModal({
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-purple animate-ping" />
                   <span className="text-xs font-bold text-text uppercase tracking-wider">
-                    Concurrent Testing Workers ({activeWorkers.size})
+                    Parallel Agents Active ({activeWorkers.size})
                   </span>
                 </div>
-                <span className="text-[10px] font-mono text-muted">concurrency=10</span>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-purple/15 text-purple">
+                    parallel swarm
+                  </span>
+                  <span className="text-[10px] font-mono text-muted">concurrency=10</span>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-36 overflow-y-auto pr-1">
