@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="favicon-base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F5EFE6" />
+    </linearGradient>
+    <linearGradient id="favicon-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#AF9FE0" />
+      <stop offset="100%" stop-color="#7E6BAE" />
+    </linearGradient>
+    <linearGradient id="favicon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8E6EB" />
+      <stop offset="100%" stop-color="#8AB7BF" />
+    </linearGradient>
+    <linearGradient id="favicon-lavender" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D5C4E5" />
+      <stop offset="100%" stop-color="#A48CBA" />
+    </linearGradient>
+    <linearGradient id="favicon-honey" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="favicon-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="45%" stop-color="#FBBF24" />
+      <stop offset="85%" stop-color="#9B8EC7" />
+      <stop offset="100%" stop-color="#7E6BAE" />
+    </linearGradient>
+  </defs>
+
+  <!-- Pebble Card Base -->
+  <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#favicon-base)" stroke="#9B8EC7" stroke-opacity="0.35" stroke-width="1.5" />
+
+  <!-- Orbital Swarm Telemetry Ring -->
+  <circle cx="24" cy="24" r="16.5" stroke="#BDA6CE" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="2 3" />
+
+  <!-- Antennae / Sensor Probes -->
+  <path d="M20.5 13.5L17.5 9.5M27.5 13.5L30.5 9.5" stroke="#9B8EC7" stroke-width="2" stroke-linecap="round" />
+  <circle cx="17" cy="9" r="1.8" fill="#FBBF24" stroke="#241E33" stroke-width="0.8" />
+  <circle cx="31" cy="9" r="1.8" fill="#F59E0B" stroke="#241E33" stroke-width="0.8" />
+
+  <!-- Top Honeycomb Cell (Apex - Honey Gold) -->
+  <path d="M24 12L31 16V22L24 25.5L17 22V16L24 12Z" fill="url(#favicon-honey)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round" />
+
+  <!-- Bottom-Left Honeycomb Cell (Purple) -->
+  <path d="M16 23.5L23 27V33L16 36.5L9 33V27L16 23.5Z" fill="url(#favicon-purple)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round" />
+
+  <!-- Bottom-Right Honeycomb Cell (Lavender) -->
+  <path d="M32 23.5L39 27V33L32 36.5L25 33V27L32 23.5Z" fill="url(#favicon-lavender)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round" />
+
+  <!-- Central Swarm Core with Honey Pulse -->
+  <circle cx="24" cy="25" r="4.2" fill="#241E33" stroke="#FFFFFF" stroke-width="1" />
+  <circle cx="24" cy="25" r="2.2" fill="url(#favicon-glow)" />
+  <circle cx="24" cy="25" r="0.9" fill="#FFFBEB" />
+
+  <!-- Downward Test Probe Pin with Honey Accent -->
+  <path d="M23 37L24 40.5L25 37Z" fill="#241E33" />
+  <circle cx="24" cy="41.5" r="1" fill="#F59E0B" />
+</svg>

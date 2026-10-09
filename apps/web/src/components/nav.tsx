@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { BrandLogo } from "@/components/brand-logo";
 
 const LINKS = [
   {
@@ -61,12 +62,7 @@ export function Nav() {
       {/* Mobile Top Header with Hamburger */}
       <header className="md:hidden sticky top-0 z-40 flex items-center justify-between border-b border-border bg-cream/95 px-4 py-3.5 backdrop-blur-xl">
         <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-xs">
-            <div className="w-4 h-4 rounded-full bg-text" />
-          </div>
-          <span className="font-extrabold text-xl tracking-tight text-text">
-            Test<span className="text-purple">Hive</span>
-          </span>
+          <BrandLogo size="sm" />
         </Link>
 
         {/* Hamburger Icon Button */}
@@ -108,12 +104,7 @@ export function Nav() {
       >
         <div className="p-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-xs">
-              <div className="w-4 h-4 rounded-full bg-text" />
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-text">
-              Test<span className="text-purple">Hive</span>
-            </span>
+            <BrandLogo size="sm" />
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
@@ -171,23 +162,17 @@ export function Nav() {
       <div className="hidden md:flex fixed top-4 left-5 z-40 items-center">
         <Link
           href="/"
-          className="flex items-center gap-3.5 p-1 rounded-2xl hover:scale-[1.03] active:scale-[0.98] transition-transform group"
+          className="p-1 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-transform group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-5 h-5 rounded-full bg-text" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-extrabold text-2xl tracking-tight text-text leading-tight">
-              Test<span className="text-purple">Hive</span>
-            </span>
-          </div>
+          <BrandLogo size="md" />
         </Link>
       </div>
 
-      {/* Desktop Navigation Bar (No right line, increased icon size, white box with equal padding, stretches on hover, purple background when selected) */}
+      {/* Desktop Navigation Bar (Vertically centered, no right line, increased icon size, white box with equal padding, stretches on hover, purple background when selected) */}
+      {/* ponytail: clean translateY center on viewport */}
       <nav
         aria-label="Sidebar Navigation"
-        className="hidden md:flex flex-col fixed top-24 left-5 z-40 gap-4"
+        className="hidden md:flex flex-col fixed top-1/2 -translate-y-1/2 left-5 z-40 gap-4"
       >
         {LINKS.map((l) => {
           const active = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));

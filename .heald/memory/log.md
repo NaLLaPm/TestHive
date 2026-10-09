@@ -276,3 +276,51 @@ Removed the preset demo showroom tab, associated hooks, and state handlers from 
 ## Session 2026-10-09T08:51:19.557381+00:00
 
 Fixed Next.js webpack missing module ./98.js error by killing stale dev instances, clearing apps/web/.next cache, and verifying clean dev server boot with HTTP 200.
+
+## Session 2026-10-09T08:58:13.342158700+00:00
+
+Centered desktop navigation rail vertically along the viewport using top-1/2 and -translate-y-1/2
+
+## Session 2026-10-09T09:02:43.243336400+00:00
+
+Designed and implemented bespoke Honeycomb Swarm Sentinel vector logo and BrandLogo component for TestHive across nav.tsx and app/icon.svg, verifying full clean build.
+
+## Session 2026-10-09T09:14:18.710433300+00:00
+
+Purged corrupted .next webpack chunk cache and restored Next.js dev server on port 3000
+
+## Session 2026-10-09T09:14:40.019045900+00:00
+
+Diagnosed that task-22 was the previous failed dev task log from before the cache purge; confirmed the current dev server process (PID 25516/31256) is running cleanly and returning HTTP 200 on / and HTTP 404 on unknown paths.
+
+## Session 2026-10-09T09:17:34.696032+00:00
+
+Infused warm honey amber yellow accents into the TestHive brand logo mark
+
+## Session 2026-10-09T09:24:52.405942300+00:00
+
+Diagnosed and resolved API /api/pools 500 Internal Server Error: Next.js proxies /api to Fastify on port 8787 via next.config.mjs rewrites; starting the backend service restored 200 OK responses.
+
+## Session 2026-10-09T09:27:56.806075400+00:00
+
+Infused warm honey amber yellow palette across TestHive brand logo and favicon icon.svg
+
+## Session 2026-10-09T09:29:46.502261600+00:00
+
+Purged corrupt webpack chunk cache and restored Next.js dev server to HTTP 200
+
+## Session 2026-10-09T09:36:15.925726100+00:00
+
+Diagnosed and resolved cascading 500 error on Next.js dev server: decoupled stale Node/Bun processes holding corrupt Webpack runtime cache, wiped .next, and launched clean standalone dev server on port 3000.
+
+## Session 2026-10-09T09:39:11.532736800+00:00
+
+Patched engine type contract, wiped stale Webpack vendor chunk artifacts, and verified clean HTTP 200 SSR across Next.js routes
+
+## Session 2026-10-09T09:43:09.195933200+00:00
+
+Verified API /api/pools is healthy and serving requests: Node backend process PID 21816 is actively listening on port 8787 and Next.js proxy on port 3000 returns 200 OK.
+
+## Session 2026-10-09T09:43:24.811063+00:00
+
+Diagnosed and resolved /api/pools 500 Internal Server Error by clearing zombie background processes and starting Fastify backend on 8787 and demo store on 8989
