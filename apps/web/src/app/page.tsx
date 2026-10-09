@@ -150,77 +150,11 @@ export default function PixelDashboardPage() {
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-text">
               Simulate 1,000 Real Users in Parallel
             </h1>
-            <p className="text-muted text-sm sm:text-base max-w-2xl leading-relaxed">
-              Synthesize 11,953 trait connections, test checkout friction, monitor live SSE events,
-              and calculate viral Word-of-Mouth cascade diffusion across human demographic clusters.
-            </p>
-          </div>
 
-          {/* Quick Glances / Quick Actions */}
-          <div className="flex flex-wrap sm:flex-nowrap gap-3">
-            <Link
-              href="/personas"
-              className="px-4 py-2.5 rounded-2xl bg-white border border-border hover:border-purple/50 transition flex items-center gap-2 text-xs font-semibold text-text group shadow-xs"
-            >
-              <span>👥</span>
-              <span>Inspect & Alter Personas</span>
-            </Link>
-            {defaultPool && (
-              <Link
-                href={`/library/${defaultPool.id}`}
-                className="px-4 py-2.5 rounded-2xl bg-white border border-border hover:border-purple/50 transition flex items-center gap-2.5 text-xs font-semibold text-text group shadow-xs"
-              >
-                <span className="w-2.5 h-2.5 rounded-full bg-purple group-hover:scale-125 transition" />
-                <span>Explore 2D Force Graph</span>
-              </Link>
-            )}
-            {activeRunId && (
-              <Link
-                href={`/runs/${activeRunId}/live`}
-                className="px-4 py-2.5 rounded-2xl bg-purple text-cream hover:bg-lavender hover:text-text transition flex items-center gap-2 text-xs font-bold shadow-xs"
-              >
-                <span className="w-2 h-2 rounded-full bg-cream animate-ping" />
-                <span>Live Execution Console</span>
-              </Link>
-            )}
           </div>
         </div>
 
-        {/* Pixel OS Quick Settings Bar / Run Selector */}
-        {runs && runs.length > 0 && (
-          <div className="mt-6 pt-5 border-t border-border flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-semibold text-muted uppercase tracking-wider">
-                Active Benchmark:
-              </span>
-              <select
-                value={activeRunId ?? ""}
-                onChange={(e) => setSelectedRunId(e.target.value)}
-                className="bg-white text-text border border-border rounded-xl px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-purple transition shadow-xs"
-              >
-                {runs.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.stimulus.type === "url" ? r.stimulus.url : r.kind} ({r.state})
-                  </option>
-                ))}
-              </select>
-            </div>
-            {currentRun && (
-              <div className="flex items-center gap-3 text-xs text-muted">
-                <span>
-                  Personas: <strong className="text-text">{currentRun.donePersonas}/{currentRun.totalPersonas}</strong>
-                </span>
-                <span>•</span>
-                <span>
-                  Status:{" "}
-                  <Badge kind={currentRun.state === "completed" ? "success" : currentRun.state === "failed" ? "failure" : "neutral"}>
-                    {currentRun.state}
-                  </Badge>
-                </span>
-              </div>
-            )}
-          </div>
-        )}
+
       </section>
 
       {/* Pixel OS Material Tab Strip */}
