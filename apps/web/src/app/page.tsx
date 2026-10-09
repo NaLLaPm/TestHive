@@ -26,6 +26,7 @@ import { FunnelView } from "@/components/report/funnel-view";
 import { FrictionHeatmap } from "@/components/report/friction-heatmap";
 import { ExportToolbar } from "@/components/report/export-toolbar";
 import { renderMarkdown } from "@/lib/markdown";
+import { BenchmarkLiveModal } from "@/components/benchmark-live-modal";
 
 type TabId =
   | "launchpad"
@@ -65,6 +66,15 @@ export default function PixelDashboardPage() {
   const [loadingDemo, setLoadingDemo] = useState(false);
   const [spreadSimulating, setSpreadSimulating] = useState(false);
 
+  // Active live test panel modal state
+  const [activeRunModal, setActiveRunModal] = useState<{
+    runId: string;
+    poolId: string | null;
+    targetUrl: string;
+    userGoal: string;
+    expectedPersonas: number;
+  } | null>(null);
+
   // Persona filter in Results/Analytics tab
   const [personaFilter, setPersonaFilter] = useState<"all" | "success" | "failure" | "partial">("all");
 
@@ -88,7 +98,16 @@ export default function PixelDashboardPage() {
         concurrency: 10,
         useCache: true,
       } as any);
-      router.push(`/runs/${res.runId}/live`);
+
+      // Open live testing/loading panel modal with real-time persona metrics
+      setActiveRunModal({
+        runId: res.runId,
+        poolId: res.poolId ?? poolId ?? null,
+        targetUrl: url,
+        userGoal: goal,
+        expectedPersonas: totalPoolSize,
+      });
+      setSelectedRunId(res.runId);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     }
@@ -859,6 +878,23 @@ export default function PixelDashboardPage() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Real-time Benchmark Run Testing & Loading Panel Modal */}
+      {activeRunModal && (
+        <BenchmarkLiveModal
+          runId={activeRunModal.runId}
+          poolId={activeRunModal.poolId}
+          targetUrl={activeRunModal.targetUrl}
+          userGoal={activeRunModal.userGoal}
+          expectedPersonas={activeRunModal.expectedPersonas}
+          onClose={() => setActiveRunModal(null)}
+          onNavigateToResults={() => {
+            setSelectedRunId(activeRunModal.runId);
+            setActiveRunModal(null);
+            setActiveTab("analytics");
+          }}
+        />
       )}
     </div>
   );
