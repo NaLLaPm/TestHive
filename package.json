@@ -16,7 +16,8 @@
     "pool:build": "tsx scripts/build-pool.ts",
     "demo:seed": "tsx scripts/seed-demo.ts",
     "demo:site": "tsx scripts/serve-demo-site.ts",
-    "dev:all": "powershell -ExecutionPolicy Bypass -File ./start-all.ps1"
+    "dev:all": "powershell -ExecutionPolicy Bypass -File ./start-all.ps1",
+    "start:all": "bash ./start-all.sh"
   },
   "dependencies": {
     "@testhive/contracts": "workspace:*",

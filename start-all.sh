@@ -12,16 +12,20 @@ cleanup() {
     echo ""
     echo "Stopping all TestHive services..."
 
-    kill "$BACKEND_PID" "$DEMO_PID" "$WEB_PID" 2>/dev/null || true
+    # Terminate background child process IDs if set
+    if [ -n "${BACKEND_PID:-}" ]; then kill "$BACKEND_PID" 2>/dev/null || true; fi
+    if [ -n "${DEMO_PID:-}" ]; then kill "$DEMO_PID" 2>/dev/null || true; fi
+    if [ -n "${WEB_PID:-}" ]; then kill "$WEB_PID" 2>/dev/null || true; fi
 
-    wait "$BACKEND_PID" "$DEMO_PID" "$WEB_PID" 2>/dev/null || true
+    # Also kill any remaining children in this process group
+    kill $(jobs -p) 2>/dev/null || true
 
     echo "All services stopped."
 }
 
 trap cleanup INT TERM EXIT
 
-ROOT="$(pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "[1/3] Starting Fastify Backend (http://127.0.0.1:8787)..."
 (
