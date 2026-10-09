@@ -1,0 +1,14 @@
+[
+  {
+    "demoId": "before-fix",
+    "title": "localhost checkout (before fix)",
+    "description": "Baseline run against http://localhost:8989/before with 200 personas: \"Buy a pair of wireless earbuds\". Expect friction and lower conversion.",
+    "runId": "850b8e57-c5f1-4e24-8e9b-072f760b8fa2"
+  },
+  {
+    "demoId": "after-fix",
+    "title": "localhost checkout (after fix)",
+    "description": "Optimized run against http://localhost:8989/after with 200 personas: \"Buy a pair of wireless earbuds\". Measure conversion and friction improvements.",
+    "runId": "8b25996d-267d-455b-9532-72e9fe9e5e93"
+  }
+]
