@@ -65,7 +65,7 @@ export function Nav() {
             <div className="w-3.5 h-3.5 rounded-full bg-text" />
           </div>
           <span className="font-bold text-base tracking-tight text-text">
-            Persona<span className="text-purple">Forge</span>
+            Test<span className="text-purple">Hive</span>
           </span>
         </Link>
 
@@ -112,7 +112,7 @@ export function Nav() {
               <div className="w-3.5 h-3.5 rounded-full bg-text" />
             </div>
             <span className="font-bold text-lg tracking-tight text-text">
-              Persona<span className="text-purple">Forge</span>
+              Test<span className="text-purple">Hive</span>
             </span>
           </Link>
           <button
@@ -177,7 +177,7 @@ export function Nav() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-text leading-tight">
-                Persona<span className="text-purple">Forge</span>
+                Test<span className="text-purple">Hive</span>
               </span>
               <span className="text-[10px] font-mono text-purple/80 font-medium">
                 Pixel OS Material You

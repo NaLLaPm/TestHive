@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "personaforge",
+      "name": "testhive",
       "dependencies": {
         "@testhive/analytics": "workspace:*",
         "@testhive/config": "workspace:*",
