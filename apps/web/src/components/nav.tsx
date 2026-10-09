@@ -106,7 +106,7 @@ export function Nav() {
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="p-5 border-b border-border/50 flex items-center justify-between">
+        <div className="p-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
             <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm">
               <div className="w-3.5 h-3.5 rounded-full bg-text" />
@@ -168,9 +168,9 @@ export function Nav() {
       </div>
 
       {/* Desktop Left Sidebar */}
-      <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-64 z-40 bg-cream/90 backdrop-blur-2xl border-r border-border">
+      <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-64 z-40 bg-cream/90 backdrop-blur-2xl">
         {/* Brand / Logo */}
-        <div className="p-5 border-b border-border/50">
+        <div className="p-5">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
               <div className="w-3.5 h-3.5 rounded-full bg-text" />
@@ -179,18 +179,14 @@ export function Nav() {
               <span className="font-bold text-lg tracking-tight text-text leading-tight">
                 Test<span className="text-purple">Hive</span>
               </span>
-              <span className="text-[10px] font-mono text-purple/80 font-medium">
-                Pixel OS Material You
-              </span>
+
             </div>
           </Link>
         </div>
 
         {/* Navigation Links */}
         <div className="flex-1 px-3 py-5 space-y-1.5 overflow-y-auto">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-muted/80">
-            Navigation
-          </div>
+
           {LINKS.map((l) => {
             const active = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
             return (
@@ -218,21 +214,6 @@ export function Nav() {
           })}
         </div>
 
-        {/* Bottom Status Card */}
-        <div className="p-4 border-t border-border/50">
-          <div className="p-3.5 rounded-2xl bg-white/70 border border-border shadow-xs">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple"></span>
-              </span>
-              <span className="text-xs font-bold text-text">Live Synthetic Engine</span>
-            </div>
-            <p className="text-[11px] text-muted font-mono leading-tight">
-              1,000 Agents Armed
-            </p>
-          </div>
-        </div>
       </aside>
     </>
   );

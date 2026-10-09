@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import { SidebarProvider } from "@/components/sidebar-context";
+import { LayoutContent } from "@/components/layout-shell";
 import { Nav } from "@/components/nav";
 
 export const metadata: Metadata = {
@@ -13,10 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-bg text-text min-h-screen selection:bg-lavender selection:text-text antialiased">
         <Providers>
-          <Nav />
-          <div className="md:pl-64 min-h-screen flex flex-col">
-            <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">{children}</main>
-          </div>
+          <SidebarProvider>
+            <Nav />
+            <LayoutContent>{children}</LayoutContent>
+          </SidebarProvider>
         </Providers>
       </body>
     </html>
