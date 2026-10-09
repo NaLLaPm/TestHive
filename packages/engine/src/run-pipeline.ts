@@ -15,7 +15,7 @@ import {
   clusterIssues,
   resultsToFrictionNotes,
 } from "@testhive/analytics";
-import { simulateSpread } from "@testhive/graph";
+import { simulateSpread, createFakeAnalysisGraph } from "@testhive/graph";
 import { writeReport } from "@testhive/report";
 import type { LlmProviderName } from "@testhive/llm";
 import { runOrchestrator } from "./orchestrator.js";
@@ -130,6 +130,17 @@ export async function runFullPipeline(opts: RunPipelineOptions): Promise<void> {
     runsR.update(opts.runId, { state: "reporting" });
     opts.emit({ type: "run.state", state: "reporting", progress: { done: 0, total: 1 } });
 
+    const analysisGraph = createFakeAnalysisGraph({
+      runId: opts.runId,
+      poolId: opts.poolId,
+      personas: allPersonas,
+      results,
+      clusters,
+      issues,
+      funnel,
+      frictionHeatmap,
+    });
+
     const report = await writeReport({
       runId: opts.runId,
       stimulus: opts.config.stimulus,
@@ -137,6 +148,7 @@ export async function runFullPipeline(opts: RunPipelineOptions): Promise<void> {
       issues,
       funnel,
       frictionHeatmap,
+      analysisGraph,
       provider,
     });
     issuesR.upsertReport({ runId: opts.runId, json: report as unknown as object, markdown: report.markdown });

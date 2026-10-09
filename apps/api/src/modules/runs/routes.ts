@@ -222,4 +222,40 @@ export async function runRoutes(app: FastifyInstance) {
     reply.header("Content-Disposition", `attachment; filename="report-${runId}.md"`);
     return row.markdown;
   });
+
+  app.get("/api/runs/:runId/analysis-graph", async (req, reply) => {
+    const { runId } = req.params as { runId: string };
+    const reportRow = issuesR.getReport(runId);
+    if (reportRow && (reportRow.json as any)?.analysisGraph) {
+      return (reportRow.json as any).analysisGraph;
+    }
+
+    const run = runsR.getById(runId);
+    if (!run) {
+      reply.code(404);
+      return { error: "run not found" };
+    }
+
+    const { graphRepo } = await import("@testhive/db");
+    const graph = graphRepo(db);
+    const allPersonas = personasR.listAllByPool(run.poolId);
+    const results = resultsR.listByRun(runId);
+    const clusters = graph.listClusters(run.poolId);
+    const issues = issuesR.listByRun(runId);
+    const { computeFunnel } = await import("@testhive/analytics");
+    const recordedSteps = (resultsR as any).listStepsByRun ? (resultsR as any).listStepsByRun(runId) : [];
+    const funnel = computeFunnel(results as any, recordedSteps, allPersonas.length);
+    const { createFakeAnalysisGraph } = await import("@testhive/graph");
+
+    const fakeGraph = createFakeAnalysisGraph({
+      runId,
+      poolId: run.poolId,
+      personas: allPersonas as any,
+      results: results as any,
+      clusters: clusters as any,
+      issues: issues as any,
+      funnel,
+    });
+    return fakeGraph;
+  });
 }

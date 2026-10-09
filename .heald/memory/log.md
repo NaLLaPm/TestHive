@@ -212,3 +212,7 @@ Finished batched migration and generated clean commits for TestHive
 ## Session 2026-10-09T06:14:36.154542+00:00
 
 Rebranded site name from PersonaForge to TestHive across mobile and desktop navigation bars, and synced lockfile.
+
+## Session 2026-10-09T06:27:32.397542500+00:00
+
+Replaced hand-rolled dangerouslySetInnerHTML markdown parser with official Vercel Streamdown markdown renderer on the executive report page and dashboard report tab, configured tailwind and streamdown CSS, and verified production builds and test suites.

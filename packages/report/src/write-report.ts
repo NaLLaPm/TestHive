@@ -1,4 +1,4 @@
-import type { ElementFriction, FunnelStep, Issue, Report, SegmentsResponse, Stimulus } from "@testhive/contracts";
+import type { AnalysisGraph, ElementFriction, FunnelStep, Issue, Report, SegmentsResponse, Stimulus } from "@testhive/contracts";
 import { ReportWriterOutputSchema } from "@testhive/contracts";
 import { generateStructured, type LlmProviderName } from "@testhive/llm";
 
@@ -9,6 +9,7 @@ export interface WriteReportOptions {
   issues: Issue[];
   funnel?: FunnelStep[];
   frictionHeatmap?: ElementFriction[];
+  analysisGraph?: AnalysisGraph;
   provider?: LlmProviderName;
 }
 
@@ -46,6 +47,7 @@ export async function writeReport(opts: WriteReportOptions): Promise<Report> {
     written.recommendations,
     funnel,
     frictionHeatmap,
+    opts.analysisGraph,
   );
 
   return {
@@ -57,6 +59,7 @@ export async function writeReport(opts: WriteReportOptions): Promise<Report> {
     recommendations: written.recommendations,
     funnel,
     frictionHeatmap,
+    analysisGraph: opts.analysisGraph,
     markdown,
     generatedAt: new Date().toISOString(),
   };
@@ -70,10 +73,22 @@ function renderMarkdown(
   recommendations: string[],
   funnel?: FunnelStep[],
   frictionHeatmap?: ElementFriction[],
+  analysisGraph?: AnalysisGraph,
 ): string {
   const lines: string[] = [];
   lines.push(`# ${title}`, "");
   lines.push(summary, "");
+
+  if (analysisGraph) {
+    lines.push("## Causal Analysis Graph", "");
+    lines.push(
+      `Synthesized **${analysisGraph.metrics.totalNodes} nodes** and **${analysisGraph.metrics.totalEdges} causal connections** across ${analysisGraph.metrics.clustersCount} cohorts and ${analysisGraph.metrics.issuesCount} UX frictions.`,
+    );
+    if (analysisGraph.metrics.topBottleneck) {
+      lines.push(`- **Primary Bottleneck:** ${analysisGraph.metrics.topBottleneck}`);
+    }
+    lines.push("");
+  }
 
   const overallPct = Math.round(segments.overall.successRate * 100);
   const overallMoe = segments.overall.marginOfError !== undefined ? Math.round(segments.overall.marginOfError * 100) : null;

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "streamdown/styles.css";
 
 :root {
   --cream: #F2EAE0;

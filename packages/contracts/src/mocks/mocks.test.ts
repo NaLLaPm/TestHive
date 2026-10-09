@@ -7,6 +7,7 @@ import { SegmentsResponseSchema } from "../domain/segment.js";
 import { IssueSchema } from "../domain/issue.js";
 import { SpreadResultSchema } from "../domain/spread.js";
 import { ReportSchema } from "../domain/report.js";
+import { AnalysisGraphSchema } from "../domain/analysis-graph.js";
 import * as mocks from "./index.js";
 
 describe("mocks are schema-valid", () => {
@@ -18,4 +19,5 @@ describe("mocks are schema-valid", () => {
   it("issue", () => expect(IssueSchema.parse(mocks.mockIssue)).toBeTruthy());
   it("spread", () => expect(SpreadResultSchema.parse(mocks.mockSpread)).toBeTruthy());
   it("report", () => expect(ReportSchema.parse(mocks.mockReport)).toBeTruthy());
+  it("analysisGraph", () => expect(AnalysisGraphSchema.parse(mocks.mockAnalysisGraph)).toBeTruthy());
 });

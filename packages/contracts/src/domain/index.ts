@@ -10,3 +10,4 @@ export * from "./issue.js";
 export * from "./segment.js";
 export * from "./spread.js";
 export * from "./report.js";
+export * from "./analysis-graph.js";

@@ -6,6 +6,7 @@ import type { SegmentsResponse } from "../domain/segment.js";
 import type { Issue } from "../domain/issue.js";
 import type { SpreadResult } from "../domain/spread.js";
 import type { Report } from "../domain/report.js";
+import type { AnalysisGraph } from "../domain/analysis-graph.js";
 
 const MOCK_POOL_ID = "4f8b2c1a-8e3d-4c5b-9a7e-1f2e3d4c5b6a";
 const MOCK_RUN_ID = "7d9e1f2a-3b4c-4d5e-8f9a-0b1c2d3e4f5a";
@@ -152,3 +153,104 @@ export const mockReport: Report = {
   markdown: "# TestHive Report\n\n58% success rate overall.",
   generatedAt: new Date().toISOString(),
 } satisfies Report;
+
+export const mockAnalysisGraph: AnalysisGraph = {
+  runId: MOCK_RUN_ID,
+  poolId: MOCK_POOL_ID,
+  title: "Causal Analysis Graph: example.com",
+  summary: "Synthetic analysis graph linking clusters, issues, and drop-off points.",
+  nodes: [
+    {
+      id: "cluster-3",
+      label: "Impatient low-end mobile users",
+      kind: "cluster",
+      val: 6,
+      color: "#BDA6CE",
+      clusterId: 3,
+      description: "Young, budget-sensitive shoppers on 3G",
+      metrics: { size: 112, successRate: 0.31 },
+    },
+    {
+      id: `issue-${MOCK_ISSUE_ID}`,
+      label: "Misleading price badge",
+      kind: "issue",
+      val: 7,
+      color: "#F28B82",
+      severity: "high",
+      suggestedFix: "Display net price transparently",
+      metrics: { affectedPersonas: 48, severity: "high" },
+    },
+    {
+      id: "funnel-1",
+      label: "1. Landing",
+      kind: "funnel",
+      val: 5,
+      color: "#9B8EC7",
+      metrics: { reached: 1000, conversionPct: 100 },
+    },
+    {
+      id: "funnel-4",
+      label: "4. Checkout",
+      kind: "funnel",
+      val: 5,
+      color: "#9B8EC7",
+      metrics: { reached: 670, dropOff: 90, conversionPct: 67 },
+    },
+    {
+      id: `persona-${MOCK_PERSONA_ID}`,
+      label: "Student (low-end android)",
+      kind: "persona",
+      val: 3,
+      color: "#F28B82",
+      status: "failure",
+      description: "Double-checks prices and distrusts popups",
+      metrics: { sentiment: -0.6, steps: 4 },
+    },
+  ],
+  edges: [
+    {
+      source: "cluster-3",
+      target: `issue-${MOCK_ISSUE_ID}`,
+      kind: "experienced_friction",
+      weight: 0.85,
+      label: "encountered",
+    },
+    {
+      source: `issue-${MOCK_ISSUE_ID}`,
+      target: "funnel-4",
+      kind: "caused_drop_off",
+      weight: 0.75,
+      label: "triggered abandonment",
+    },
+    {
+      source: "funnel-1",
+      target: "funnel-4",
+      kind: "funnel_flow",
+      weight: 0.67,
+      label: "flow",
+    },
+    {
+      source: `persona-${MOCK_PERSONA_ID}`,
+      target: "cluster-3",
+      kind: "belongs_to",
+      weight: 0.5,
+      label: "member",
+    },
+    {
+      source: `persona-${MOCK_PERSONA_ID}`,
+      target: `issue-${MOCK_ISSUE_ID}`,
+      kind: "experienced_friction",
+      weight: 0.8,
+      label: "abandoned",
+    },
+  ],
+  metrics: {
+    totalNodes: 5,
+    totalEdges: 5,
+    clustersCount: 1,
+    issuesCount: 1,
+    funnelStagesCount: 2,
+    topBottleneck: "Misleading price badge",
+  },
+  generatedAt: new Date().toISOString(),
+} satisfies AnalysisGraph;

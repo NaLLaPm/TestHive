@@ -67,6 +67,8 @@ export const api = {
     request(`/api/runs/${runId}/spread`, C.GetSpreadResponseSchema, { method: "POST", body: JSON.stringify(body) }),
   getSpread: (runId: string) => request(`/api/runs/${runId}/spread`, C.GetSpreadResponseSchema),
   getReport: (runId: string) => request(`/api/runs/${runId}/report`, C.GetReportResponseSchema),
+  getAnalysisGraph: (runId: string) =>
+    request(`/api/runs/${runId}/analysis-graph`, C.GetAnalysisGraphResponseSchema),
 
   listDemoRuns: () => request("/api/demo/runs", C.ListDemoRunsResponseSchema),
   loadDemoRun: (demoId: string) =>

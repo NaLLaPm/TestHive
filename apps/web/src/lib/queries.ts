@@ -114,6 +114,15 @@ export function useReport(runId: string | undefined) {
   });
 }
 
+export function useAnalysisGraph(runId: string | undefined) {
+  return useQuery({
+    queryKey: ["analysis-graph", runId],
+    queryFn: () => api.getAnalysisGraph(runId!),
+    enabled: !!runId,
+    retry: false,
+  });
+}
+
 export function useCreateRun() {
   const qc = useQueryClient();
   return useMutation({

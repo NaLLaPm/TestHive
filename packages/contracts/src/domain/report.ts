@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { IssueSchema } from "./issue.js";
 import { SegmentsResponseSchema } from "./segment.js";
+import { AnalysisGraphSchema } from "./analysis-graph.js";
 
 export const FunnelStepSchema = z.object({
   id: z.string(),
@@ -34,6 +35,7 @@ export const ReportSchema = z.object({
   recommendations: z.array(z.string()),
   funnel: z.array(FunnelStepSchema).optional(),
   frictionHeatmap: z.array(ElementFrictionSchema).optional(),
+  analysisGraph: AnalysisGraphSchema.optional(),
   markdown: z.string(),
   generatedAt: z.string(),
 });
