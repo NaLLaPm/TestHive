@@ -1,0 +1,61 @@
+[
+  {
+    "feature": "Core Application Logic",
+    "files": [
+      "apps/api/src/modules/pools/routes.ts",
+      "apps/web/src/app/library/[poolId]/page.tsx",
+      "apps/web/src/app/runs/[id]/live/page.tsx",
+      "apps/web/src/components/network-graph.tsx",
+      "apps/web/src/lib/queries.ts",
+      "packages/contracts/src/domain/graph.ts"
+    ],
+    "symbols": [],
+    "guidance": "Fixed node click hit detection and optimistic persona presentation in cluster graph",
+    "updated_at": "2026-10-08T17:19:57.218524837+00:00"
+  },
+  {
+    "feature": "Core Application Logic",
+    "files": [
+      "apps/api/src/modules/pools/routes.ts",
+      "apps/web/src/app/library/[poolId]/page.tsx",
+      "apps/web/src/app/runs/[id]/live/page.tsx",
+      "apps/web/src/components/network-graph.tsx",
+      "apps/web/src/lib/queries.ts",
+      "packages/contracts/src/domain/graph.ts",
+      "packages/db/src/client.ts"
+    ],
+    "symbols": [],
+    "guidance": "Auto-migrated database schema on startup, scattered cluster graph nodes with stronger repulsion and link distance, and pinned moved node positions on drag",
+    "updated_at": "2026-10-08T17:25:02.124397615+00:00"
+  },
+  {
+    "feature": "Core Application Logic",
+    "files": [
+      "apps/api/src/modules/pools/routes.ts",
+      "apps/web/src/app/library/[poolId]/page.tsx",
+      "apps/web/src/app/runs/[id]/live/page.tsx",
+      "apps/web/src/components/network-graph.tsx",
+      "apps/web/src/lib/queries.ts",
+      "packages/contracts/src/domain/graph.ts",
+      "packages/db/src/client.ts"
+    ],
+    "symbols": [],
+    "guidance": "Fixed Persona Dock responsiveness and UI collision by dynamically adapting right clearance, removing redundant inspectable badge and nested chip index pills, positioning zoom controls safely above the dock, and implementing dynamic D3 force drag physics where connected nodes smoothly move along with the dragged node while preserving its pinned destination upon release.",
+    "updated_at": "2026-10-08T17:28:38.771894237+00:00"
+  },
+  {
+    "feature": "Core Application Logic",
+    "files": [
+      "apps/api/src/modules/pools/routes.ts",
+      "apps/web/src/app/library/[poolId]/page.tsx",
+      "apps/web/src/app/runs/[id]/live/page.tsx",
+      "apps/web/src/components/network-graph.tsx",
+      "apps/web/src/lib/queries.ts",
+      "packages/contracts/src/domain/graph.ts",
+      "packages/db/src/client.ts"
+    ],
+    "symbols": [],
+    "guidance": "Decongested the network graph and fixed UI instability: 1) Pruned excessive cross-cluster edges so clusters separate into airy, readable constellations. 2) Capped hit-test radius so clicking empty canvas pans smoothly instead of accidentally grabbing all nodes. 3) Added velocity decay 0.5 and controlled drag alpha target to prevent chaotic orbital spin and maintain smooth physical settling.",
+    "updated_at": "2026-10-08T17:31:58.267778799+00:00"
+  }
+]
