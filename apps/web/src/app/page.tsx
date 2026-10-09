@@ -7,7 +7,6 @@ import {
   usePools,
   useCreateRun,
   useRuns,
-  useDemoRuns,
   useRun,
   useSegments,
   useIssues,
@@ -30,7 +29,6 @@ import { BenchmarkLiveModal } from "@/components/benchmark-live-modal";
 
 type TabId =
   | "launchpad"
-  | "presets"
   | "analytics"
   | "spread"
   | "report";
@@ -42,7 +40,6 @@ export default function PixelDashboardPage() {
   // Query hooks
   const { data: pools } = usePools();
   const { data: runs } = useRuns();
-  const { data: demos } = useDemoRuns();
   const createRun = useCreateRun();
 
   // Selected run for deep inspection tabs (default to latest completed run or latest run)
@@ -63,7 +60,6 @@ export default function PixelDashboardPage() {
   const [url, setUrl] = useState("http://localhost:8989/before");
   const [goal, setGoal] = useState("Buy a pair of wireless earbuds");
   const [error, setError] = useState<string | null>(null);
-  const [loadingDemo, setLoadingDemo] = useState(false);
   const [spreadSimulating, setSpreadSimulating] = useState(false);
 
   // Active live test panel modal state
@@ -113,17 +109,6 @@ export default function PixelDashboardPage() {
     }
   }
 
-  async function onLoadPresetDemo(demoId: string) {
-    setLoadingDemo(true);
-    try {
-      const res = await api.loadDemoRun(demoId);
-      setSelectedRunId(res.runId);
-      setActiveTab("analytics");
-    } finally {
-      setLoadingDemo(false);
-    }
-  }
-
   async function onRerunSpread() {
     if (!activeRunId) return;
     setSpreadSimulating(true);
@@ -161,10 +146,9 @@ export default function PixelDashboardPage() {
       <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-border">
         {[
           { id: "launchpad", label: "1. Launch Pad" },
-          { id: "presets", label: "2. Preset Showroom" },
-          { id: "analytics", label: "3. Analytics & UX Frictions" },
-          { id: "spread", label: "4. Word-of-Mouth Spread" },
-          { id: "report", label: "5. Executive Report" },
+          { id: "analytics", label: "2. Analytics & UX Frictions" },
+          { id: "spread", label: "3. Word-of-Mouth Spread" },
+          { id: "report", label: "4. Executive Report" },
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -377,66 +361,7 @@ export default function PixelDashboardPage() {
           </div>
         </div>
       )}
-
-      {/* TAB 2: PRESET DEMO SHOWROOM */}
-      {activeTab === "presets" && (
-        <div className="space-y-6">
-          <div className="max-w-2xl">
-            <h2 className="text-xl font-bold text-text">Preset Demo Showroom</h2>
-            <p className="text-xs sm:text-sm text-muted mt-1 leading-relaxed">
-              Instant one-click navigation straight into comparative results for pre-baked benchmarks.
-              Compare how the persona collective acts on <strong>ShopKart (before fix)</strong> versus{" "}
-              <strong>ShopKart (after fix)</strong>.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {(demos ?? []).map((d) => (
-              <div
-                key={d.demoId}
-                className="bg-white border border-border rounded-3xl p-6 shadow-xs hover:border-purple/50 transition flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted font-mono">{d.demoId}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-text">{d.title}</h3>
-                  <p className="text-xs sm:text-sm text-muted leading-relaxed">{d.description}</p>
-                </div>
-
-                <div className="mt-6 pt-5 border-t border-border flex items-center justify-between">
-                  <button
-                    onClick={() => onLoadPresetDemo(d.demoId)}
-                    disabled={loadingDemo}
-                    className="px-4 py-2.5 rounded-xl bg-purple text-cream font-bold text-xs hover:bg-lavender hover:text-text transition disabled:opacity-50 shadow-xs"
-                  >
-                    {loadingDemo ? "Loading…" : "Inspect Results & Heatmap →"}
-                  </button>
-                  <Link
-                    href="/demo"
-                    className="text-xs text-muted hover:text-text transition underline"
-                  >
-                    Demo page
-                  </Link>
-                </div>
-              </div>
-            ))}
-
-            {(demos ?? []).length === 0 && (
-              <div className="col-span-2 p-8 rounded-3xl bg-panel2 border border-border text-center space-y-3">
-                <p className="text-muted text-sm">
-                  No cached demo runs found. Generate pre-baked benchmarks with:
-                </p>
-                <code className="inline-block bg-white text-purple border border-border px-3 py-1.5 rounded-xl text-xs font-mono">
-                  pnpm demo:seed
-                </code>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* TAB 3: ANALYTICS & SEGMENTATION DASHBOARD */}
+      {/* TAB 2: ANALYTICS & SEGMENTATION DASHBOARD */}
       {activeTab === "analytics" && (
         <div className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -682,7 +607,7 @@ export default function PixelDashboardPage() {
         </div>
       )}
 
-      {/* TAB 4: WORD-OF-MOUTH DIFFUSION */}
+      {/* TAB 3: WORD-OF-MOUTH DIFFUSION */}
       {activeTab === "spread" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -761,7 +686,7 @@ export default function PixelDashboardPage() {
         </div>
       )}
 
-      {/* TAB 5: EXECUTIVE REPORT VIEW */}
+      {/* TAB 4: EXECUTIVE REPORT VIEW */}
       {activeTab === "report" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

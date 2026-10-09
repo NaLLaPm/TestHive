@@ -10,7 +10,7 @@ const LINKS = [
     href: "/",
     label: "Dashboard",
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect width="7" height="9" x="3" y="3" rx="1" />
         <rect width="7" height="5" x="14" y="3" rx="1" />
         <rect width="7" height="9" x="14" y="12" rx="1" />
@@ -22,7 +22,7 @@ const LINKS = [
     href: "/library",
     label: "Library",
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
         <path d="M6 6h10" />
         <path d="M6 10h10" />
@@ -33,7 +33,7 @@ const LINKS = [
     href: "/personas",
     label: "Personas",
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -45,7 +45,7 @@ const LINKS = [
     href: "/runs",
     label: "Runs",
     icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="6 3 20 12 6 21 6 3" />
       </svg>
     ),
@@ -59,12 +59,12 @@ export function Nav() {
   return (
     <>
       {/* Mobile Top Header with Hamburger */}
-      <header className="md:hidden sticky top-0 z-40 flex items-center justify-between border-b border-border bg-cream/95 px-4 py-3 backdrop-blur-xl">
-        <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
-          <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm">
-            <div className="w-3.5 h-3.5 rounded-full bg-text" />
+      <header className="md:hidden sticky top-0 z-40 flex items-center justify-between border-b border-border bg-cream/95 px-4 py-3.5 backdrop-blur-xl">
+        <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-xs">
+            <div className="w-4 h-4 rounded-full bg-text" />
           </div>
-          <span className="font-bold text-base tracking-tight text-text">
+          <span className="font-extrabold text-xl tracking-tight text-text">
             Test<span className="text-purple">Hive</span>
           </span>
         </Link>
@@ -107,11 +107,11 @@ export function Nav() {
         )}
       >
         <div className="p-5 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
-            <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm">
-              <div className="w-3.5 h-3.5 rounded-full bg-text" />
+          <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-xs">
+              <div className="w-4 h-4 rounded-full bg-text" />
             </div>
-            <span className="font-bold text-lg tracking-tight text-text">
+            <span className="font-extrabold text-xl tracking-tight text-text">
               Test<span className="text-purple">Hive</span>
             </span>
           </Link>
@@ -167,54 +167,67 @@ export function Nav() {
         </div>
       </div>
 
-      {/* Desktop Left Sidebar */}
-      <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-64 z-40 bg-cream/90 backdrop-blur-2xl">
-        {/* Brand / Logo */}
-        <div className="p-5">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
-              <div className="w-3.5 h-3.5 rounded-full bg-text" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg tracking-tight text-text leading-tight">
-                Test<span className="text-purple">Hive</span>
-              </span>
+      {/* Desktop Top-Left Brand Logo (Isolated, enhanced size) */}
+      <div className="hidden md:flex fixed top-4 left-5 z-40 items-center">
+        <Link
+          href="/"
+          className="flex items-center gap-3.5 p-1 rounded-2xl hover:scale-[1.03] active:scale-[0.98] transition-transform group"
+        >
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple via-lavender to-cyan flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-5 h-5 rounded-full bg-text" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-extrabold text-2xl tracking-tight text-text leading-tight">
+              Test<span className="text-purple">Hive</span>
+            </span>
+          </div>
+        </Link>
+      </div>
 
-            </div>
-          </Link>
-        </div>
-
-        {/* Navigation Links */}
-        <div className="flex-1 px-3 py-5 space-y-1.5 overflow-y-auto">
-
-          {LINKS.map((l) => {
-            const active = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
-            return (
-              <Link
-                key={l.href}
-                href={l.href}
+      {/* Desktop Navigation Bar (No right line, increased icon size, white box with equal padding, stretches on hover, purple background when selected) */}
+      <nav
+        aria-label="Sidebar Navigation"
+        className="hidden md:flex flex-col fixed top-24 left-5 z-40 gap-4"
+      >
+        {LINKS.map((l) => {
+          const active = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
+          return (
+            <Link
+              key={l.href}
+              href={l.href}
+              aria-label={l.label}
+              className={clsx(
+                "group relative flex items-center rounded-2xl shadow-xs transition-all duration-300 ease-out p-3.5",
+                "w-[54px] hover:w-[150px] overflow-hidden",
+                active
+                  ? "bg-purple text-white shadow-sm ring-2 ring-purple/40 border border-purple"
+                  : "bg-white border border-border text-muted hover:text-text hover:border-purple/40 hover:shadow-sm"
+              )}
+            >
+              {/* Icon Container with increased size (w-6 h-6 / 24px) */}
+              <div
                 className={clsx(
-                  "group flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all",
-                  active
-                    ? "bg-purple text-cream shadow-sm font-bold"
-                    : "text-muted hover:text-text hover:bg-lavender/20"
+                  "shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
+                  active ? "text-white" : "text-muted group-hover:text-purple"
                 )}
               >
-                <div className="flex items-center gap-3">
-                  <span className={clsx(
-                    "transition-colors",
-                    active ? "text-cream" : "text-muted group-hover:text-text"
-                  )}>
-                    {l.icon}
-                  </span>
-                  <span>{l.label}</span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                {l.icon}
+              </div>
 
-      </aside>
+              {/* Label Text - Smoothly revealed as the box stretches */}
+              <span
+                className={clsx(
+                  "ml-3 text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none",
+                  "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0",
+                  active ? "text-white font-bold" : "text-text"
+                )}
+              >
+                {l.label}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
     </>
   );
 }
