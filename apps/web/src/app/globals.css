@@ -55,3 +55,24 @@ html, body {
   border-radius: 20px;
   box-shadow: 0 1px 4px rgba(155, 142, 199, 0.08);
 }
+
+/* Realistic progress shimmer & micro-shiver animation */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes progress-shiver {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-0.5px, 0.5px); }
+  50% { transform: translate(0.5px, -0.5px); }
+  75% { transform: translate(-0.5px, -0.5px); }
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-progress-shiver {
+  animation: progress-shiver 0.35s ease-in-out infinite;
+}

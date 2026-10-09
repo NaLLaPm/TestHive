@@ -194,9 +194,40 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
       state: "testing",
       progress: { done, total: combinedPersonas.length },
     });
+
+    // Pacing delay (5-15ms) to make 1000 persona simulation feel realistic and allow smooth UI streaming
+    await new Promise((r) => setTimeout(r, 8 + Math.floor(Math.random() * 8)));
   };
 
-  const tasks = combinedPersonas.map((persona) =>
+  // Interleave personas (distributing deep personas evenly rather than clustering controls at index 0)
+  // so deep Playwright browser tasks run in parallel throughout the execution rather than trailing at the end
+  const deepPersonas: Persona[] = [];
+  const lightPersonas: Persona[] = [];
+  for (const p of combinedPersonas) {
+    if (deepSet.has(p.id)) {
+      deepPersonas.push(p);
+    } else {
+      lightPersonas.push(p);
+    }
+  }
+
+  const scheduledPersonas: Persona[] = [];
+  const totalP = combinedPersonas.length;
+  const deepInterval = deepPersonas.length > 0 ? Math.floor(totalP / (deepPersonas.length + 1)) : totalP + 1;
+  let dIdx = 0;
+  let lIdx = 0;
+
+  for (let i = 0; i < totalP; i++) {
+    if (dIdx < deepPersonas.length && (i % deepInterval === 0 || lIdx >= lightPersonas.length)) {
+      scheduledPersonas.push(deepPersonas[dIdx++]!);
+    } else if (lIdx < lightPersonas.length) {
+      scheduledPersonas.push(lightPersonas[lIdx++]!);
+    } else if (dIdx < deepPersonas.length) {
+      scheduledPersonas.push(deepPersonas[dIdx++]!);
+    }
+  }
+
+  const tasks = scheduledPersonas.map((persona) =>
     (deepSet.has(persona.id) ? deepQueue : lightQueue).add(() => runOnePersona(persona)),
   );
   await Promise.all(tasks);

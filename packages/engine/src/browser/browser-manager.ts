@@ -4,7 +4,16 @@ let sharedBrowser: Browser | null = null;
 
 export async function getSharedBrowser(): Promise<Browser> {
   if (!sharedBrowser) {
-    sharedBrowser = await chromium.launch({ headless: true });
+    const launchOpts: Record<string, unknown> = {
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+    };
+    if (process.env.CHROMIUM_PATH) {
+      launchOpts.executablePath = process.env.CHROMIUM_PATH;
+    } else if (require("node:fs").existsSync("/usr/bin/chromium")) {
+      launchOpts.executablePath = "/usr/bin/chromium";
+    }
+    sharedBrowser = await chromium.launch(launchOpts);
   }
   return sharedBrowser;
 }

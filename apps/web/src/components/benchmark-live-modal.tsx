@@ -342,12 +342,19 @@ export function BenchmarkLiveModal({
             </div>
           </div>
 
-          <div className="h-3 w-full bg-white rounded-full overflow-hidden border border-border relative p-0.5">
+          <div className="h-3.5 w-full bg-white rounded-full overflow-hidden border border-border relative p-0.5 shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-purple via-lavender to-cyan rounded-full transition-all duration-300 relative overflow-hidden"
+              className={`h-full bg-gradient-to-r from-purple via-lavender to-cyan rounded-full transition-all duration-300 relative overflow-hidden shadow-xs ${
+                !isComplete && !isFailed ? "animate-progress-shiver" : ""
+              }`}
               style={{ width: `${pct}%` }}
             >
-              <div className="absolute inset-0 bg-white/20 animate-pulse" />
+              {/* Glass shimmer sweep highlight */}
+              <div
+                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none animate-shimmer-sweep"
+              />
+              {/* Subtle continuous micro-pulse */}
+              <div className="absolute inset-0 bg-white/15 animate-pulse pointer-events-none" />
             </div>
           </div>
         </div>
