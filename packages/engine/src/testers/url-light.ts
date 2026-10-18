@@ -9,7 +9,9 @@ export const urlLightTester: Tester<"url_journey"> = {
   kind: "url_journey",
   mode: "light",
   async run(persona: Persona, stimulus: Stimulus, ctx: TesterContext): Promise<TesterOutcome> {
-    if (stimulus.type !== "url") throw new Error("url_light requires a url stimulus");
+    if (stimulus.type !== "url" && stimulus.type !== "source_code") {
+      throw new Error("url_light requires a url or source_code stimulus");
+    }
 
     const pageText = await fetchPageText(stimulus.url).catch(
       () => "(page could not be loaded; evaluate based on the URL and goal alone)",

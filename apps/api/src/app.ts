@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyStatic from "@fastify/static";
+import fastifyMultipart from "@fastify/multipart";
 import path from "node:path";
 import fs from "node:fs";
 import { poolRoutes } from "./modules/pools/routes.js";
@@ -23,9 +24,14 @@ function findRepoRoot(): string {
 }
 
 export async function buildApp() {
-  const app = Fastify({ logger: true, bodyLimit: 5 * 1024 * 1024 });
+  const app = Fastify({ logger: true, bodyLimit: 25 * 1024 * 1024 });
 
   await app.register(cors, { origin: true });
+  await app.register(fastifyMultipart, {
+    limits: {
+      fileSize: 50 * 1024 * 1024,
+    },
+  });
 
   const screenshotDir = path.resolve(findRepoRoot(), "data", "screenshots");
   fs.mkdirSync(screenshotDir, { recursive: true });

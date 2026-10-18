@@ -50,6 +50,20 @@ export const api = {
   getGraph: (poolId: string) => request(`/api/pools/${poolId}/graph`, C.GetGraphResponseSchema),
   getClusters: (poolId: string) => request(`/api/pools/${poolId}/clusters`, C.GetClustersResponseSchema),
 
+  uploadSource: async (formData: FormData): Promise<z.infer<typeof C.UploadSourceResponseSchema>> => {
+    const res = await fetch(`${getBaseUrl()}/api/runs/upload-source`, {
+      method: "POST",
+      body: formData,
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => res.statusText);
+      throw new Error(`Upload failed (${res.status}): ${text}`);
+    }
+    const json = await res.json();
+    return C.UploadSourceResponseSchema.parse(json);
+  },
+
   createRun: (body: z.infer<typeof C.CreateRunRequestSchema>) =>
     request("/api/runs", C.CreateRunResponseSchema, { method: "POST", body: JSON.stringify(body) }),
   listRuns: () => request("/api/runs", C.ListRunsResponseSchema),

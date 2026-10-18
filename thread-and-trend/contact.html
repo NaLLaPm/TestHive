@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | THREAD & TREND</title>
+  <meta name="description" content="Get in touch with customer care for fit guidance, exchange inquiries, or atelier visits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-inner" id="announcement-text">
+      Free shipping on orders over ₹1,499
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <button class="mobile-menu-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="shop.html?tag=New+Arrival" class="nav-link">New Arrivals</a>
+        <a href="shop.html?tag=Sale" class="nav-link sale-link">Sale</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="header-action-btn" data-action="open-search" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="header-action-btn" data-action="open-account" aria-label="Account">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+        <a href="wishlist.html" class="header-action-btn" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count wishlist-count-badge" style="display:none;">0</span>
+        </a>
+        <button class="header-action-btn" data-action="open-cart-drawer" aria-label="Cart">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="badge-count cart-count-badge" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: var(--space-4xl) var(--space-lg);">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="section-header">
+        <span class="section-tagline">WE'D LOVE TO HEAR FROM YOU</span>
+        <h1 class="section-title">Get In Touch</h1>
+        <p class="section-subtitle">Reach out for styling consultations, order queries, or custom sizing requests.</p>
+      </div>
+
+      <div class="checkout-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-2xl);">
+        <div class="checkout-card">
+          <h3 style="font-family:var(--font-serif);font-size:1.25rem;margin-bottom:var(--space-md);">Send Us a Message</h3>
+          <form id="demo-contact-form" onsubmit="event.preventDefault(); showToast('Thank you! Your inquiry has been sent to our styling team (Demo).', 'success'); this.reset();">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-input" required placeholder="Your name">
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-input" required placeholder="Your email address">
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="form-label">Subject</label>
+              <input type="text" class="form-input" placeholder="Exchange, Order status, Sizing advice">
+            </div>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label class="form-label">Message *</label>
+              <textarea class="form-textarea" rows="4" required placeholder="How can we assist you today?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message &rarr;</button>
+          </form>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
+          <div class="checkout-card">
+            <h4 style="font-size:1rem;margin-bottom:6px;">Bengaluru Atelier &amp; Showroom</h4>
+            <p style="color:var(--color-text-secondary);font-size:0.9375rem;line-height:1.6;">
+              100 Feet Road, Indiranagar<br>
+              Bengaluru, Karnataka 560038, India<br>
+              Open Daily: 10:30 AM – 8:30 PM IST
+            </p>
+          </div>
+
+          <div class="checkout-card">
+            <h4 style="font-size:1rem;margin-bottom:6px;">Customer Assistance</h4>
+            <p style="color:var(--color-text-secondary);font-size:0.9375rem;line-height:1.6;">
+              Email: <strong>care@threadandtrend.demo</strong><br>
+              Phone: <strong>+91 (0) 80 4000 1234</strong><br>
+              Response Window: Within 4 working hours
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

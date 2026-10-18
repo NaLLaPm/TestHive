@@ -156,7 +156,14 @@ export default function LiveRunPage() {
             </h1>
           </div>
           <p className="text-xs text-muted font-mono mt-1">
-            {run?.stimulus.type === "url" ? run.stimulus.url : run?.kind} {run?.stimulus.type === "url" ? `· "${run.stimulus.goal}"` : ""}
+            {run?.stimulus.type === "url"
+              ? run.stimulus.url
+              : run?.stimulus.type === "source_code"
+                ? `${run.stimulus.projectName || "Source Code"} (${run.stimulus.url})`
+                : run?.kind}{" "}
+            {run?.stimulus.type === "url" || run?.stimulus.type === "source_code"
+              ? `· "${run.stimulus.goal}"`
+              : ""}
           </p>
         </div>
 

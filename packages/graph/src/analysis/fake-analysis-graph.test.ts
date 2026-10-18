@@ -14,14 +14,17 @@ describe("createFakeAnalysisGraph", () => {
       personas: [mockPersona],
       results: [
         {
+          id: "3c9e1f2a-3b4c-4d5e-8f9a-0b1c2d3e4f5a",
           runId,
           personaId: mockPersona.id,
+          kind: "url_journey",
           outcome: "failure",
+          verdict: { note: "Blocked at checkout" },
           sentiment: -0.4,
-          stepsCount: 3,
-          durationMs: 1200,
-          notes: "Blocked at checkout",
-          recordedAt: new Date().toISOString(),
+          wouldRecommend: false,
+          frictionNotes: ["Blocked at checkout"],
+          dropOffStep: 3,
+          dropOffReason: "Blocked at checkout",
         },
       ],
       clusters: [

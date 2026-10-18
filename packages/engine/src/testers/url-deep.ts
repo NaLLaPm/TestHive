@@ -14,7 +14,9 @@ export const urlDeepTester: Tester<"url_journey"> = {
   kind: "url_journey",
   mode: "deep",
   async run(persona: Persona, stimulus: Stimulus, ctx: TesterContext): Promise<TesterOutcome> {
-    if (stimulus.type !== "url") throw new Error("url_deep requires a url stimulus");
+    if (stimulus.type !== "url" && stimulus.type !== "source_code") {
+      throw new Error("url_deep requires a url or source_code stimulus");
+    }
 
     const profile = getDeviceProfile(persona.deviceProfileKey);
     const browser = await getSharedBrowser();

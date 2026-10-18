@@ -18,9 +18,11 @@ export async function writeReport(opts: WriteReportOptions): Promise<Report> {
   const title =
     opts.stimulus.type === "url"
       ? `TestHive Report: ${new URL(opts.stimulus.url).hostname}`
-      : opts.stimulus.type === "questions"
-        ? `TestHive Report: ${opts.stimulus.prompt.slice(0, 60)}`
-        : `TestHive Report: ${opts.stimulus.title ?? "copy test"}`;
+      : opts.stimulus.type === "source_code"
+        ? `TestHive Report: ${opts.stimulus.projectName || "Uploaded Source Code"}`
+        : opts.stimulus.type === "questions"
+          ? `TestHive Report: ${opts.stimulus.prompt.slice(0, 60)}`
+          : `TestHive Report: ${opts.stimulus.title ?? "copy test"}`;
 
   const prompt = [
     `Write a concise usability-test executive summary for "${title}".`,

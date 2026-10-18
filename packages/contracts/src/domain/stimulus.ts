@@ -9,6 +9,13 @@ export type Question = z.infer<typeof QuestionSchema>;
 export const StimulusSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("url"), url: z.string().url(), goal: z.string().min(3) }),
   z.object({
+    type: z.literal("source_code"),
+    url: z.string().url(),
+    goal: z.string().min(3),
+    projectName: z.string().optional(),
+    entryPath: z.string().optional(),
+  }),
+  z.object({
     type: z.literal("questions"),
     prompt: z.string(),
     questions: z.array(QuestionSchema).min(1),

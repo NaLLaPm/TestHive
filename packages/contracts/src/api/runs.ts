@@ -35,3 +35,13 @@ export const NodeStatesResponseSchema = z.array(
     outcome: z.string().nullable(),
   }),
 );
+
+export const UploadSourceResponseSchema = z.object({
+  sourceId: z.string(),
+  url: z.string().url(),
+  projectName: z.string(),
+  entryPath: z.string().optional(),
+  fileCount: z.number().int(),
+  htmlFiles: z.array(z.string()),
+});
+export type UploadSourceResponse = z.infer<typeof UploadSourceResponseSchema>;

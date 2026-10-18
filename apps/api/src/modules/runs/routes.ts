@@ -12,6 +12,7 @@ import { simulateSpread } from "@testhive/graph";
 import { emitEvent, getHistory, subscribe } from "../../realtime/bus.js";
 import { executeRun, resolvePoolId } from "./service.js";
 import { cancelRun } from "./cancel.js";
+import { siteServerManager } from "./site-server.js";
 
 export async function runRoutes(app: FastifyInstance) {
   const db = getDb();
@@ -19,6 +20,30 @@ export async function runRoutes(app: FastifyInstance) {
   const resultsR = resultsRepo(db);
   const issuesR = issuesRepo(db);
   const personasR = personasRepo(db);
+
+  app.post("/api/runs/upload-source", async (req, reply) => {
+    const file = await (req as any).file();
+    if (!file) {
+      reply.code(400);
+      return { error: "No file uploaded. Please upload a .zip file of your website source code." };
+    }
+
+    const buffer = await file.toBuffer();
+    if (!buffer || buffer.length === 0) {
+      reply.code(400);
+      return { error: "Uploaded file is empty." };
+    }
+
+    try {
+      const deployed = await siteServerManager.deployZip(buffer, file.filename || "website.zip");
+      reply.code(201);
+      return deployed;
+    } catch (err) {
+      app.log.error(err);
+      reply.code(500);
+      return { error: `Failed to extract and serve source code: ${err instanceof Error ? err.message : String(err)}` };
+    }
+  });
 
   app.post("/api/runs", async (req, reply) => {
     const body = CreateRunRequestSchema.parse(req.body);

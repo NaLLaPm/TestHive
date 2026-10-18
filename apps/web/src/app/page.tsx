@@ -26,7 +26,7 @@ import { FrictionHeatmap } from "@/components/report/friction-heatmap";
 import { ExportToolbar } from "@/components/report/export-toolbar";
 import { MarkdownSourceViewer } from "@/components/report/markdown-source-viewer";
 import { BenchmarkLiveModal } from "@/components/benchmark-live-modal";
-import { BarChart3, FileCode2, Zap, Rocket, ShieldCheck, AlertTriangle, Lightbulb } from "lucide-react";
+import { BarChart3, FileCode2, Zap, Rocket, ShieldCheck, AlertTriangle, Lightbulb, Upload, Globe, CheckCircle2, FolderArchive } from "lucide-react";
 
 type TabId =
   | "launchpad"
@@ -57,9 +57,19 @@ export default function PixelDashboardPage() {
   const { data: report } = useReport(activeRunId ?? undefined);
 
   // Form states for Launchpad
+  const [targetMode, setTargetMode] = useState<"url" | "source_code">("url");
   const [poolId, setPoolId] = useState<string>("");
   const [url, setUrl] = useState("http://localhost:8989/before");
   const [goal, setGoal] = useState("Buy a pair of wireless earbuds");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadingSource, setUploadingSource] = useState(false);
+  const [deployedSource, setDeployedSource] = useState<{
+    sourceId: string;
+    url: string;
+    projectName: string;
+    fileCount: number;
+    htmlFiles: string[];
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [spreadSimulating, setSpreadSimulating] = useState(false);
 
@@ -82,16 +92,56 @@ export default function PixelDashboardPage() {
   const defaultPool = readyPools.find((p) => p.isDefault) ?? readyPools[0];
   const activeSelectedPool = readyPools.find((p) => p.id === poolId) ?? defaultPool;
 
+  async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError(null);
+    setUploadedFile(file);
+    setUploadingSource(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await api.uploadSource(formData);
+      setDeployedSource(res);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setUploadingSource(false);
+    }
+  }
+
   async function onStartRun(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     try {
       const targetPool = readyPools.find((p) => p.id === poolId) ?? defaultPool;
       const totalPoolSize = targetPool?.size ?? 1000;
+
+      let effectiveUrl = url;
+      let stimulusPayload: any;
+
+      if (targetMode === "source_code") {
+        if (!deployedSource) {
+          throw new Error("Please upload a .zip file containing your website source code first.");
+        }
+        effectiveUrl = deployedSource.url;
+        stimulusPayload = {
+          type: "source_code",
+          url: deployedSource.url,
+          goal,
+          projectName: deployedSource.projectName,
+        };
+      } else {
+        if (!url || !url.startsWith("http")) {
+          throw new Error("Please enter a valid target URL (e.g. http://localhost:8989/before)");
+        }
+        stimulusPayload = { type: "url", url, goal };
+      }
+
       const res = await createRun.mutateAsync({
         kind: "url_journey",
         poolId: poolId || null,
-        stimulus: { type: "url", url, goal },
+        stimulus: stimulusPayload,
         selection: { strategy: "all", count: totalPoolSize, seed: 42 },
         deepCount: 15,
         maxSteps: 8,
@@ -103,7 +153,7 @@ export default function PixelDashboardPage() {
       setActiveRunModal({
         runId: res.runId,
         poolId: res.poolId ?? poolId ?? null,
-        targetUrl: url,
+        targetUrl: targetMode === "source_code" && deployedSource ? `${deployedSource.projectName} (${effectiveUrl})` : effectiveUrl,
         userGoal: goal,
         expectedPersonas: totalPoolSize,
       });
@@ -226,24 +276,131 @@ export default function PixelDashboardPage() {
 
                   <div>
                     <label className="text-[11px] uppercase tracking-wider font-semibold text-muted block mb-1.5">
-                      Stimulus Target URL
+                      Testing Target Stimulus
                     </label>
-                    <div className="relative">
-                      <input
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        placeholder="http://localhost:8989/before"
-                        className="w-full bg-white border border-border text-text rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple transition pr-24 font-mono shadow-xs"
-                      />
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-panel2 rounded-2xl border border-border">
                       <button
                         type="button"
-                        onClick={() => setUrl("http://localhost:8989/before")}
-                        className="absolute right-2 top-2 px-2.5 py-1 text-[11px] rounded-lg bg-panel2 border border-border text-muted hover:text-text"
+                        onClick={() => {
+                          setTargetMode("url");
+                          setError(null);
+                        }}
+                        className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition ${
+                          targetMode === "url"
+                            ? "bg-white text-purple shadow-xs font-bold border border-border"
+                            : "text-muted hover:text-text"
+                        }`}
                       >
-                        Reset Demo
+                        <Globe className="w-3.5 h-3.5" />
+                        <span>Live Website URL</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTargetMode("source_code");
+                          setError(null);
+                        }}
+                        className={`flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold transition ${
+                          targetMode === "source_code"
+                            ? "bg-white text-purple shadow-xs font-bold border border-border"
+                            : "text-muted hover:text-text"
+                        }`}
+                      >
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Upload Source Code (.zip)</span>
                       </button>
                     </div>
                   </div>
+
+                  {targetMode === "url" ? (
+                    <div>
+                      <label className="text-[11px] uppercase tracking-wider font-semibold text-muted block mb-1.5">
+                        Stimulus Target URL
+                      </label>
+                      <div className="relative">
+                        <input
+                          value={url}
+                          onChange={(e) => setUrl(e.target.value)}
+                          placeholder="http://localhost:8989/before"
+                          className="w-full bg-white border border-border text-text rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple transition pr-24 font-mono shadow-xs"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setUrl("http://localhost:8989/before")}
+                          className="absolute right-2 top-2 px-2.5 py-1 text-[11px] rounded-lg bg-panel2 border border-border text-muted hover:text-text"
+                        >
+                          Reset Demo
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="text-[11px] uppercase tracking-wider font-semibold text-muted block mb-1.5">
+                        Upload Website Source Code (.zip archive)
+                      </label>
+
+                      {!deployedSource ? (
+                        <div className="relative border-2 border-dashed border-border hover:border-purple/60 rounded-2xl p-6 text-center transition bg-panel2/40 hover:bg-purple/5">
+                          <input
+                            type="file"
+                            accept=".zip,application/zip"
+                            onChange={handleFileSelect}
+                            disabled={uploadingSource}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                          />
+                          <div className="flex flex-col items-center justify-center space-y-2 pointer-events-none">
+                            <div className="w-10 h-10 rounded-full bg-purple/10 flex items-center justify-center text-purple">
+                              {uploadingSource ? (
+                                <span className="w-5 h-5 border-2 border-purple border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                <FolderArchive className="w-5 h-5" />
+                              )}
+                            </div>
+                            <div className="text-xs font-semibold text-text">
+                              {uploadingSource
+                                ? "Unpacking & hosting website on ephemeral port…"
+                                : "Click or drag & drop website .zip here"}
+                            </div>
+                            <p className="text-[11px] text-muted max-w-sm">
+                              Upload HTML, CSS, JS bundle, or exported web app folder. TestHive will auto-deploy it locally for parallel synthetic agents.
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                              <span className="text-xs font-bold text-emerald-900">
+                                Source Code Deployed & Hosted Locally
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setDeployedSource(null);
+                                setUploadedFile(null);
+                              }}
+                              className="text-[11px] text-muted hover:text-rose-600 font-semibold"
+                            >
+                              Replace file
+                            </button>
+                          </div>
+                          <div className="text-xs text-emerald-800 space-y-1 font-mono">
+                            <div>
+                              Project: <strong className="text-emerald-950 font-bold">{deployedSource.projectName}</strong> ({deployedSource.fileCount} files)
+                            </div>
+                            <div className="truncate">
+                              Local Host URL: <span className="underline font-semibold">{deployedSource.url}</span>
+                            </div>
+                          </div>
+                          <div className="text-[11px] text-emerald-700/80">
+                            Entry: <code className="bg-white/80 px-1 py-0.5 rounded border border-emerald-300 font-mono">{deployedSource.htmlFiles[0] || "index.html"}</code> · All persona browser agents will test against this local deployment.
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <label className="text-[11px] uppercase tracking-wider font-semibold text-muted block mb-1.5">

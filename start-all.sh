@@ -27,6 +27,16 @@ trap cleanup INT TERM EXIT
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Check if ports 3000, 8787, or 8989 are already in use
+for port in 3000 8787 8989; do
+    if lsof -ti :"$port" >/dev/null 2>&1; then
+        pid=$(lsof -ti :"$port" | head -n 1)
+        proc_cmd=$(ps -p "$pid" -o comm= 2>/dev/null || echo "unknown")
+        echo "WARNING: Port $port is already occupied by process $pid ($proc_cmd)!"
+        echo "Please stop the conflicting process or run: kill $pid"
+    fi
+done
+
 echo "[1/3] Starting Fastify Backend (http://127.0.0.1:8787)..."
 (
     cd "$ROOT"

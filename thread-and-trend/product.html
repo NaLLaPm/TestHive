@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | THREAD & TREND</title>
+  <meta name="description" content="View product specifications, materials, care instructions, and customer reviews.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Product Details Page Styles */
+    .pdp-wrapper {
+      padding: var(--space-xl) 0 var(--space-4xl) 0;
+    }
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: var(--space-3xl);
+      align-items: flex-start;
+      margin-bottom: var(--space-4xl);
+    }
+    .pdp-gallery-sticky {
+      position: sticky;
+      top: 100px;
+    }
+    .pdp-main-media {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background-color: var(--color-bg-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: var(--space-md);
+    }
+    .pdp-main-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .pdp-thumbs-row {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    .pdp-thumb-item {
+      width: 80px;
+      height: 105px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      opacity: 0.7;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .pdp-thumb-item.active,
+    .pdp-thumb-item:hover {
+      opacity: 1;
+      border-color: var(--color-text-main);
+    }
+    .pdp-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pdp-info-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .pdp-cat-tag {
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .pdp-main-title {
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: var(--space-sm);
+    }
+    .pdp-price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .pdp-price-current {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .pdp-price-orig {
+      font-size: 1.125rem;
+      color: var(--color-text-muted);
+      text-decoration: line-through;
+    }
+    .pdp-discount-badge {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--color-sale-red);
+      background-color: var(--color-sale-light);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .pdp-long-desc {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-xl);
+    }
+    .pdp-selectors-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .pdp-cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+    .pdp-btn-row {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    .pdp-wishlist-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      padding: 8px 0;
+      cursor: pointer;
+    }
+    .pdp-wishlist-action:hover,
+    .pdp-wishlist-action.active {
+      color: var(--color-sale-red);
+    }
+    /* Value Props Highlights */
+    .pdp-perks-box {
+      background-color: var(--color-bg-warm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: var(--space-xl);
+    }
+    .pdp-perk-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+    }
+    /* Accordion Tabs */
+    .accordion-section {
+      border-top: 1px solid var(--color-border);
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .accordion-header {
+      width: 100%;
+      text-align: left;
+      padding: var(--space-md) 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .accordion-icon {
+      font-size: 1.25rem;
+      transition: transform var(--transition-fast);
+    }
+    .accordion-item.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      color: var(--color-text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    .accordion-item.active .accordion-body {
+      max-height: 400px;
+      padding-bottom: var(--space-md);
+    }
+    @media (max-width: 900px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+      }
+      .pdp-gallery-sticky {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-inner" id="announcement-text">
+      Free shipping on orders over ₹1,499
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <button class="mobile-menu-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Shop</a>
+        <div class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Categories ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="shop.html?category=Dresses" class="dropdown-link">Dresses</a>
+            <a href="shop.html?category=Tops%20and%20Blouses" class="dropdown-link">Tops &amp; Blouses</a>
+            <a href="shop.html?category=Jeans" class="dropdown-link">Jeans</a>
+            <a href="shop.html?category=Shirts" class="dropdown-link">Shirts</a>
+            <a href="shop.html?category=Trousers" class="dropdown-link">Trousers</a>
+            <a href="shop.html?category=Skirts" class="dropdown-link">Skirts</a>
+            <a href="shop.html?category=Jackets" class="dropdown-link">Jackets</a>
+            <a href="shop.html?category=Ethnic%20Wear" class="dropdown-link">Ethnic Wear</a>
+            <a href="shop.html?category=Accessories" class="dropdown-link">Accessories</a>
+            <a href="shop.html" class="dropdown-link" style="font-weight:600;border-top:1px solid #f0ece6;">View All Collections</a>
+          </div>
+        </div>
+        <a href="shop.html?tag=New+Arrival" class="nav-link">New Arrivals</a>
+        <a href="shop.html?tag=Best+Seller" class="nav-link">Best Sellers</a>
+        <a href="shop.html?tag=Sale" class="nav-link sale-link">Sale</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="header-action-btn" data-action="open-search" aria-label="Search Catalog" title="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button class="header-action-btn" data-action="open-account" aria-label="My Account" title="Account">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <a href="wishlist.html" class="header-action-btn" aria-label="Saved Wishlist" title="Wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count wishlist-count-badge" style="display:none;">0</span>
+        </a>
+
+        <button class="header-action-btn" data-action="open-cart-drawer" aria-label="Shopping Bag" title="Shopping Bag">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="badge-count cart-count-badge" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <aside class="mobile-nav-drawer" aria-label="Mobile Menu">
+    <div class="mobile-nav-header">
+      <span class="brand-logo">THREAD <span>&amp;</span> TREND</span>
+      <button class="mobile-nav-close" aria-label="Close Navigation">&times;</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Shop All</a>
+      <a href="shop.html?tag=New+Arrival" class="mobile-nav-link">New Arrivals</a>
+      <a href="shop.html?tag=Best+Seller" class="mobile-nav-link">Best Sellers</a>
+      <a href="shop.html?tag=Sale" class="mobile-nav-link" style="color:var(--color-sale-red);">Sale Styles</a>
+      <a href="wishlist.html" class="mobile-nav-link">My Wishlist</a>
+      <a href="cart.html" class="mobile-nav-link">Shopping Bag</a>
+      <a href="about.html" class="mobile-nav-link">About Us</a>
+      <a href="contact.html" class="mobile-nav-link">Contact Us</a>
+    </div>
+  </aside>
+
+  <!-- Product Main Page Container -->
+  <main class="container pdp-wrapper" id="product-detail-container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb" style="margin-bottom:var(--space-md);">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="#" id="crumb-category">Category</a></li>
+        <li class="current" id="crumb-product">Product</li>
+      </ol>
+    </nav>
+
+    <!-- Two-Column Product Layout -->
+    <div class="pdp-grid">
+      <!-- Left Column: Media Gallery -->
+      <div class="pdp-gallery-sticky">
+        <div class="pdp-main-media">
+          <img id="pdp-main-image" src="" alt="Product view" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'500\'%3E%3Crect fill=\'%23FAF8F5\' width=\'100%25\' height=\'100%25\'/%3E%3C/svg%3E';">
+        </div>
+        <div class="pdp-thumbs-row" id="pdp-thumbnails">
+          <!-- Thumbnail buttons -->
+        </div>
+      </div>
+
+      <!-- Right Column: Product Data & Add to Cart -->
+      <div class="pdp-info-col">
+        <span class="pdp-cat-tag" id="pdp-category">Dresses</span>
+        <h1 class="pdp-main-title" id="pdp-title">Product Title</h1>
+
+        <div id="pdp-rating-wrap">
+          <!-- Rating Stars -->
+        </div>
+
+        <div class="pdp-price-wrap">
+          <span class="pdp-price-current" id="pdp-price">₹0</span>
+          <span class="pdp-price-orig" id="pdp-orig-price">₹0</span>
+          <span class="pdp-discount-badge" id="pdp-discount-badge">0% OFF</span>
+        </div>
+
+        <p class="pdp-long-desc" id="pdp-description"></p>
+
+        <!-- Variant Selectors -->
+        <div class="pdp-selectors-block">
+          <!-- Color Swatch -->
+          <div>
+            <label class="form-label">Color: <strong id="pdp-selected-color-name">Default</strong></label>
+            <div class="color-swatches" id="pdp-color-swatches" style="margin-top:6px;"></div>
+          </div>
+
+          <!-- Size Selector -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <label class="form-label">Select Size:</label>
+              <span id="pdp-stock-status"></span>
+            </div>
+            <div class="size-selector" id="pdp-size-selector"></div>
+          </div>
+
+          <!-- Quantity Stepper -->
+          <div>
+            <label class="form-label">Quantity:</label>
+            <div class="qty-stepper large" style="margin-top:6px;">
+              <button type="button" class="qty-btn" id="pdp-qty-minus">&minus;</button>
+              <input type="number" id="pdp-qty-input" value="1" min="1" readonly>
+              <button type="button" class="qty-btn" id="pdp-qty-plus">&#43;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Actions -->
+        <div class="pdp-cta-group">
+          <div class="pdp-btn-row">
+            <button type="button" class="btn btn-primary" id="pdp-add-to-bag" style="flex:1;">
+              Add to Shopping Bag
+            </button>
+            <button type="button" class="btn btn-accent" id="pdp-buy-now" style="flex:1;">
+              Buy It Now &rarr;
+            </button>
+          </div>
+          <button type="button" class="pdp-wishlist-action" id="pdp-wishlist-toggle">
+            <!-- Icon and label -->
+          </button>
+        </div>
+
+        <!-- Value Highlight Perks -->
+        <div class="pdp-perks-box">
+          <div class="pdp-perk-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span><strong>Complimentary Delivery</strong> on prepaid orders over ₹1,499</span>
+          </div>
+          <div class="pdp-perk-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <path d="M21 3v5h-5"></path>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <path d="M8 16H3v5"></path>
+            </svg>
+            <span><strong>15-Day Effortless Returns &amp; Exchanges</strong> doorstep pickup</span>
+          </div>
+          <div class="pdp-perk-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span><strong>100% Genuine Certified Fabrics</strong> ethically sourced</span>
+          </div>
+        </div>
+
+        <!-- Product Accordions -->
+        <div class="accordion-section">
+          <div class="accordion-item active">
+            <button type="button" class="accordion-header">
+              <span>Fabric &amp; Care Details</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>Crafted using responsibly sourced long-staple fibres and breathable weaves. Pre-shrunk finish preserves dimensional stability wash after wash.</p>
+              <ul style="margin-top:8px;padding-left:16px;list-style:disc;">
+                <li>Machine wash cold with mild detergent on gentle cycle</li>
+                <li>Do not wring or soak for extended periods</li>
+                <li>Warm iron while damp for best crisp texture</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header">
+              <span>Shipping &amp; Delivery Timeline</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>Standard delivery takes 3 to 5 business days across major Indian metros. Express air delivery takes 24 to 48 hours. Real-time SMS and email tracking links dispatched upon shipment dispatch.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-header">
+              <span>Size &amp; Fit Recommendations</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-body">
+              <p>Model is 5'9" wearing Size S. This silhouette is tailored to standard regular fit. If you prefer a more relaxed or oversized drape, we suggest ordering one size up.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    <section style="margin-top:var(--space-4xl);">
+      <div class="section-header">
+        <span class="section-tagline">COMPLETE THE LOOK</span>
+        <h2 class="section-title">You Might Also Love</h2>
+      </div>
+      <div class="product-grid" id="related-products-grid"></div>
+    </section>
+
+    <!-- Recently Viewed -->
+    <section id="recently-viewed-section" style="margin-top:var(--space-4xl);display:none;">
+      <div class="section-header">
+        <span class="section-tagline">YOUR BROWSING HISTORY</span>
+        <h2 class="section-title">Recently Viewed</h2>
+      </div>
+      <div class="product-grid" id="recently-viewed-grid"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <span class="brand-logo" style="color:#FFF;">THREAD <span>&amp;</span> TREND</span>
+          <p>Modern fashion for everyday wear. Thoughtful silhouettes, comfortable fabrics, and affordable contemporary clothing crafted for the discerning minimalist.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop Collections</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=Dresses">Dresses</a></li>
+            <li><a href="shop.html?category=Jeans">Jeans</a></li>
+            <li><a href="shop.html?category=Shirts">Shirts</a></li>
+            <li><a href="shop.html?tag=Sale">Seasonal Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="faq.html">Shipping &amp; Delivery</a></li>
+            <li><a href="faq.html">Returns &amp; Exchanges</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/product-details.js"></script>
+</body>
+</html>

@@ -19,7 +19,13 @@ export default function RunsPage() {
         {(runs ?? []).map((r) => (
           <Link key={r.id} href={`/runs/${r.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-panel2/60 transition">
             <div>
-              <div className="text-sm font-medium">{r.stimulus.type === "url" ? r.stimulus.url : r.kind}</div>
+              <div className="text-sm font-medium">
+                {r.stimulus.type === "url"
+                  ? r.stimulus.url
+                  : r.stimulus.type === "source_code"
+                    ? `[Source Code] ${r.stimulus.projectName || r.stimulus.url}`
+                    : r.kind}
+              </div>
               <div className="text-xs text-muted">{new Date(r.createdAt).toLocaleString()} · {r.donePersonas}/{r.totalPersonas}</div>
             </div>
             <Badge kind={STATE_KIND[r.state] ?? "neutral"}>{r.state}</Badge>

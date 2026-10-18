@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation | THREAD & TREND</title>
+  <meta name="description" content="Thank you for your order! View your demo order summary and delivery details.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body style="background-color: var(--color-bg-warm);">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+      <div>
+        <a href="shop.html" class="btn btn-outline btn-sm">Continue Shopping &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Confirmation Wrapper -->
+  <main class="container" style="padding: var(--space-3xl) var(--space-lg);">
+    <div class="confirmation-card" id="order-confirmation-wrapper">
+      <div class="confirmation-icon">✓</div>
+      <h1>Thank You for Your Order!</h1>
+      <p style="color:var(--color-text-secondary);margin-bottom:var(--space-md);">
+        Your order has been placed successfully and is being prepared for dispatch.
+      </p>
+
+      <div class="order-id-badge">
+        Order ID: <strong id="confirm-order-id">TT-DEMO-000000</strong>
+      </div>
+
+      <!-- Demo Disclaimer Box -->
+      <div style="background-color:#FFF8E7;border:1px solid #FFE6A7;padding:var(--space-md);border-radius:var(--radius-sm);margin-bottom:var(--space-xl);font-size:0.875rem;color:#7A5E0B;text-align:left;">
+        ℹ️ <strong>Demonstration Note:</strong> This is an interactive frontend shopping demo. No actual payment was collected, and no physical parcel will be shipped. Your simulated order details have been persisted in your browser's local storage.
+      </div>
+
+      <!-- Order Metadata Grid -->
+      <div class="confirmation-details-grid">
+        <div class="confirm-block">
+          <h4>Order Date</h4>
+          <p id="confirm-order-date">Today</p>
+        </div>
+        <div class="confirm-block">
+          <h4>Total Amount Paid</h4>
+          <p><strong id="confirm-total-amount">₹0</strong></p>
+        </div>
+        <div class="confirm-block">
+          <h4>Delivery Address</h4>
+          <p id="confirm-shipping-address">Customer Address</p>
+        </div>
+        <div class="confirm-block">
+          <h4>Shipping Method</h4>
+          <p id="confirm-shipping-method">Standard Delivery</p>
+          <div style="margin-top:8px;">
+            <h4>Payment Method</h4>
+            <p id="confirm-payment-method">CARD</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ordered Items Review -->
+      <div style="text-align:left;margin-bottom:var(--space-2xl);">
+        <h3 style="font-family:var(--font-serif);font-size:1.25rem;margin-bottom:var(--space-md);border-bottom:1px solid var(--color-border-light);padding-bottom:var(--space-xs);">
+          Purchased Items
+        </h3>
+        <div id="confirm-order-items">
+          <!-- Dynamically populated items -->
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--space-md);justify-content:center;flex-wrap:wrap;">
+        <a href="shop.html" class="btn btn-primary">Browse More Styles &rarr;</a>
+        <a href="index.html" class="btn btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved.</p>
+        <p style="font-size:0.75rem;">Educational Demo E-Commerce Platform.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

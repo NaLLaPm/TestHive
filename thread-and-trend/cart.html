@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Bag | THREAD & TREND</title>
+  <meta name="description" content="Review your items, apply promotional discount coupons, and proceed to checkout.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .cart-page-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .cart-page-table th {
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-secondary);
+      padding: var(--space-md) var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .cart-page-table td {
+      padding: var(--space-lg) var(--space-sm);
+      border-bottom: 1px solid var(--color-border-light);
+      vertical-align: middle;
+    }
+    .cart-product-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .cart-page-thumb {
+      width: 75px;
+      height: 95px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+    .cart-page-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .cart-page-meta {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+    }
+    .cart-line-total {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .cart-remove-btn {
+      color: var(--color-text-muted);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .cart-remove-btn:hover {
+      color: var(--color-sale-red);
+    }
+    @media (max-width: 768px) {
+      .cart-page-table thead { display: none; }
+      .cart-page-table, .cart-page-table tbody, .cart-page-table tr, .cart-page-table td {
+        display: block;
+        width: 100%;
+      }
+      .cart-page-table tr {
+        position: relative;
+        padding: var(--space-md) 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .cart-remove-btn {
+        position: absolute;
+        top: 14px;
+        right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-inner" id="announcement-text">
+      Free shipping on orders over ₹1,499
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <button class="mobile-menu-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <div class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Categories ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="shop.html?category=Dresses" class="dropdown-link">Dresses</a>
+            <a href="shop.html?category=Tops%20and%20Blouses" class="dropdown-link">Tops &amp; Blouses</a>
+            <a href="shop.html?category=Jeans" class="dropdown-link">Jeans</a>
+            <a href="shop.html?category=Shirts" class="dropdown-link">Shirts</a>
+            <a href="shop.html?category=Trousers" class="dropdown-link">Trousers</a>
+            <a href="shop.html?category=Skirts" class="dropdown-link">Skirts</a>
+            <a href="shop.html?category=Jackets" class="dropdown-link">Jackets</a>
+            <a href="shop.html?category=Ethnic%20Wear" class="dropdown-link">Ethnic Wear</a>
+            <a href="shop.html?category=Accessories" class="dropdown-link">Accessories</a>
+          </div>
+        </div>
+        <a href="shop.html?tag=New+Arrival" class="nav-link">New Arrivals</a>
+        <a href="shop.html?tag=Best+Seller" class="nav-link">Best Sellers</a>
+        <a href="shop.html?tag=Sale" class="nav-link sale-link">Sale</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="header-action-btn" data-action="open-search" aria-label="Search Catalog" title="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button class="header-action-btn" data-action="open-account" aria-label="My Account" title="Account">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <a href="wishlist.html" class="header-action-btn" aria-label="Saved Wishlist" title="Wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count wishlist-count-badge" style="display:none;">0</span>
+        </a>
+
+        <a href="cart.html" class="header-action-btn" aria-label="Shopping Bag" title="Shopping Bag">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="badge-count cart-count-badge" style="display:none;">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <aside class="mobile-nav-drawer" aria-label="Mobile Menu">
+    <div class="mobile-nav-header">
+      <span class="brand-logo">THREAD <span>&amp;</span> TREND</span>
+      <button class="mobile-nav-close" aria-label="Close Navigation">&times;</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Shop All</a>
+      <a href="wishlist.html" class="mobile-nav-link">My Wishlist</a>
+      <a href="cart.html" class="mobile-nav-link">Shopping Bag</a>
+      <a href="about.html" class="mobile-nav-link">About Us</a>
+      <a href="contact.html" class="mobile-nav-link">Contact Us</a>
+    </div>
+  </aside>
+
+  <!-- Cart Page Layout -->
+  <main class="checkout-page-container">
+    <div class="container">
+      <h1 class="section-title" style="margin-bottom:var(--space-2xl);">Your Shopping Bag</h1>
+
+      <div class="checkout-grid">
+        <!-- Left: Cart Items Table -->
+        <div>
+          <!-- Empty Bag State -->
+          <div class="checkout-card empty-state" id="cart-empty-view" style="display:none;">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+            </div>
+            <h3>Your shopping bag is currently empty</h3>
+            <p>Explore our latest summer dresses, pure linen tops, and denim trousers.</p>
+            <a href="shop.html" class="btn btn-primary" style="margin-top:12px;">Discover New Arrivals &rarr;</a>
+          </div>
+
+          <!-- Items Table Wrapper -->
+          <div class="checkout-card" id="cart-table-wrapper" style="padding:0 var(--space-xl);">
+            <table class="cart-page-table" id="cart-page-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="cart-items-tbody">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary Sidebar -->
+        <aside class="order-summary-sidebar" id="cart-page-summary">
+          <div class="summary-card">
+            <h3>Order Summary</h3>
+
+            <!-- Promotional Coupon Code Box -->
+            <label class="form-label">Promotional Coupon</label>
+            <div class="coupon-box">
+              <input type="text" id="coupon-code-input" placeholder="e.g. WELCOME10, SAVE200">
+              <button type="button" class="btn btn-outline btn-sm" id="apply-coupon-btn">Apply</button>
+            </div>
+            <div id="applied-coupon-wrapper"></div>
+
+            <div class="price-breakdown">
+              <div class="breakdown-row">
+                <span>Subtotal (<span id="summary-item-count">0</span> items)</span>
+                <span id="summary-subtotal">₹0</span>
+              </div>
+              <div class="breakdown-row discount-row" id="summary-coupon-row" style="display:none;">
+                <span>Coupon Savings</span>
+                <span id="summary-coupon-val">-₹0</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Estimated Shipping</span>
+                <span id="summary-shipping-val">Calculated next</span>
+              </div>
+              <div class="breakdown-row total-row">
+                <span>Estimated Total</span>
+                <span id="summary-grand-total">₹0</span>
+              </div>
+            </div>
+
+            <a href="checkout.html" class="btn btn-primary btn-block mt-3" style="margin-top:var(--space-lg);">
+              Proceed to Checkout &rarr;
+            </a>
+
+            <div style="margin-top:var(--space-md);text-align:center;">
+              <a href="shop.html" style="font-size:0.8125rem;color:var(--color-text-secondary);text-decoration:underline;">
+                &larr; Continue Shopping
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved.</p>
+        <p style="font-size:0.75rem;">Educational Demo E-Commerce Platform.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

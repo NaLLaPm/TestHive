@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | THREAD & TREND</title>
+  <meta name="description" content="Complete your purchase with secure demo checkout, address validation, and multiple payment methods.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Minimal Brand Header for Checkout -->
+  <header style="background-color:#FFFFFF;border-bottom:1px solid var(--color-border);padding:var(--space-md) 0;">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+      <div style="display:flex;align-items:center;gap:8px;font-size:0.8125rem;color:var(--color-text-secondary);">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>100% Encrypted 256-Bit SSL Demo Checkout</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Checkout Main Container -->
+  <main class="checkout-page-container">
+    <div class="container">
+      <!-- Checkout Stepper Progress Indicator -->
+      <div class="checkout-steps-bar" aria-label="Checkout Progress">
+        <div class="step-indicator active">
+          <span class="step-number">1</span>
+          <span>Contact</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-indicator active">
+          <span class="step-number">2</span>
+          <span>Delivery</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-indicator active">
+          <span class="step-number">3</span>
+          <span>Payment</span>
+        </div>
+      </div>
+
+      <form id="checkout-form" novalidate>
+        <div class="checkout-grid">
+          <!-- Left Forms Column -->
+          <div class="checkout-form-sections">
+            
+            <!-- Step 1: Customer Contact Information -->
+            <section class="checkout-card">
+              <div class="checkout-card-header">
+                <h2 class="checkout-card-title">1. Contact Information</h2>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">Guest Checkout</span>
+              </div>
+              <div class="form-grid">
+                <div class="form-group col-full">
+                  <label for="checkout-email" class="form-label">Email Address *</label>
+                  <input type="email" id="checkout-email" class="form-input" placeholder="e.g. ananya@example.com" autocomplete="email" required>
+                  <span class="form-error-msg" id="checkout-email-error"></span>
+                </div>
+                <div class="form-group col-full">
+                  <label for="checkout-phone" class="form-label">10-Digit Mobile Number *</label>
+                  <input type="tel" id="checkout-phone" class="form-input" placeholder="e.g. 9876543210" maxlength="10" autocomplete="tel" required>
+                  <span class="form-error-msg" id="checkout-phone-error"></span>
+                </div>
+              </div>
+            </section>
+
+            <!-- Step 2: Shipping Delivery Address -->
+            <section class="checkout-card">
+              <div class="checkout-card-header">
+                <h2 class="checkout-card-title">2. Shipping Address</h2>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">Delivery within India</span>
+              </div>
+              <div class="form-grid">
+                <div class="form-group col-full">
+                  <label for="shipping-name" class="form-label">Full Name *</label>
+                  <input type="text" id="shipping-name" class="form-input" placeholder="e.g. Ananya Sharma" autocomplete="name" required>
+                  <span class="form-error-msg" id="shipping-name-error"></span>
+                </div>
+                <div class="form-group col-full">
+                  <label for="shipping-address1" class="form-label">Flat, House no., Building, Street *</label>
+                  <input type="text" id="shipping-address1" class="form-input" placeholder="e.g. Flat 402, Lotus Residency, 12th Main Road" autocomplete="address-line1" required>
+                  <span class="form-error-msg" id="shipping-address1-error"></span>
+                </div>
+                <div class="form-group col-full">
+                  <label for="shipping-address2" class="form-label">Area, Landmark (Optional)</label>
+                  <input type="text" id="shipping-address2" class="form-input" placeholder="e.g. Near Indiranagar Metro Station" autocomplete="address-line2">
+                </div>
+                <div class="form-group">
+                  <label for="shipping-city" class="form-label">Town / City *</label>
+                  <input type="text" id="shipping-city" class="form-input" placeholder="e.g. Bengaluru" autocomplete="address-level2" required>
+                  <span class="form-error-msg" id="shipping-city-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="shipping-state" class="form-label">State *</label>
+                  <input type="text" id="shipping-state" class="form-input" placeholder="e.g. Karnataka" autocomplete="address-level1" required>
+                  <span class="form-error-msg" id="shipping-state-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="shipping-pincode" class="form-label">Postal PIN Code *</label>
+                  <input type="text" id="shipping-pincode" class="form-input" placeholder="6 digits (e.g. 560038)" maxlength="6" autocomplete="postal-code" required>
+                  <span class="form-error-msg" id="shipping-pincode-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="shipping-country" class="form-label">Country</label>
+                  <input type="text" id="shipping-country" class="form-input" value="India" readonly>
+                </div>
+                <div class="form-group col-full">
+                  <label class="form-checkbox-label">
+                    <input type="checkbox" id="save-address-opt">
+                    <span>Save this address securely on this browser for future orders</span>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <!-- Step 3: Shipping Method Selection -->
+            <section class="checkout-card">
+              <div class="checkout-card-header">
+                <h2 class="checkout-card-title">3. Shipping Method</h2>
+              </div>
+              <div class="selection-radio-list">
+                <label class="selection-radio-card shipping-card active">
+                  <div class="selection-radio-left">
+                    <input type="radio" name="shipping_method" value="standard" checked>
+                    <div>
+                      <div class="selection-title">Standard Courier Delivery</div>
+                      <div class="selection-desc">Estimated transit: 3–5 Business Days (Free over ₹1,499)</div>
+                    </div>
+                  </div>
+                  <div class="selection-price">₹49</div>
+                </label>
+
+                <label class="selection-radio-card shipping-card">
+                  <div class="selection-radio-left">
+                    <input type="radio" name="shipping_method" value="express">
+                    <div>
+                      <div class="selection-title">Express Air Priority Delivery</div>
+                      <div class="selection-desc">Estimated transit: 1–2 Business Days</div>
+                    </div>
+                  </div>
+                  <div class="selection-price">₹99</div>
+                </label>
+              </div>
+            </section>
+
+            <!-- Step 4: Billing Address Checkbox -->
+            <section class="checkout-card">
+              <div class="checkout-card-header">
+                <h2 class="checkout-card-title">4. Billing Address</h2>
+              </div>
+              <label class="form-checkbox-label">
+                <input type="checkbox" id="same-billing-address" checked>
+                <span>Billing address is identical to shipping delivery address</span>
+              </label>
+              <div class="form-grid" id="billing-address-fields" style="display:none;margin-top:var(--space-md);">
+                <div class="form-group col-full">
+                  <label for="billing-name" class="form-label">Billing Full Name</label>
+                  <input type="text" id="billing-name" class="form-input" placeholder="Billing Name">
+                </div>
+                <div class="form-group col-full">
+                  <label for="billing-address" class="form-label">Billing Address</label>
+                  <input type="text" id="billing-address" class="form-input" placeholder="Address">
+                </div>
+                <div class="form-group">
+                  <label for="billing-city" class="form-label">City</label>
+                  <input type="text" id="billing-city" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label for="billing-pin" class="form-label">PIN Code</label>
+                  <input type="text" id="billing-pin" class="form-input">
+                </div>
+              </div>
+            </section>
+
+            <!-- Step 5: Payment Method Selection -->
+            <section class="checkout-card">
+              <div class="checkout-card-header">
+                <h2 class="checkout-card-title">5. Payment Method</h2>
+                <span style="font-size:0.75rem;color:var(--color-accent);font-weight:600;">Simulated Test Gateway</span>
+              </div>
+
+              <!-- Payment Tabs -->
+              <div class="payment-tabs">
+                <button type="button" class="payment-tab-btn active" data-payment-method="card">Card</button>
+                <button type="button" class="payment-tab-btn" data-payment-method="upi">UPI</button>
+                <button type="button" class="payment-tab-btn" data-payment-method="cod">Cash on Delivery</button>
+              </div>
+
+              <!-- Panel 1: Card -->
+              <div class="payment-panel active" id="panel-card">
+                <div class="form-grid">
+                  <div class="form-group col-full">
+                    <label for="card-name" class="form-label">Cardholder Name *</label>
+                    <input type="text" id="card-name" class="form-input" placeholder="Name as displayed on card" value="Demo Cardholder">
+                    <span class="form-error-msg" id="card-name-error"></span>
+                  </div>
+                  <div class="form-group col-full">
+                    <label for="card-number" class="form-label">16-Digit Card Number *</label>
+                    <input type="text" id="card-number" class="form-input" placeholder="4242 4242 4242 4242" maxlength="19" value="4242 4242 4242 4242">
+                    <span class="form-error-msg" id="card-number-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="card-expiry" class="form-label">Expiry (MM/YY) *</label>
+                    <input type="text" id="card-expiry" class="form-input" placeholder="12/28" maxlength="5" value="12/28">
+                    <span class="form-error-msg" id="card-expiry-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="card-cvv" class="form-label">CVV (3 Digits) *</label>
+                    <input type="password" id="card-cvv" class="form-input" placeholder="123" maxlength="4" value="123">
+                    <span class="form-error-msg" id="card-cvv-error"></span>
+                  </div>
+                </div>
+                <div class="payment-security-notice">
+                  <span>🔒 <strong>Simulation Notice:</strong> Demo test numbers pre-filled. No actual money will ever be charged. Full card numbers are never stored in database or localStorage.</span>
+                </div>
+              </div>
+
+              <!-- Panel 2: UPI -->
+              <div class="payment-panel" id="panel-upi">
+                <div class="form-group">
+                  <label for="upi-id" class="form-label">Virtual Payment Address (UPI ID) *</label>
+                  <input type="text" id="upi-id" class="form-input" placeholder="e.g. mobile@okhdfcbank or yourname@upi" value="demo@okhdfcbank">
+                  <span class="form-error-msg" id="upi-id-error"></span>
+                </div>
+                <div class="payment-security-notice">
+                  <span>⚡ Works with Google Pay, PhonePe, Paytm &amp; BHIM UPI. In production, this launches instant UPI intent / QR.</span>
+                </div>
+              </div>
+
+              <!-- Panel 3: COD -->
+              <div class="payment-panel" id="panel-cod">
+                <p style="font-size:0.875rem;margin-bottom:8px;">
+                  Pay in cash or through UPI QR scanner directly to our courier executive upon package delivery.
+                </p>
+                <div class="payment-security-notice">
+                  <span>📦 A standard Cash-on-Delivery convenience fee of <strong>₹49</strong> is applied to cover handling.</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- Step 6 & 7: Consent & Final Place Order CTA -->
+            <section class="checkout-card">
+              <label class="form-checkbox-label">
+                <input type="checkbox" id="agree-terms" checked required>
+                <span>I have reviewed my order and agree to THREAD &amp; TREND's <a href="terms.html" target="_blank" style="text-decoration:underline;">Terms &amp; Conditions</a> and <a href="privacy-policy.html" target="_blank" style="text-decoration:underline;">Privacy Policy</a>.</span>
+              </label>
+
+              <button type="submit" class="btn btn-primary btn-block" id="place-order-btn" style="padding:16px;font-size:1rem;margin-top:var(--space-md);">
+                Confirm &amp; Place Order &rarr;
+              </button>
+            </section>
+          </div>
+
+          <!-- Right: Sticky Order Summary -->
+          <aside class="order-summary-sidebar">
+            <div class="summary-card">
+              <h3>Order Summary</h3>
+
+              <!-- Cart Line Items List -->
+              <div class="summary-item-list" id="checkout-items-list">
+                <!-- Dynamically rendered -->
+              </div>
+
+              <!-- Coupon Code Box -->
+              <label class="form-label">Promotional Coupon</label>
+              <div class="coupon-box">
+                <input type="text" id="coupon-code-input" placeholder="WELCOME10, SAVE200">
+                <button type="button" class="btn btn-outline btn-sm" id="apply-coupon-btn">Apply</button>
+              </div>
+              <div id="applied-coupon-wrapper"></div>
+
+              <!-- Price Breakdown -->
+              <div class="price-breakdown">
+                <div class="breakdown-row">
+                  <span>Subtotal (<span id="summary-item-count">0</span> items)</span>
+                  <span id="summary-subtotal">₹0</span>
+                </div>
+                <div class="breakdown-row discount-row" id="summary-coupon-row" style="display:none;">
+                  <span>Coupon Discount</span>
+                  <span id="summary-coupon-val">-₹0</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Delivery Fee</span>
+                  <span id="summary-shipping-val">₹0</span>
+                </div>
+                <div class="breakdown-row" id="summary-fee-row" style="display:none;">
+                  <span>COD Handling Fee</span>
+                  <span id="summary-fee-val">₹49</span>
+                </div>
+                <div class="breakdown-row total-row">
+                  <span>Total Amount</span>
+                  <span id="summary-grand-total">₹0</span>
+                </div>
+              </div>
+
+              <div style="margin-top:var(--space-md);text-align:center;">
+                <a href="cart.html" style="font-size:0.8125rem;color:var(--color-text-secondary);text-decoration:underline;">
+                  &larr; Return to Shopping Bag
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved. Demo E-Commerce Frontend.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

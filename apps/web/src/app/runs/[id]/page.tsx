@@ -21,8 +21,18 @@ export default function RunOverviewPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold">{run.stimulus.type === "url" ? run.stimulus.url : run.kind}</h1>
-          <p className="text-muted text-sm mt-1">{run.stimulus.type === "url" ? run.stimulus.goal : ""}</p>
+          <h1 className="text-2xl font-bold">
+            {run.stimulus.type === "url"
+              ? run.stimulus.url
+              : run.stimulus.type === "source_code"
+                ? `${run.stimulus.projectName || "Source Code"} (${run.stimulus.url})`
+                : run.kind}
+          </h1>
+          <p className="text-muted text-sm mt-1">
+            {run.stimulus.type === "url" || run.stimulus.type === "source_code"
+              ? run.stimulus.goal
+              : ""}
+          </p>
         </div>
         <Badge kind={STATE_KIND[run.state] ?? "neutral"}>{run.state}</Badge>
       </div>

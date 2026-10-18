@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop All Clothing | THREAD & TREND</title>
+  <meta name="description" content="Browse our complete collection of modern apparel: dresses, tops, shirts, trousers, jackets, and accessories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Shop Listing Layout Styles */
+    .shop-page-wrapper {
+      padding: var(--space-xl) 0 var(--space-4xl) 0;
+    }
+    .shop-header-banner {
+      background-color: var(--color-bg-warm);
+      padding: var(--space-2xl) 0;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-2xl);
+    }
+    .shop-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: var(--space-2xl);
+      align-items: flex-start;
+    }
+    .filter-sidebar {
+      background-color: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+      position: sticky;
+      top: 100px;
+    }
+    .filter-group {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .filter-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .filter-title {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text-main);
+    }
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .filter-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .filter-checkbox-item input {
+      accent-color: var(--color-accent);
+      cursor: pointer;
+    }
+    .filter-chips-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: var(--space-lg);
+    }
+    .filter-chip {
+      background-color: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-chip button {
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--color-text-muted);
+    }
+    .filter-chip button:hover {
+      color: var(--color-sale-red);
+    }
+    .shop-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-border-light);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .shop-count-info {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+    }
+    .shop-sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .shop-sort-wrap select {
+      padding: 8px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: #FFFFFF;
+      font-size: 0.875rem;
+    }
+    .mobile-filter-btn {
+      display: none;
+    }
+    .price-range-inputs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-range-inputs input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+    }
+    .pagination-bar {
+      margin-top: var(--space-3xl);
+      text-align: center;
+    }
+
+    @media (max-width: 992px) {
+      .shop-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        width: 320px;
+        max-width: 85vw;
+        border-radius: 0;
+        overflow-y: auto;
+      }
+      .filter-sidebar.is-open {
+        display: block;
+      }
+      .mobile-filter-btn {
+        display: inline-flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-inner" id="announcement-text">
+      Free shipping on orders over ₹1,499
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <button class="mobile-menu-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Shop</a>
+        <div class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Categories ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="shop.html?category=Dresses" class="dropdown-link">Dresses</a>
+            <a href="shop.html?category=Tops%20and%20Blouses" class="dropdown-link">Tops &amp; Blouses</a>
+            <a href="shop.html?category=Jeans" class="dropdown-link">Jeans</a>
+            <a href="shop.html?category=Shirts" class="dropdown-link">Shirts</a>
+            <a href="shop.html?category=Trousers" class="dropdown-link">Trousers</a>
+            <a href="shop.html?category=Skirts" class="dropdown-link">Skirts</a>
+            <a href="shop.html?category=Jackets" class="dropdown-link">Jackets</a>
+            <a href="shop.html?category=Ethnic%20Wear" class="dropdown-link">Ethnic Wear</a>
+            <a href="shop.html?category=Accessories" class="dropdown-link">Accessories</a>
+            <a href="shop.html" class="dropdown-link" style="font-weight:600;border-top:1px solid #f0ece6;">View All Collections</a>
+          </div>
+        </div>
+        <a href="shop.html?tag=New+Arrival" class="nav-link">New Arrivals</a>
+        <a href="shop.html?tag=Best+Seller" class="nav-link">Best Sellers</a>
+        <a href="shop.html?tag=Sale" class="nav-link sale-link">Sale</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="header-action-btn" data-action="open-search" aria-label="Search Catalog" title="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button class="header-action-btn" data-action="open-account" aria-label="My Account" title="Account">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <a href="wishlist.html" class="header-action-btn" aria-label="Saved Wishlist" title="Wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count wishlist-count-badge" style="display:none;">0</span>
+        </a>
+
+        <button class="header-action-btn" data-action="open-cart-drawer" aria-label="Shopping Bag" title="Shopping Bag">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="badge-count cart-count-badge" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Overlay & Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <aside class="mobile-nav-drawer" aria-label="Mobile Menu">
+    <div class="mobile-nav-header">
+      <span class="brand-logo">THREAD <span>&amp;</span> TREND</span>
+      <button class="mobile-nav-close" aria-label="Close Navigation">&times;</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Shop All</a>
+      <div class="mobile-category-block">
+        <span class="mobile-nav-link" style="border:none;padding-bottom:0;">Categories</span>
+        <div class="mobile-categories-list">
+          <a href="shop.html?category=Dresses">Dresses</a>
+          <a href="shop.html?category=Tops%20and%20Blouses">Tops &amp; Blouses</a>
+          <a href="shop.html?category=Jeans">Jeans</a>
+          <a href="shop.html?category=Shirts">Shirts</a>
+          <a href="shop.html?category=Trousers">Trousers</a>
+          <a href="shop.html?category=Skirts">Skirts</a>
+          <a href="shop.html?category=Jackets">Jackets</a>
+          <a href="shop.html?category=Ethnic%20Wear">Ethnic Wear</a>
+          <a href="shop.html?category=Accessories">Accessories</a>
+        </div>
+      </div>
+      <a href="shop.html?tag=New+Arrival" class="mobile-nav-link">New Arrivals</a>
+      <a href="shop.html?tag=Best+Seller" class="mobile-nav-link">Best Sellers</a>
+      <a href="shop.html?tag=Sale" class="mobile-nav-link" style="color:var(--color-sale-red);">Sale Styles</a>
+      <a href="wishlist.html" class="mobile-nav-link">My Wishlist</a>
+      <a href="cart.html" class="mobile-nav-link">Shopping Bag</a>
+      <a href="about.html" class="mobile-nav-link">About Us</a>
+      <a href="contact.html" class="mobile-nav-link">Contact Us</a>
+    </div>
+  </aside>
+
+  <!-- Shop Header Banner -->
+  <section class="shop-header-banner">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li class="current" id="shop-crumb-current">All Clothing</li>
+        </ol>
+      </nav>
+      <h1 class="section-title" id="shop-page-title" style="margin-bottom:8px;">All Collections</h1>
+      <p class="section-subtitle" id="shop-page-desc">Explore our full selection of thoughtfully crafted garments, refined linens, and signature denim.</p>
+    </div>
+  </section>
+
+  <!-- Main Shop Body -->
+  <main class="container shop-page-wrapper">
+    <div class="shop-layout">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar" id="filter-sidebar" aria-label="Filters">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md);">
+          <h3 style="font-size:1.0625rem;font-weight:700;">Filters</h3>
+          <button type="button" id="clear-all-filters-btn" style="font-size:0.75rem;color:var(--color-accent);font-weight:600;">Clear All</button>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Category</h4>
+          <div class="filter-list" id="category-filter-list">
+            <!-- Dynamically populated categories -->
+          </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Price (₹)</h4>
+          <div class="price-range-inputs">
+            <input type="number" id="filter-min-price" placeholder="Min" min="0" step="100">
+            <span>–</span>
+            <input type="number" id="filter-max-price" placeholder="Max" min="0" step="100">
+          </div>
+          <button type="button" class="btn btn-outline btn-block btn-sm mt-2" id="apply-price-filter-btn" style="margin-top:8px;">Apply Price</button>
+        </div>
+
+        <!-- Size Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Sizes</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="XS"> XS</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="S"> S</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="M"> M</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="L"> L</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="XL"> XL</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_size" value="XXL"> XXL</label>
+          </div>
+        </div>
+
+        <!-- Collection Badges Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Collection Tags</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_tag" value="New Arrival"> New Arrivals</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_tag" value="Best Seller"> Best Sellers</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_tag" value="Sale"> On Sale</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="filter_tag" value="Trending"> Trending</label>
+          </div>
+        </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Customer Rating</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-item"><input type="radio" name="filter_rating" value="4.8"> 4.8★ &amp; Above</label>
+            <label class="filter-checkbox-item"><input type="radio" name="filter_rating" value="4.5"> 4.5★ &amp; Above</label>
+            <label class="filter-checkbox-item"><input type="radio" name="filter_rating" value="0" checked> All Ratings</label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Shop Listing Content -->
+      <section class="shop-main-content">
+        <!-- Toolbar & Sorting -->
+        <div class="shop-toolbar">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="btn btn-outline btn-sm mobile-filter-btn" id="open-mobile-filter-btn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+              Filter
+            </button>
+            <span class="shop-count-info" id="shop-product-count">Showing 36 products</span>
+          </div>
+
+          <div class="shop-sort-wrap">
+            <label for="shop-sort-select" style="font-size:0.875rem;color:var(--color-text-secondary);">Sort By:</label>
+            <select id="shop-sort-select">
+              <option value="featured">Featured Collection</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Customer Rating</option>
+              <option value="discount">Highest Discount</option>
+              <option value="name-asc">Alphabetical (A - Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Filter Chips -->
+        <div class="filter-chips-bar" id="active-filter-chips"></div>
+
+        <!-- Products Grid -->
+        <div class="product-grid" id="shop-products-grid">
+          <!-- Dynamic cards injected here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="shop-empty-state" style="display:none;">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3>No matching styles found</h3>
+          <p>Try clearing some filters or searching for something else.</p>
+          <button class="btn btn-outline" id="reset-filters-empty-btn">Clear All Filters</button>
+        </div>
+
+        <!-- Pagination / Load More -->
+        <div class="pagination-bar" id="load-more-wrapper">
+          <button type="button" class="btn btn-outline" id="load-more-btn">Load More Styles</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <span class="brand-logo" style="color:#FFF;">THREAD <span>&amp;</span> TREND</span>
+          <p>Modern fashion for everyday wear. Thoughtful silhouettes, comfortable fabrics, and affordable contemporary clothing crafted for the discerning minimalist.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop Collections</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=Dresses">Dresses</a></li>
+            <li><a href="shop.html?category=Jeans">Jeans</a></li>
+            <li><a href="shop.html?category=Ethnic%20Wear">Ethnic Wear</a></li>
+            <li><a href="shop.html?tag=Sale">Seasonal Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="faq.html">Shipping &amp; Delivery</a></li>
+            <li><a href="faq.html">Returns &amp; Exchanges</a></li>
+            <li><a href="contact.html">Help Center</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Shop Listing Controller Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let activeCategory = null;
+      let activeTag = null;
+      let activeSearch = null;
+      let selectedSizes = [];
+      let selectedTags = [];
+      let minPrice = null;
+      let maxPrice = null;
+      let minRating = 0;
+      let sortBy = 'featured';
+      let pageSize = 12;
+      let visibleCount = 12;
+
+      // Parse URL Query Params
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('category')) activeCategory = urlParams.get('category');
+      if (urlParams.get('tag')) {
+        activeTag = urlParams.get('tag');
+        selectedTags.push(activeTag);
+      }
+      if (urlParams.get('search')) activeSearch = urlParams.get('search');
+
+      // Populate Category Filter Sidebar
+      const catList = document.getElementById('category-filter-list');
+      if (catList) {
+        catList.innerHTML = `
+          <label class="filter-checkbox-item">
+            <input type="radio" name="filter_cat" value="" ${!activeCategory ? 'checked' : ''}> All Categories
+          </label>
+        ` + CATEGORIES.map(c => `
+          <label class="filter-checkbox-item">
+            <input type="radio" name="filter_cat" value="${c.name}" ${activeCategory === c.name ? 'checked' : ''}> ${c.name}
+          </label>
+        `).join('');
+
+        catList.querySelectorAll('input[name="filter_cat"]').forEach(radio => {
+          radio.addEventListener('change', (e) => {
+            activeCategory = e.target.value || null;
+            updateHeaders();
+            filterAndRender();
+          });
+        });
+      }
+
+      function updateHeaders() {
+        const titleEl = document.getElementById('shop-page-title');
+        const descEl = document.getElementById('shop-page-desc');
+        const crumbEl = document.getElementById('shop-crumb-current');
+
+        if (activeSearch) {
+          titleEl.textContent = `Search results for "${activeSearch}"`;
+          descEl.textContent = `Browse matching pieces found across our collections.`;
+          crumbEl.textContent = `Search: ${activeSearch}`;
+        } else if (activeCategory) {
+          const cat = CATEGORIES.find(c => c.name === activeCategory);
+          titleEl.textContent = activeCategory;
+          descEl.textContent = cat ? cat.description : 'Curated premium styles.';
+          crumbEl.textContent = activeCategory;
+        } else if (activeTag) {
+          titleEl.textContent = `${activeTag}s`;
+          descEl.textContent = `Curated selection of our best ${activeTag.toLowerCase()} designs.`;
+          crumbEl.textContent = activeTag;
+        } else {
+          titleEl.textContent = 'All Collections';
+          descEl.textContent = 'Explore our full selection of thoughtfully crafted garments, refined linens, and signature denim.';
+          crumbEl.textContent = 'All Clothing';
+        }
+      }
+
+      function filterAndRender() {
+        let results = [...PRODUCTS];
+
+        // Filter Category
+        if (activeCategory) {
+          results = results.filter(p => p.category.toLowerCase() === activeCategory.toLowerCase());
+        }
+
+        // Filter Tag (from URL or checkbox)
+        if (selectedTags.length > 0) {
+          results = results.filter(p => p.tags && p.tags.some(t => selectedTags.includes(t)));
+        }
+
+        // Filter Search Query
+        if (activeSearch) {
+          const q = activeSearch.toLowerCase();
+          results = results.filter(p => 
+            p.name.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q) ||
+            p.shortDescription.toLowerCase().includes(q)
+          );
+        }
+
+        // Filter Sizes
+        if (selectedSizes.length > 0) {
+          results = results.filter(p => p.sizes && p.sizes.some(s => selectedSizes.includes(s)));
+        }
+
+        // Filter Price
+        if (minPrice !== null && !isNaN(minPrice)) {
+          results = results.filter(p => p.price >= minPrice);
+        }
+        if (maxPrice !== null && !isNaN(maxPrice)) {
+          results = results.filter(p => p.price <= maxPrice);
+        }
+
+        // Filter Rating
+        if (minRating > 0) {
+          results = results.filter(p => p.rating >= minRating);
+        }
+
+        // Sort results
+        if (sortBy === 'price-low') {
+          results.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price-high') {
+          results.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'rating') {
+          results.sort((a, b) => b.rating - a.rating);
+        } else if (sortBy === 'discount') {
+          results.sort((a, b) => {
+            const dA = a.originalPrice ? (a.originalPrice - a.price) : 0;
+            const dB = b.originalPrice ? (b.originalPrice - b.price) : 0;
+            return dB - dA;
+          });
+        } else if (sortBy === 'name-asc') {
+          results.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        // Render counts and active chips
+        const countEl = document.getElementById('shop-product-count');
+        if (countEl) countEl.textContent = `Showing ${Math.min(visibleCount, results.length)} of ${results.length} products`;
+
+        renderChips();
+
+        // Render Grid
+        const grid = document.getElementById('shop-products-grid');
+        const emptyState = document.getElementById('shop-empty-state');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadMoreWrap = document.getElementById('load-more-wrapper');
+
+        if (results.length === 0) {
+          grid.innerHTML = '';
+          emptyState.style.display = 'block';
+          if (loadMoreWrap) loadMoreWrap.style.display = 'none';
+          return;
+        }
+
+        emptyState.style.display = 'none';
+        const pagedItems = results.slice(0, visibleCount);
+        grid.innerHTML = pagedItems.map(p => renderProductCard(p)).join('');
+
+        if (loadMoreWrap) {
+          loadMoreWrap.style.display = results.length > visibleCount ? 'block' : 'none';
+        }
+      }
+
+      function renderChips() {
+        const chipsContainer = document.getElementById('active-filter-chips');
+        if (!chipsContainer) return;
+
+        let chips = [];
+        if (activeCategory) chips.push({ label: `Category: ${activeCategory}`, clear: () => { activeCategory = null; } });
+        if (activeSearch) chips.push({ label: `Search: "${activeSearch}"`, clear: () => { activeSearch = null; } });
+        selectedTags.forEach(t => chips.push({ label: `Tag: ${t}`, clear: () => { selectedTags = selectedTags.filter(item => item !== t); } }));
+        selectedSizes.forEach(s => chips.push({ label: `Size: ${s}`, clear: () => { selectedSizes = selectedSizes.filter(item => item !== s); } }));
+        if (minPrice !== null || maxPrice !== null) chips.push({ label: `Price: ₹${minPrice || 0} - ₹${maxPrice || 'Any'}`, clear: () => { minPrice = null; maxPrice = null; } });
+        if (minRating > 0) chips.push({ label: `Rating: ${minRating}★+`, clear: () => { minRating = 0; } });
+
+        chipsContainer.innerHTML = chips.map((c, idx) => `
+          <span class="filter-chip">
+            ${escapeHTML(c.label)}
+            <button type="button" data-chip-idx="${idx}">&times;</button>
+          </span>
+        `).join('');
+
+        chipsContainer.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-chip-idx'));
+            chips[idx].clear();
+            syncFilterInputs();
+            filterAndRender();
+          });
+        });
+      }
+
+      function syncFilterInputs() {
+        document.querySelectorAll('input[name="filter_cat"]').forEach(r => r.checked = r.value === (activeCategory || ''));
+        document.querySelectorAll('input[name="filter_size"]').forEach(c => c.checked = selectedSizes.includes(c.value));
+        document.querySelectorAll('input[name="filter_tag"]').forEach(c => c.checked = selectedTags.includes(c.value));
+        const minInp = document.getElementById('filter-min-price');
+        const maxInp = document.getElementById('filter-max-price');
+        if (minInp) minInp.value = minPrice || '';
+        if (maxInp) maxInp.value = maxPrice || '';
+      }
+
+      // Size checkbox listeners
+      document.querySelectorAll('input[name="filter_size"]').forEach(chk => {
+        chk.addEventListener('change', () => {
+          selectedSizes = Array.from(document.querySelectorAll('input[name="filter_size"]:checked')).map(c => c.value);
+          filterAndRender();
+        });
+      });
+
+      // Tag checkbox listeners
+      document.querySelectorAll('input[name="filter_tag"]').forEach(chk => {
+        if (activeTag && chk.value === activeTag) chk.checked = true;
+        chk.addEventListener('change', () => {
+          selectedTags = Array.from(document.querySelectorAll('input[name="filter_tag"]:checked')).map(c => c.value);
+          filterAndRender();
+        });
+      });
+
+      // Rating listeners
+      document.querySelectorAll('input[name="filter_rating"]').forEach(r => {
+        r.addEventListener('change', (e) => {
+          minRating = parseFloat(e.target.value) || 0;
+          filterAndRender();
+        });
+      });
+
+      // Price filter
+      const priceBtn = document.getElementById('apply-price-filter-btn');
+      if (priceBtn) {
+        priceBtn.addEventListener('click', () => {
+          const minVal = parseFloat(document.getElementById('filter-min-price').value);
+          const maxVal = parseFloat(document.getElementById('filter-max-price').value);
+          minPrice = !isNaN(minVal) ? minVal : null;
+          maxPrice = !isNaN(maxVal) ? maxVal : null;
+          filterAndRender();
+        });
+      }
+
+      // Sort dropdown
+      const sortSelect = document.getElementById('shop-sort-select');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          sortBy = e.target.value;
+          filterAndRender();
+        });
+      }
+
+      // Clear all
+      const clearAllBtn = document.getElementById('clear-all-filters-btn');
+      const resetEmptyBtn = document.getElementById('reset-filters-empty-btn');
+      const clearAll = () => {
+        activeCategory = null;
+        activeTag = null;
+        activeSearch = null;
+        selectedSizes = [];
+        selectedTags = [];
+        minPrice = null;
+        maxPrice = null;
+        minRating = 0;
+        syncFilterInputs();
+        updateHeaders();
+        filterAndRender();
+      };
+      if (clearAllBtn) clearAllBtn.addEventListener('click', clearAll);
+      if (resetEmptyBtn) resetEmptyBtn.addEventListener('click', clearAll);
+
+      // Load more
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+          visibleCount += pageSize;
+          filterAndRender();
+        });
+      }
+
+      // Mobile filter sidebar toggle
+      const mobileFilterBtn = document.getElementById('open-mobile-filter-btn');
+      const sidebar = document.getElementById('filter-sidebar');
+      if (mobileFilterBtn && sidebar) {
+        mobileFilterBtn.addEventListener('click', () => {
+          sidebar.classList.toggle('is-open');
+        });
+      }
+
+      // Initial execution
+      updateHeaders();
+      filterAndRender();
+    });
+  </script>
+</body>
+</html>

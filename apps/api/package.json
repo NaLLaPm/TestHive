@@ -10,20 +10,21 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/multipart": "^10.1.4",
+    "@fastify/static": "^8.0.2",
+    "@testhive/analytics": "workspace:*",
+    "@testhive/config": "workspace:*",
     "@testhive/contracts": "workspace:*",
     "@testhive/db": "workspace:*",
+    "@testhive/engine": "workspace:*",
+    "@testhive/graph": "workspace:*",
     "@testhive/llm": "workspace:*",
     "@testhive/personas": "workspace:*",
-    "@testhive/graph": "workspace:*",
-    "@testhive/engine": "workspace:*",
-    "@testhive/analytics": "workspace:*",
     "@testhive/report": "workspace:*",
-    "@testhive/config": "workspace:*",
+    "dotenv": "^16.4.5",
     "fastify": "^5.1.0",
-    "@fastify/cors": "^10.0.1",
-    "@fastify/static": "^8.0.2",
-    "zod": "^3.23.8",
-    "dotenv": "^16.4.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

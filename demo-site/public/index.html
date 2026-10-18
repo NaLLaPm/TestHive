@@ -1,43 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="description"
-    content="Shopping Time is an e-commerce website that has at least 150 women's clothing products with different sizes and color choices">
-  <meta name="keywords" content="shopping, online shopping, shopping time">
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Shopping Time">
-  <meta property="og:description"
-    content="Shopping Time is an e-commerce website that has at least 150 women's clothing products with different sizes and color choices">
-  <meta property="og:image"
-    content="https://github.com/catherineisonline/shopping-time/raw/main/src/assets/images/project-preview.webp?raw=true">
-  <meta property="og:url" content="">
-  <meta property="og:type" content="website">
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="Shopping Time">
-  <meta name="twitter:title" content="Shopping Time">
-  <meta name="twitter:description"
-    content="Shopping Time is an e-commerce website that has at least 150 women's clothing products with different sizes and color choices">
-  <meta name="twitter:image"
-    content="https://github.com/catherineisonline/shopping-time/raw/main/src/assets/images/project-preview.webp?raw=true">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000000">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    as="style">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" as="style">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
-    as="style">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/logo192.png">
-  <title>Shopping Time</title>
-  <script type="module" crossorigin src="/assets/index-CHBUjcUG.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CqFlB9kb.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THREAD & TREND | Modern Fashion for Everyday Wear</title>
+  <meta name="description" content="Discover trendy, stylish, and comfortable apparel for modern living. Explore dresses, shirts, jeans, and ethnic collections.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
-
 <body>
-  <div id="root"></div>
 
+  <!-- Slim Promotional Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcements">
+    <div class="announcement-inner" id="announcement-text">
+      Free shipping on orders over ₹1,499
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Mobile menu trigger -->
+      <button class="mobile-menu-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        THREAD <span>&amp;</span> TREND
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <div class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Categories ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="shop.html?category=Dresses" class="dropdown-link">Dresses</a>
+            <a href="shop.html?category=Tops%20and%20Blouses" class="dropdown-link">Tops &amp; Blouses</a>
+            <a href="shop.html?category=Jeans" class="dropdown-link">Jeans</a>
+            <a href="shop.html?category=Shirts" class="dropdown-link">Shirts</a>
+            <a href="shop.html?category=Trousers" class="dropdown-link">Trousers</a>
+            <a href="shop.html?category=Skirts" class="dropdown-link">Skirts</a>
+            <a href="shop.html?category=Jackets" class="dropdown-link">Jackets</a>
+            <a href="shop.html?category=Ethnic%20Wear" class="dropdown-link">Ethnic Wear</a>
+            <a href="shop.html?category=Accessories" class="dropdown-link">Accessories</a>
+            <a href="shop.html" class="dropdown-link" style="font-weight:600;border-top:1px solid #f0ece6;">View All Collections</a>
+          </div>
+        </div>
+        <a href="shop.html?tag=New+Arrival" class="nav-link">New Arrivals</a>
+        <a href="shop.html?tag=Best+Seller" class="nav-link">Best Sellers</a>
+        <a href="shop.html?tag=Sale" class="nav-link sale-link">Sale</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="header-action-btn" data-action="open-search" aria-label="Search Catalog" title="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button class="header-action-btn" data-action="open-account" aria-label="My Account" title="Account">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <a href="wishlist.html" class="header-action-btn" aria-label="Saved Wishlist" title="Wishlist">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count wishlist-count-badge" style="display:none;">0</span>
+        </a>
+
+        <button class="header-action-btn" data-action="open-cart-drawer" aria-label="Shopping Bag" title="Shopping Bag">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="badge-count cart-count-badge" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Overlay & Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <aside class="mobile-nav-drawer" aria-label="Mobile Menu">
+    <div class="mobile-nav-header">
+      <span class="brand-logo">THREAD <span>&amp;</span> TREND</span>
+      <button class="mobile-nav-close" aria-label="Close Navigation">&times;</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Shop All</a>
+      <div class="mobile-category-block">
+        <span class="mobile-nav-link" style="border:none;padding-bottom:0;">Categories</span>
+        <div class="mobile-categories-list">
+          <a href="shop.html?category=Dresses">Dresses</a>
+          <a href="shop.html?category=Tops%20and%20Blouses">Tops &amp; Blouses</a>
+          <a href="shop.html?category=Jeans">Jeans</a>
+          <a href="shop.html?category=Shirts">Shirts</a>
+          <a href="shop.html?category=Trousers">Trousers</a>
+          <a href="shop.html?category=Skirts">Skirts</a>
+          <a href="shop.html?category=Jackets">Jackets</a>
+          <a href="shop.html?category=Ethnic%20Wear">Ethnic Wear</a>
+          <a href="shop.html?category=Accessories">Accessories</a>
+        </div>
+      </div>
+      <a href="shop.html?tag=New+Arrival" class="mobile-nav-link">New Arrivals</a>
+      <a href="shop.html?tag=Best+Seller" class="mobile-nav-link">Best Sellers</a>
+      <a href="shop.html?tag=Sale" class="mobile-nav-link" style="color:var(--color-sale-red);">Sale Styles</a>
+      <a href="wishlist.html" class="mobile-nav-link">My Wishlist</a>
+      <a href="cart.html" class="mobile-nav-link">Shopping Bag</a>
+      <a href="about.html" class="mobile-nav-link">About Us</a>
+      <a href="contact.html" class="mobile-nav-link">Contact Us</a>
+    </div>
+  </aside>
+
+  <!-- Main Homepage Content -->
+  <main>
+    <!-- A. Hero Banner -->
+    <section class="hero-section">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1920&q=80" 
+           alt="Editorial Fashion Campaign" 
+           class="hero-background-image"
+           onerror="this.src='https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1920&q=80';">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge">NEW SEASON '26</span>
+          <h1 class="hero-headline">STYLE THAT SPEAKS.</h1>
+          <p class="hero-subtext">
+            Discover your next everyday favourite. Unpretentious tailoring, breathable fabrics, and refined modern silhouettes curated for modern living.
+          </p>
+          <div class="hero-cta-group">
+            <a href="shop.html" class="btn btn-primary">Shop Collection &rarr;</a>
+            <a href="shop.html?tag=New+Arrival" class="btn btn-outline-white">Explore New Arrivals</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B. Shop by Category -->
+    <section class="category-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tagline">CURATED COLLECTIONS</span>
+          <h2 class="section-title">Shop by Category</h2>
+          <p class="section-subtitle">Effortless essentials thoughtfully categorized for seamless wardrobe curation.</p>
+        </div>
+
+        <div class="category-grid" id="homepage-category-grid">
+          <!-- Dynamically injected category cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- C. New Arrivals Section -->
+    <section class="container" style="padding: var(--space-4xl) var(--space-lg);">
+      <div class="section-header">
+        <span class="section-tagline">FRESH FROM OUR ATELIER</span>
+        <h2 class="section-title">New Arrivals</h2>
+        <p class="section-subtitle">Hand-picked wardrobe staples designed for effortless transitions.</p>
+      </div>
+
+      <div class="product-grid" id="new-arrivals-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-3xl);">
+        <a href="shop.html?tag=New+Arrival" class="btn btn-outline">View All New Arrivals &rarr;</a>
+      </div>
+    </section>
+
+    <!-- E. Promotional Banner -->
+    <section class="container promo-banner-section">
+      <div class="promo-banner-card">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80" 
+             alt="Seasonal Sale Editorial" 
+             class="promo-banner-img"
+             onerror="this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=80';">
+        <div class="promo-banner-content">
+          <span class="promo-tag">LIMITED TIME OFFER</span>
+          <h2 class="promo-title">Up to 40% Off Selected Styles</h2>
+          <p class="promo-text">
+            Upgrade your daily rotation with signature linens, crisp denim, and occasion essentials at exceptional seasonal values.
+          </p>
+          <a href="shop.html?tag=Sale" class="btn btn-accent">Explore Sale Collection &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- D. Best Sellers Section -->
+    <section class="container" style="padding-bottom: var(--space-4xl);">
+      <div class="section-header">
+        <span class="section-tagline">MOST LOVED STYLES</span>
+        <h2 class="section-title">Our Best Sellers</h2>
+        <p class="section-subtitle">The highest rated pieces our community can't stop wearing.</p>
+      </div>
+
+      <div class="product-grid" id="best-sellers-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- F. Trending Now Section -->
+    <section style="background-color: var(--color-bg-subtle); padding: var(--space-4xl) 0;">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tagline">ON THE STREETS</span>
+          <h2 class="section-title">Trending Right Now</h2>
+          <p class="section-subtitle">Contemporary silhouettes defining everyday style this week.</p>
+        </div>
+
+        <div class="product-grid" id="trending-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- G. Customer Testimonials -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tagline">COMMUNITY FEEDBACK</span>
+          <h2 class="section-title">What Our Customers Say</h2>
+          <p class="section-subtitle">Sample customer reviews and experiences with THREAD & TREND garments.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+            </div>
+            <p class="testimonial-quote">
+              "The French linen shirt is by far the best piece I've bought all year. Breathable, beautifully constructed French seams, and it holds its shape through wash after wash."
+            </p>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Ananya S." class="author-avatar">
+              <div class="author-info">
+                <h4>Ananya S.</h4>
+                <span>Verified Buyer • Oversized Pure Linen Shirt</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+            </div>
+            <p class="testimonial-quote">
+              "Finally high-waisted jeans that fit my waist without gaping at the back! Authentic 90s wash denim with just enough comfort stretch for long workdays."
+            </p>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Rohan M." class="author-avatar">
+              <div class="author-info">
+                <h4>Rohan M.</h4>
+                <span>Verified Buyer • High-Waisted Straight Jeans</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span><span class="star filled">★</span>
+            </div>
+            <p class="testimonial-quote">
+              "Wore the Chanderi Kurta set for an intimate family celebration and received countless compliments. The fabric drape and subtle zari detailing feel like pure luxury."
+            </p>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" alt="Pooja V." class="author-avatar">
+              <div class="author-info">
+                <h4>Pooja V.</h4>
+                <span>Verified Buyer • Printed Chanderi Kurta Set</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- H. Newsletter Subscription -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-box">
+          <h3>Join The THREAD &amp; TREND Community</h3>
+          <p>Receive exclusive invitations to preview new capsule collections and private promotional access.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email address" required aria-label="Email Address">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+          <span class="newsletter-notice">By signing up, you agree to our Privacy Policy. Simulated demo form.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- I. Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <span class="brand-logo" style="color:#FFF;">THREAD <span>&amp;</span> TREND</span>
+          <p>
+            Modern fashion for everyday wear. Thoughtful silhouettes, comfortable fabrics, and affordable contemporary clothing crafted for the discerning minimalist.
+          </p>
+          <div class="footer-payments">
+            <span class="payment-chip">UPI</span>
+            <span class="payment-chip">VISA</span>
+            <span class="payment-chip">MASTERCARD</span>
+            <span class="payment-chip">COD</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Shop Collections</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=Dresses">Dresses</a></li>
+            <li><a href="shop.html?category=Tops%20and%20Blouses">Tops &amp; Blouses</a></li>
+            <li><a href="shop.html?category=Jeans">Jeans</a></li>
+            <li><a href="shop.html?category=Shirts">Shirts &amp; Polos</a></li>
+            <li><a href="shop.html?category=Ethnic%20Wear">Ethnic Wear</a></li>
+            <li><a href="shop.html?tag=Sale">Seasonal Sale</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="faq.html">Track Order</a></li>
+            <li><a href="faq.html">Shipping &amp; Delivery</a></li>
+            <li><a href="faq.html">Returns &amp; Exchanges</a></li>
+            <li><a href="faq.html">Size Guide</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+            <li><a href="contact.html">Help Center</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-contact">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+            <li><a href="contact.html">Store Locator</a></li>
+          </ul>
+          <div style="margin-top:16px;">
+            <p style="font-size:0.8125rem;color:#A09D96;">Demo Customer Line:<br><strong>+91 (0) 80 4000 1234</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 THREAD &amp; TREND India. All rights reserved. Built with HTML5, CSS3 &amp; Vanilla JavaScript.</p>
+        <p style="font-size:0.75rem;">Educational Demo E-Commerce Platform.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Homepage Dynamic Feed Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Render Categories
+      const catContainer = document.getElementById('homepage-category-grid');
+      if (catContainer) {
+        catContainer.innerHTML = CATEGORIES.slice(0, 8).map(c => `
+          <a href="shop.html?category=${encodeURIComponent(c.slug)}" class="category-card">
+            <img src="${c.image}" alt="${escapeHTML(c.name)}" loading="lazy" onerror="this.src='${FALLBACK_IMAGE}'">
+            <div class="category-card-overlay">
+              <h3 class="category-card-title">${escapeHTML(c.name)}</h3>
+              <span class="category-card-action">Shop Now &rarr;</span>
+            </div>
+          </a>
+        `).join('');
+      }
+
+      // 2. Render New Arrivals (8 items)
+      const newArrivalsContainer = document.getElementById('new-arrivals-grid');
+      if (newArrivalsContainer) {
+        const newArrivals = PRODUCTS.filter(p => p.tags.includes('New Arrival')).slice(0, 8);
+        const fallback = PRODUCTS.slice(0, 8);
+        const items = newArrivals.length >= 4 ? newArrivals : fallback;
+        newArrivalsContainer.innerHTML = items.map(p => renderProductCard(p)).join('');
+      }
+
+      // 3. Render Best Sellers (8 items)
+      const bestSellersContainer = document.getElementById('best-sellers-grid');
+      if (bestSellersContainer) {
+        const bestSellers = PRODUCTS.filter(p => p.tags.includes('Best Seller')).slice(0, 8);
+        const fallback = PRODUCTS.slice(4, 12);
+        const items = bestSellers.length >= 4 ? bestSellers : fallback;
+        bestSellersContainer.innerHTML = items.map(p => renderProductCard(p)).join('');
+      }
+
+      // 4. Render Trending Now (4 items)
+      const trendingContainer = document.getElementById('trending-grid');
+      if (trendingContainer) {
+        const trending = PRODUCTS.filter(p => p.tags.includes('Trending')).slice(0, 4);
+        const fallback = PRODUCTS.slice(8, 12);
+        const items = trending.length >= 4 ? trending : fallback;
+        trendingContainer.innerHTML = items.map(p => renderProductCard(p)).join('');
+      }
+    });
+  </script>
 </body>
-
 </html>
