@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Link2, Check, FileText, Settings, Download } from "lucide-react";
 
 interface ExportToolbarProps {
   runId: string;
@@ -36,7 +37,11 @@ export function ExportToolbar({ runId }: ExportToolbarProps) {
         onClick={handleShare}
         className="px-3.5 py-2 rounded-2xl bg-white border border-border text-text text-xs font-semibold hover:border-purple/50 hover:bg-lavender/10 transition flex items-center gap-1.5 shadow-xs"
       >
-        <span>{copied ? "✓" : "🔗"}</span>
+        {copied ? (
+          <Check className="w-3.5 h-3.5 text-green-600 stroke-[2.5]" />
+        ) : (
+          <Link2 className="w-3.5 h-3.5 text-muted stroke-[2]" />
+        )}
         <span>{copied ? "Link Copied!" : "Share Link"}</span>
       </button>
 
@@ -46,7 +51,7 @@ export function ExportToolbar({ runId }: ExportToolbarProps) {
         onClick={handlePrint}
         className="px-3.5 py-2 rounded-2xl bg-white border border-border text-text text-xs font-semibold hover:border-cyan/70 hover:bg-cyan/15 transition flex items-center gap-1.5 shadow-xs"
       >
-        <span>📄</span>
+        <FileText className="w-3.5 h-3.5 text-muted stroke-[2]" />
         <span>Export PDF</span>
       </button>
 
@@ -56,7 +61,7 @@ export function ExportToolbar({ runId }: ExportToolbarProps) {
         download={`report-${runId}.json`}
         className="px-3.5 py-2 rounded-2xl bg-white border border-border text-text text-xs font-semibold hover:border-purple/50 hover:bg-lavender/10 transition flex items-center gap-1.5 shadow-xs"
       >
-        <span>⚙️</span>
+        <Settings className="w-3.5 h-3.5 text-muted stroke-[2]" />
         <span>JSON (CI)</span>
       </a>
 
@@ -66,7 +71,7 @@ export function ExportToolbar({ runId }: ExportToolbarProps) {
         download={`report-${runId}.md`}
         className="px-4 py-2 rounded-2xl bg-purple text-cream font-bold text-xs hover:bg-lavender hover:text-text transition flex items-center gap-1.5 shadow-sm"
       >
-        <span>⬇</span>
+        <Download className="w-3.5 h-3.5 stroke-[2.5]" />
         <span>Download .md</span>
       </a>
     </div>

@@ -15,6 +15,7 @@
     "@testhive/api-client": "workspace:*",
     "@testhive/contracts": "workspace:*",
     "clsx": "^2.1.1",
+    "lucide-react": "^1.54.0",
     "next": "14.2.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

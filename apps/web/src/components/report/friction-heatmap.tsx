@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import type { ElementFriction } from "@testhive/contracts";
+import { MousePointerClick, FormInput, Hourglass, Compass, MapPin } from "lucide-react";
 
 interface FrictionHeatmapProps {
   elements?: ElementFriction[];
@@ -9,26 +10,26 @@ interface FrictionHeatmapProps {
 
 const TYPE_CONFIG: Record<
   string,
-  { label: string; icon: string; badgeClass: string }
+  { label: string; icon: React.ReactNode; badgeClass: string }
 > = {
   button: {
     label: "Button CTA",
-    icon: "🔘",
+    icon: <MousePointerClick className="w-3.5 h-3.5" />,
     badgeClass: "text-white bg-purple border-purple/80",
   },
   form_field: {
     label: "Form Input",
-    icon: "📝",
+    icon: <FormInput className="w-3.5 h-3.5" />,
     badgeClass: "text-white bg-[#1C5B66] border-[#1C5B66]/80",
   },
   load_delay: {
     label: "Load Delay / Latency",
-    icon: "⏳",
+    icon: <Hourglass className="w-3.5 h-3.5" />,
     badgeClass: "text-white bg-[#B28900] border-[#B28900]/80",
   },
   navigation: {
     label: "Navigation",
-    icon: "🧭",
+    icon: <Compass className="w-3.5 h-3.5" />,
     badgeClass: "text-white bg-purple border-purple/80",
   },
 };
@@ -92,7 +93,7 @@ export function FrictionHeatmap({ elements }: FrictionHeatmapProps) {
         {filtered.map((item) => {
           const typeConf = TYPE_CONFIG[item.type] ?? {
             label: item.type,
-            icon: "📍",
+            icon: <MapPin className="w-3.5 h-3.5" />,
             badgeClass: "text-muted bg-panel2 border-border",
           };
 

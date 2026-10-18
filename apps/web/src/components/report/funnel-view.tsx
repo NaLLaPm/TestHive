@@ -2,18 +2,37 @@
 
 import React from "react";
 import type { FunnelStep } from "@testhive/contracts";
+import {
+  Globe,
+  ShoppingBag,
+  ShoppingCart,
+  CreditCard,
+  CheckCircle2,
+  MapPin,
+  TrendingDown,
+  Sparkles,
+} from "lucide-react";
 
 interface FunnelViewProps {
   steps?: FunnelStep[];
 }
 
-const STAGE_ICONS: Record<string, string> = {
-  landing: "🌐",
-  product: "🛍️",
-  cart: "🛒",
-  checkout: "💳",
-  success: "🎉",
-};
+function StageIcon({ id }: { id: string }) {
+  switch (id) {
+    case "landing":
+      return <Globe className="w-4 h-4 text-purple" />;
+    case "product":
+      return <ShoppingBag className="w-4 h-4 text-[#1C5B66]" />;
+    case "cart":
+      return <ShoppingCart className="w-4 h-4 text-purple" />;
+    case "checkout":
+      return <CreditCard className="w-4 h-4 text-[#B28900]" />;
+    case "success":
+      return <CheckCircle2 className="w-4 h-4 text-[#1C6938]" />;
+    default:
+      return <MapPin className="w-4 h-4 text-muted" />;
+  }
+}
 
 export function FunnelView({ steps }: FunnelViewProps) {
   if (!steps || steps.length === 0) {
@@ -67,7 +86,9 @@ export function FunnelView({ steps }: FunnelViewProps) {
               <div>
                 <div className="flex items-center justify-between text-xs mb-2">
                   <span className="font-mono text-muted text-[11px]">Step 0{st.order}</span>
-                  <span className="text-base">{STAGE_ICONS[st.id] ?? "📍"}</span>
+                  <div className="p-1.5 rounded-lg bg-panel2/80 border border-border/60">
+                    <StageIcon id={st.id} />
+                  </div>
                 </div>
 
                 <div className="font-bold text-sm text-text">{st.name}</div>
@@ -97,7 +118,7 @@ export function FunnelView({ steps }: FunnelViewProps) {
                 {st.dropOffCount > 0 ? (
                   <>
                     <span className="text-[#A82B24] font-semibold flex items-center gap-1">
-                      <span>📉</span> -{st.dropOffCount} dropped
+                      <TrendingDown className="w-3.5 h-3.5" /> -{st.dropOffCount} dropped
                     </span>
                     <span className="font-mono text-[#A82B24] bg-[#F28B82]/20 px-1.5 py-0.5 rounded border border-[#F28B82]/40 font-semibold">
                       {dropPct}% drop
@@ -105,7 +126,7 @@ export function FunnelView({ steps }: FunnelViewProps) {
                   </>
                 ) : (
                   <span className="text-[#1C6938] font-semibold text-[11px] flex items-center gap-1">
-                    <span>✨</span> {isFinal ? "Target Completed" : "Zero Drop-off"}
+                    <Sparkles className="w-3.5 h-3.5 text-[#1C6938]" /> {isFinal ? "Target Completed" : "Zero Drop-off"}
                   </span>
                 )}
               </div>
@@ -131,7 +152,7 @@ export function FunnelView({ steps }: FunnelViewProps) {
             {steps.map((st, idx) => (
               <tr key={st.id} className="hover:bg-panel2/50 transition">
                 <td className="py-3 px-4 font-semibold text-text flex items-center gap-2">
-                  <span>{STAGE_ICONS[st.id] ?? "•"}</span>
+                  <StageIcon id={st.id} />
                   <span>{st.name}</span>
                 </td>
                 <td className="py-3 px-4 font-mono text-text font-semibold">

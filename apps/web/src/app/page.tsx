@@ -26,6 +26,7 @@ import { FrictionHeatmap } from "@/components/report/friction-heatmap";
 import { ExportToolbar } from "@/components/report/export-toolbar";
 import { MarkdownSourceViewer } from "@/components/report/markdown-source-viewer";
 import { BenchmarkLiveModal } from "@/components/benchmark-live-modal";
+import { BarChart3, FileCode2, Zap, Rocket, ShieldCheck, AlertTriangle, Lightbulb } from "lucide-react";
 
 type TabId =
   | "launchpad"
@@ -136,7 +137,7 @@ export default function PixelDashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-text">
-              Simulate 1,000 Real Users in Parallel
+              Simulate 100 Real Users in Parallel
             </h1>
 
           </div>
@@ -187,7 +188,7 @@ export default function PixelDashboardPage() {
                   </p>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-purple/15 flex items-center justify-center text-purple">
-                  ⚡
+                  <Zap className="w-4 h-4 fill-purple" />
                 </div>
               </div>
 
@@ -285,7 +286,7 @@ export default function PixelDashboardPage() {
                       </>
                     ) : (
                       <>
-                        <span>🚀</span>
+                        <Rocket className="w-4 h-4" />
                         <span>Launch Parallel Agents ({activeSelectedPool?.size ?? 1000} Personas)</span>
                       </>
                     )}
@@ -452,7 +453,19 @@ export default function PixelDashboardPage() {
             >
               <div className="space-y-0.5">
                 <div className="font-bold text-xs uppercase tracking-wider flex items-center gap-2">
-                  <span>{segments.baselineControl.allPassed ? "🛡️ Baseline Control: Passed" : "⚠️ Baseline Control: Site Failure"}</span>
+                  <span className="flex items-center gap-1.5">
+                    {segments.baselineControl.allPassed ? (
+                      <>
+                        <ShieldCheck className="w-4 h-4 text-cyan" />
+                        <span>Baseline Control: Passed</span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertTriangle className="w-4 h-4 text-amber-500" />
+                        <span>Baseline Control: Site Failure</span>
+                      </>
+                    )}
+                  </span>
                   <Badge kind={segments.baselineControl.allPassed ? "success" : "failure"}>
                     {segments.baselineControl.status}
                   </Badge>
@@ -544,9 +557,12 @@ export default function PixelDashboardPage() {
                       {issue.affectedClusters.join(", ") || "All"}
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white border border-border text-xs text-text font-medium shadow-2xs">
-                      💡 <strong className="text-purple">Suggested Fix:</strong>{" "}
-                      {issue.suggestedFix}
+                    <div className="p-3 rounded-xl bg-white border border-border text-xs text-text font-medium shadow-2xs flex items-start gap-2">
+                      <Lightbulb className="w-4 h-4 text-purple flex-shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-purple">Suggested Fix:</strong>{" "}
+                        {issue.suggestedFix}
+                      </div>
                     </div>
 
                     {issue.evidence[0] && (
@@ -727,23 +743,25 @@ export default function PixelDashboardPage() {
                 <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-border text-xs font-semibold shadow-xs">
                   <button
                     onClick={() => setReportViewMode("interactive")}
-                    className={`px-4 py-1.5 rounded-xl transition ${
+                    className={`px-4 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
                       reportViewMode === "interactive"
                         ? "bg-purple text-cream font-bold shadow-xs"
                         : "text-muted hover:text-text hover:bg-lavender/20"
                     }`}
                   >
-                    📊 Visual Executive Insights
+                    <BarChart3 className="w-3.5 h-3.5" />
+                    <span>Visual Executive Insights</span>
                   </button>
                   <button
                     onClick={() => setReportViewMode("markdown")}
-                    className={`px-4 py-1.5 rounded-xl transition ${
+                    className={`px-4 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
                       reportViewMode === "markdown"
                         ? "bg-purple text-cream font-bold shadow-xs"
                         : "text-muted hover:text-text hover:bg-lavender/20"
                     }`}
                   >
-                    📝 Markdown Source
+                    <FileCode2 className="w-3.5 h-3.5" />
+                    <span>Markdown Source</span>
                   </button>
                 </div>
 

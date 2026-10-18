@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { Streamdown } from "streamdown";
+import { Search, Copy, Check, Download, FileText, X } from "lucide-react";
 
 interface MarkdownSourceViewerProps {
   markdown: string;
@@ -173,16 +174,14 @@ export function MarkdownSourceViewer({
             placeholder="Search report sections..."
             className="w-full text-xs bg-panel2 border border-border rounded-xl pl-8 pr-7 py-1.5 text-text placeholder:text-muted/70 focus:outline-none focus:ring-1 focus:ring-purple/60 focus:bg-white transition"
           />
-          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted text-xs pointer-events-none">
-            🔍
-          </span>
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted w-3.5 h-3.5 pointer-events-none stroke-[2]" />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-text text-xs"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-text"
             >
-              ✕
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
@@ -195,7 +194,11 @@ export function MarkdownSourceViewer({
             className="px-3 py-1.5 rounded-xl bg-panel2 border border-border text-text text-xs font-semibold hover:border-purple/50 hover:bg-lavender/10 transition flex items-center gap-1.5 shadow-xs"
             title="Copy full Markdown source to clipboard"
           >
-            <span>{copied ? "✓" : "📋"}</span>
+            {copied ? (
+              <Check className="w-3.5 h-3.5 text-green-600 stroke-[2.5]" />
+            ) : (
+              <Copy className="w-3.5 h-3.5 text-muted stroke-[2]" />
+            )}
             <span>{copied ? "Copied!" : "Copy"}</span>
           </button>
           <button
@@ -204,7 +207,7 @@ export function MarkdownSourceViewer({
             className="px-3 py-1.5 rounded-xl bg-purple text-cream text-xs font-bold hover:bg-lavender hover:text-text transition flex items-center gap-1.5 shadow-xs"
             title="Download .md file"
           >
-            <span>⬇</span>
+            <Download className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Export</span>
           </button>
         </div>
@@ -269,13 +272,14 @@ export function MarkdownSourceViewer({
                 <button
                   type="button"
                   onClick={() => setSelectedSection(null)}
-                  className={`w-full text-left text-xs px-2.5 py-1.5 rounded-lg transition truncate ${
+                  className={`w-full text-left text-xs px-2.5 py-1.5 rounded-lg transition truncate flex items-center gap-1.5 ${
                     selectedSection === null && !searchQuery
                       ? "bg-purple/15 text-purple font-semibold"
                       : "text-muted hover:text-text hover:bg-panel2"
                   }`}
                 >
-                  📄 Entire Document
+                  <FileText className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>Entire Document</span>
                 </button>
                 {stats.sections.map((sec) => (
                   <button

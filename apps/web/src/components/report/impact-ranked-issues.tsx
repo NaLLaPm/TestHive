@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import type { Issue } from "@testhive/contracts";
 import { Badge } from "@/components/ui/badge";
+import { Zap, Wrench, Search, Camera, X } from "lucide-react";
 
 interface ImpactRankedIssuesProps {
   issues?: Issue[];
@@ -101,8 +102,8 @@ export function ImpactRankedIssues({ issues }: ImpactRankedIssuesProps) {
                 <div className="flex items-center gap-2 flex-wrap">
                   {issue.impactScore !== undefined && (
                     <div className="px-3 py-1 rounded-xl bg-purple/15 text-purple border border-purple/30 font-mono text-xs font-bold flex items-center gap-1.5">
-                      <span>⚡ Impact:</span>
-                      <span>{issue.impactScore.toFixed(3)}</span>
+                      <Zap className="w-3.5 h-3.5 fill-purple text-purple" />
+                      <span>Impact: {issue.impactScore.toFixed(3)}</span>
                     </div>
                   )}
                   <div
@@ -140,7 +141,8 @@ export function ImpactRankedIssues({ issues }: ImpactRankedIssuesProps) {
               {/* Actionable Concrete Fix Card */}
               <div className="p-4 rounded-2xl bg-[#81C995]/15 border border-[#81C995]/40 space-y-1">
                 <div className="text-xs font-bold text-[#1C6938] flex items-center gap-1.5 uppercase tracking-wider">
-                  <span>🛠️ Concrete Fix:</span>
+                  <Wrench className="w-3.5 h-3.5" />
+                  <span>Concrete Fix:</span>
                 </div>
                 <p className="text-xs text-text leading-relaxed font-medium">
                   {issue.suggestedFix}
@@ -179,12 +181,18 @@ export function ImpactRankedIssues({ issues }: ImpactRankedIssuesProps) {
                         }}
                       />
                       <div className="absolute inset-0 bg-purple/20 group-hover:bg-purple/10 flex items-center justify-center text-xs font-semibold text-text gap-1 transition">
-                        <span className="px-3 py-1.5 rounded-xl bg-white/95 text-purple shadow-xs font-bold border border-border">🔍 View Screenshot</span>
+                        <span className="px-3 py-1.5 rounded-xl bg-white/95 text-purple shadow-xs font-bold border border-border flex items-center gap-1.5">
+                          <Search className="w-3.5 h-3.5" />
+                          <span>View Screenshot</span>
+                        </span>
                       </div>
                     </div>
                   ) : (
                     <div className="h-32 rounded-xl border border-dashed border-border/80 bg-panel2/50 flex flex-col items-center justify-center text-center p-3 text-muted text-xs">
-                      <span>📸 No screenshot attached</span>
+                      <div className="flex items-center gap-1.5 text-muted mb-0.5">
+                        <Camera className="w-4 h-4" />
+                        <span>No screenshot attached</span>
+                      </div>
                       <span className="text-[10px] text-muted/60 mt-1">Trace logged via DOM events</span>
                     </div>
                   )}
@@ -236,9 +244,10 @@ export function ImpactRankedIssues({ issues }: ImpactRankedIssuesProps) {
               <span className="text-xs font-mono text-purple font-semibold">Visual Evidence Capture</span>
               <button
                 onClick={() => setSelectedScreenshot(null)}
-                className="text-xs font-bold text-muted hover:text-text px-2 py-1 rounded-lg bg-panel2 border border-border"
+                className="text-xs font-bold text-muted hover:text-text px-2.5 py-1 rounded-lg bg-panel2 border border-border flex items-center gap-1"
               >
-                ✕ Close
+                <X className="w-3.5 h-3.5" />
+                <span>Close</span>
               </button>
             </div>
             <div className="overflow-auto rounded-2xl border border-border">

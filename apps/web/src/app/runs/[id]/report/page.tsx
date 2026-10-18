@@ -11,6 +11,7 @@ import { ClusterBreakdown } from "@/components/report/cluster-breakdown";
 import { ExportToolbar } from "@/components/report/export-toolbar";
 import { MarkdownSourceViewer } from "@/components/report/markdown-source-viewer";
 import { Badge } from "@/components/ui/badge";
+import { FileText, BarChart3, FileCode2 } from "lucide-react";
 
 export default function ReportPage() {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +30,9 @@ export default function ReportPage() {
   if (!report) {
     return (
       <div className="p-8 rounded-3xl bg-panel border border-border text-center space-y-3 max-w-xl mx-auto my-12 shadow-sm">
-        <div className="text-2xl">📋</div>
+        <div className="w-12 h-12 rounded-2xl bg-purple/10 text-purple flex items-center justify-center mx-auto">
+          <FileText className="w-6 h-6 stroke-[1.75]" />
+        </div>
         <h2 className="text-lg font-bold text-text">Report Not Ready</h2>
         <p className="text-muted text-xs leading-relaxed">
           The evaluation run #{id.slice(0, 8)} is still progressing or has not generated an executive report yet.
@@ -169,23 +172,25 @@ export default function ReportPage() {
         <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-border text-xs font-semibold shadow-xs">
           <button
             onClick={() => setViewMode("interactive")}
-            className={`px-4 py-1.5 rounded-xl transition ${
+            className={`px-4 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
               viewMode === "interactive"
                 ? "bg-purple text-cream font-bold shadow-xs"
                 : "text-muted hover:text-text hover:bg-lavender/20"
             }`}
           >
-            📊 Visual Executive Insights
+            <BarChart3 className="w-3.5 h-3.5" />
+            <span>Visual Executive Insights</span>
           </button>
           <button
             onClick={() => setViewMode("markdown")}
-            className={`px-4 py-1.5 rounded-xl transition ${
+            className={`px-4 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
               viewMode === "markdown"
                 ? "bg-purple text-cream font-bold shadow-xs"
                 : "text-muted hover:text-text hover:bg-lavender/20"
             }`}
           >
-            📝 Markdown Source
+            <FileCode2 className="w-3.5 h-3.5" />
+            <span>Markdown Source</span>
           </button>
         </div>
 
