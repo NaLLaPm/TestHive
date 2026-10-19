@@ -66,7 +66,7 @@ export function FrictionHeatmap({ elements }: FrictionHeatmapProps) {
         </div>
 
         {/* Element Filter Pills */}
-        <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-border text-xs font-semibold shadow-xs">
+        <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-border text-xs font-semibold shadow-xs overflow-x-auto max-w-full pb-1 sm:pb-0 scrollbar-none">
           {[
             { key: "all", label: "All Elements" },
             { key: "button", label: "Buttons" },
@@ -76,7 +76,7 @@ export function FrictionHeatmap({ elements }: FrictionHeatmapProps) {
             <button
               key={tab.key}
               onClick={() => setSelectedType(tab.key)}
-              className={`px-3 py-1 rounded-xl transition ${
+              className={`px-3 py-1 rounded-xl transition shrink-0 ${
                 selectedType === tab.key
                   ? "bg-purple text-cream font-bold shadow-xs"
                   : "text-muted hover:text-text hover:bg-lavender/20"

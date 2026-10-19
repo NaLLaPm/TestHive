@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TestHive - Word-of-Mouth Spread</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with container-queries and forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#180460",
+            "outline-variant": "#c9c4d3",
+            "status-warning-border": "#FDE68A",
+            "outline": "#787582",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#adccd2",
+            "border-accent-tint": "rgba(136, 127, 206, 0.35)",
+            "inverse-on-surface": "#f3f0f4",
+            "on-tertiary-container": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "status-success-border": "#A5D6A7",
+            "surface-container-high": "#eae7eb",
+            "on-primary": "#ffffff",
+            "honey-light": "#FBBF24",
+            "on-secondary-container": "#684000",
+            "tertiary-fixed": "#c9e8ee",
+            "on-error-container": "#93000a",
+            "surface-tint": "#5d53a5",
+            "on-tertiary": "#ffffff",
+            "surface-cream": "#F5F1EA",
+            "status-error-bg": "#FEF2F2",
+            "on-tertiary-fixed-variant": "#2e4b50",
+            "error": "#ba1a1a",
+            "text-muted": "#52525B",
+            "background": "#fbf8fc",
+            "inverse-primary": "#c7bfff",
+            "secondary-fixed-dim": "#ffb95f",
+            "border-subtle": "#ECE7E1",
+            "on-tertiary-fixed": "#001f24",
+            "border-warm": "#E6E0D8",
+            "cyan-tint": "#E6F3F5",
+            "surface-panel-alt": "#FAF6F0",
+            "surface-container-low": "#f5f3f6",
+            "surface-variant": "#e4e1e5",
+            "secondary": "#855300",
+            "primary-container": "#756bbf",
+            "status-success-bg": "#E8F5E9",
+            "on-background": "#1b1b1e",
+            "lavender-tint": "#EDEBF9",
+            "secondary-fixed": "#ffddb8",
+            "status-error": "#DC2626",
+            "text-tertiary": "#71717A",
+            "surface": "#fbf8fc",
+            "surface-container-highest": "#e4e1e5",
+            "surface-dim": "#dcd9dd",
+            "on-primary-container": "#ffffff",
+            "canvas-ivory": "#FBF9F5",
+            "surface-white": "#FFFFFF",
+            "status-warning": "#F59E0B",
+            "honey-tint": "#FEF3C7",
+            "status-warning-bg": "#FFFBEB",
+            "primary": "#5c52a4",
+            "on-error": "#ffffff",
+            "status-success": "#1C6938",
+            "surface-container": "#f0edf1",
+            "tertiary-container": "#5e7b81",
+            "on-secondary-fixed-variant": "#653e00",
+            "on-primary-fixed-variant": "#453b8c",
+            "on-secondary-fixed": "#2a1700",
+            "on-surface": "#1b1b1e",
+            "honey-dark": "#D97706",
+            "on-surface-variant": "#474551",
+            "lavender-light": "#887FCE",
+            "primary-fixed-dim": "#c7bfff",
+            "inverse-surface": "#303033",
+            "error-container": "#ffdad6",
+            "status-error-border": "#FECACA",
+            "cyan-dark": "#1C5B66",
+            "primary-fixed": "#e5deff",
+            "tertiary": "#456267",
+            "secondary-container": "#fea619",
+            "surface-bright": "#fbf8fc",
+            "text-primary": "#18181B"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "display-hero-mobile": ["Inter"],
+            "display-hero": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-base": ["Inter"],
+            "label-caps": ["Inter"],
+            "body-semibold": ["Inter"],
+            "code-badge": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "caption": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "display-hero-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "display-hero": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-base": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "body-semibold": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "code-badge": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #FBF9F5;
+      color: #18181B;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .squircle-card {
+      border-radius: 24px;
+      box-shadow: 0 2px 10px -2px rgba(136, 127, 206, 0.08), 0 1px 4px 0 rgba(24, 24, 27, 0.03);
+    }
+    .squircle-card:hover {
+      box-shadow: 0 6px 18px -4px rgba(136, 127, 206, 0.12), 0 2px 6px -1px rgba(24, 24, 27, 0.04);
+    }
+    /* Custom subtle slider appearance */
+    input[type=range] {
+      accent-color: #756BBF;
+    }
+  </style>
+</head>
+<body class="h-full bg-canvas-ivory text-text-primary antialiased flex flex-col">
+<!-- ==================== SHARED COMPONENT: TopNavBar ==================== -->
+<header class="w-full bg-canvas-ivory border-b border-border-subtle sticky top-0 z-30">
+<div class="w-full px-6 py-4 flex items-center justify-between">
+<!-- Left: Logo & Wordmark & Status Badge -->
+<div class="flex items-center gap-4">
+<a class="font-headline-lg text-headline-lg font-bold text-text-primary flex items-center gap-2 tracking-tight" href="#">
+<span class="w-8 h-8 rounded-xl bg-primary-container text-surface-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="hub">hub</span>
+</span>
+<span>TestHive</span>
+</a>
+<div class="hidden sm:flex items-center gap-2 pl-3 border-l border-border-warm">
+<span class="w-2.5 h-2.5 rounded-full bg-honey-light animate-pulse"></span>
+<span class="font-code-badge text-code-badge text-honey-dark font-semibold tracking-wide bg-honey-tint px-2.5 py-1 rounded-full border border-status-warning-border">
+            Agent Social Diffusion Model Active
+          </span>
+</div>
+</div>
+<!-- Center: Stepper Stage Navigation Links (From Shared Components) -->
+<nav class="hidden md:flex items-center gap-2 bg-surface-cream p-1.5 rounded-full border border-border-warm">
+<!-- Tab 1 -->
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150 active:scale-98" href="#">
+          Launch Pad
+        </a>
+<!-- Tab 2 -->
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150 active:scale-98" href="#">
+          Analytics &amp; UX Frictions
+        </a>
+<!-- Tab 3 (ACTIVE) -->
+<a class="bg-lavender-light text-surface-white font-body-semibold text-body-semibold px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5 active:scale-98 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+          Word-of-Mouth Spread
+        </a>
+<!-- Tab 4 -->
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150 active:scale-98" href="#">
+          Executive Report
+        </a>
+</nav>
+<!-- Right: Trailing Actions -->
+<div class="flex items-center gap-3">
+<button class="hidden lg:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface-white border border-border-warm text-text-muted hover:text-text-primary font-body-semibold text-body-semibold transition-all shadow-sm hover:bg-surface-cream" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+<span>Share Network Model</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary-container text-surface-white font-body-semibold text-body-semibold shadow-sm hover:opacity-95 transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_arrow">play_arrow</span>
+<span>Run Simulation</span>
+</button>
+<div class="flex items-center gap-1 pl-2 border-l border-border-warm">
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</button>
+<div class="w-9 h-9 ml-1 rounded-full bg-lavender-tint border border-border-accent-tint flex items-center justify-center font-code-badge text-primary font-bold">
+            LR
+          </div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN WRAPPER WITH RAIL NAV ==================== -->
+<div class="flex-1 flex overflow-hidden relative">
+<!-- ==================== SHARED COMPONENT: SideNavBar (Icon Rail) ==================== -->
+<aside aria-label="Icon rail navigation" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40 hidden md:flex">
+<!-- 1: Dashboard -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all duration-200 active:scale-95" href="#" title="Dashboard">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</a>
+<!-- 2: Library -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all duration-200 active:scale-95" href="#" title="Library">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</a>
+<!-- 3: Personas -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all duration-200 active:scale-95" href="#" title="Personas">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</a>
+<!-- 4: Test Runs (ACTIVE / MATCHING WOM SIMULATION RUNS) -->
+<a class="w-12 h-12 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-sm transition-all duration-200 active:scale-95" href="#" title="Test Runs">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</a>
+</aside>
+<!-- ==================== SCROLLABLE CANVAS ==================== -->
+<main class="flex-1 overflow-y-auto pl-4 md:pl-24 pr-4 md:pr-10 py-8">
+<div class="max-w-[1280px] mx-auto space-y-8">
+<!-- Header Title Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-border-warm/60">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="px-2.5 py-0.5 rounded-full font-label-caps text-label-caps uppercase bg-lavender-tint text-primary font-bold border border-border-accent-tint">
+                Phase 3 Behavioral Synthesis
+              </span>
+<span class="text-text-tertiary text-xs">• 1,000 Autonomous Agents Simulated</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-text-primary tracking-tight">
+              Viral Coefficient &amp; Organic Word-of-Mouth Network
+            </h1>
+<p class="font-body-base text-body-base text-text-muted mt-1 max-w-3xl">
+              Simulating synthetic social sharing, sentiment cascades, and viral loops across peer networks.
+            </p>
+</div>
+<!-- Quick Filter / Preset selector -->
+<div class="flex items-center gap-2 bg-surface-cream px-3 py-1.5 rounded-2xl border border-border-warm shrink-0">
+<span class="font-label-caps text-label-caps uppercase text-text-tertiary font-bold">Network Model:</span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Scale-Free B2B Barabási–Albert</span>
+<button class="material-symbols-outlined text-[18px] text-text-muted hover:text-primary transition-colors" data-icon="info">info</button>
+</div>
+</div>
+<!-- ==================== 1. VIRAL DYNAMICS METRICS ROW ==================== -->
+<section aria-label="Viral Dynamics Metric Row" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1: K-Factor -->
+<div class="squircle-card bg-surface-white border border-border-warm p-5 flex flex-col justify-between transition-all">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps uppercase text-text-muted tracking-wider">Estimated Viral K-Factor</span>
+<span class="w-8 h-8 rounded-xl bg-lavender-tint text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="all_inclusive">all_inclusive</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary font-headline-lg">1.24</span>
+<span class="px-2 py-0.5 rounded-full font-label-caps text-label-caps uppercase bg-status-success-bg border border-status-success-border text-status-success">
+                  &gt; 1.0 Exponential
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-2">
+                Viral expansion loop self-sustaining across secondary nodes.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs text-text-tertiary">
+<span>Target: &gt; 1.15</span>
+<span class="text-status-success font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +0.18 vs Baseline
+              </span>
+</div>
+</div>
+<!-- Metric 2: Synthetic NPS -->
+<div class="squircle-card bg-surface-white border border-border-warm p-5 flex flex-col justify-between transition-all">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps uppercase text-text-muted tracking-wider">Synthetic NPS (sNPS)</span>
+<span class="w-8 h-8 rounded-xl bg-honey-tint text-honey-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="sentiment_satisfied">sentiment_satisfied</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary font-headline-lg">+46</span>
+<span class="font-body-sm text-body-sm text-text-muted">High Affinity</span>
+</div>
+<!-- Progress Stack -->
+<div class="w-full bg-surface-cream h-2 rounded-full mt-3 overflow-hidden flex">
+<div class="bg-status-success h-full" style="width: 62%" title="Promoters 62%"></div>
+<div class="bg-honey-light h-full" style="width: 22%" title="Passives 22%"></div>
+<div class="bg-status-error h-full" style="width: 16%" title="Detractors 16%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-code-badge text-text-muted mt-1.5">
+<span class="text-status-success">Promoters 62%</span>
+<span class="text-honey-dark">Pass 22%</span>
+<span class="text-status-error">Det 16%</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs text-text-tertiary">
+<span>Benchmark: +32 (SaaS)</span>
+<span class="text-status-success font-semibold">+14 pts delta</span>
+</div>
+</div>
+<!-- Metric 3: Referral Velocity -->
+<div class="squircle-card bg-surface-white border border-border-warm p-5 flex flex-col justify-between transition-all">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps uppercase text-text-muted tracking-wider">Referral Velocity</span>
+<span class="w-8 h-8 rounded-xl bg-cyan-tint text-cyan-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="bolt">bolt</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary font-headline-lg">3.4</span>
+<span class="text-xs text-text-muted font-body-base">shares / user / wk</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-2">
+                Average propagation cycle clocking at 41.2 hours per peer invitation.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs text-text-tertiary">
+<span>Cycle: 41.2 hrs</span>
+<span class="text-status-success font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="north_east">north_east</span> +22% Acceleration
+              </span>
+</div>
+</div>
+<!-- Metric 4: Sentiment Valence -->
+<div class="squircle-card bg-surface-white border border-border-warm p-5 flex flex-col justify-between transition-all">
+<div class="flex items-start justify-between">
+<span class="font-label-caps text-label-caps uppercase text-text-muted tracking-wider">Sentiment Valence</span>
+<span class="w-8 h-8 rounded-xl bg-status-success-bg text-status-success flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="thumb_up">thumb_up</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary font-headline-lg">78%</span>
+<span class="px-2 py-0.5 rounded-full font-label-caps text-label-caps uppercase bg-status-success-bg border border-status-success-border text-status-success">
+                  Positive Diffusion
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-2">
+                Synthetic discourse shows strong technical advocacy with minimal reputational risk.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs text-text-tertiary">
+<span>Neutral: 15%</span>
+<span class="text-status-error font-medium">Critical: 7%</span>
+</div>
+</div>
+</section>
+<!-- ==================== 2. AGENT NETWORK SPREAD GRAPH / CLUSTER VISUALIZER ==================== -->
+<section aria-label="Agent Network Spread Graph" class="squircle-card bg-surface-white border border-border-warm p-6 md:p-8">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-border-subtle">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md font-bold text-text-primary">
+                  Agent Network Spread &amp; Diffusion Clusters
+                </h2>
+<span class="px-2 py-0.5 rounded-full font-code-badge text-code-badge bg-lavender-tint text-primary font-semibold">
+                  k-hop depth = 3
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-1">
+                Visualizing social ripple paths initiated by seed champion personas across synthetic community clusters.
+              </p>
+</div>
+<!-- Legend with Counts -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-cream border border-border-warm">
+<span class="w-3 h-3 rounded-full bg-honey-light shadow-sm"></span>
+<span class="font-body-sm text-body-sm font-semibold text-text-primary">Influencers / Seed Champions</span>
+<span class="font-code-badge text-code-badge bg-honey-tint text-honey-dark px-1.5 py-0.5 rounded ml-1 font-bold">150</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-cream border border-border-warm">
+<span class="w-3 h-3 rounded-full bg-lavender-light shadow-sm"></span>
+<span class="font-body-sm text-body-sm font-semibold text-text-primary">Conversions (2nd Degree)</span>
+<span class="font-code-badge text-code-badge bg-lavender-tint text-primary px-1.5 py-0.5 rounded ml-1 font-bold">540</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-cream border border-border-warm">
+<span class="w-3 h-3 rounded-full bg-rose-400 shadow-sm"></span>
+<span class="font-body-sm text-body-sm font-semibold text-text-primary">Skeptics / Detractors</span>
+<span class="font-code-badge text-code-badge bg-status-error-bg text-status-error px-1.5 py-0.5 rounded ml-1 font-bold">310</span>
+</div>
+</div>
+</div>
+<!-- Network Canvas Area with SVG Nodes and Graph -->
+<div class="relative w-full h-[360px] md:h-[440px] mt-6 bg-canvas-ivory rounded-2xl border border-border-warm overflow-hidden flex items-center justify-center">
+<!-- Grid lines background -->
+<div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(#887FCE 1px, transparent 1px); background-size: 28px 28px;"></div>
+<!-- SVG Graph Connections & Nodes -->
+<svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="lineGradLavender" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#F59E0B" stop-opacity="0.8"></stop>
+<stop offset="100%" stop-color="#887FCE" stop-opacity="0.7"></stop>
+</lineargradient>
+<lineargradient id="lineGradSkeptic" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#887FCE" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#DC2626" stop-opacity="0.4"></stop>
+</lineargradient>
+</defs>
+<!-- Connection Edges -->
+<!-- Cluster Center 1 (Left) -->
+<line stroke="#E6E0D8" stroke-dasharray="3,3" stroke-width="1.5" x1="220" x2="130" y1="200" y2="140"></line>
+<line stroke="#887FCE" stroke-width="1.8" x1="220" x2="140" y1="200" y2="280"></line>
+<line stroke="url(#lineGradLavender)" stroke-width="2.5" x1="220" x2="310" y1="200" y2="130"></line>
+<line stroke="#887FCE" stroke-width="2" x1="220" x2="270" y1="200" y2="270"></line>
+<line stroke="#887FCE" stroke-width="1.5" x1="310" x2="420" y1="130" y2="110"></line>
+<line stroke="#887FCE" stroke-width="1.8" x1="310" x2="390" y1="130" y2="190"></line>
+<!-- High Traffic Bridge to Cluster 2 -->
+<line stroke="url(#lineGradLavender)" stroke-width="3" x1="310" x2="560" y1="130" y2="210"></line>
+<line stroke="#887FCE" stroke-width="2" x1="390" x2="560" y1="190" y2="210"></line>
+<!-- Cluster 2 (Center-Right) -->
+<line stroke="url(#lineGradSkeptic)" stroke-width="1.8" x1="560" x2="480" y1="210" y2="290"></line>
+<line stroke="url(#lineGradLavender)" stroke-width="2.5" x1="560" x2="650" y1="210" y2="120"></line>
+<line stroke="#887FCE" stroke-width="2" x1="560" x2="690" y1="210" y2="220"></line>
+<line stroke="#887FCE" stroke-width="1.5" x1="560" x2="610" y1="210" y2="320"></line>
+<line stroke="#887FCE" stroke-width="1.8" x1="690" x2="780" y1="220" y2="180"></line>
+<line stroke="#E6E0D8" stroke-dasharray="3,3" stroke-width="1.5" x1="690" x2="790" y1="220" y2="270"></line>
+<!-- Outer Cluster 3 (Right) -->
+<line stroke="#887FCE" stroke-width="1.5" x1="650" x2="820" y1="120" y2="90"></line>
+<line stroke="#887FCE" stroke-width="1.8" x1="780" x2="890" y1="180" y2="160"></line>
+<line stroke="url(#lineGradSkeptic)" stroke-width="1.5" x1="780" x2="870" y1="180" y2="240"></line>
+<line stroke="#DC2626" stroke-dasharray="2,2" stroke-width="1.2" x1="480" x2="420" y1="290" y2="350"></line>
+<!-- Render Nodes -->
+<!-- Influencer Hub 1 -->
+<circle cx="220" cy="200" fill="#F59E0B" r="16" stroke="#FFFFFF" stroke-width="3"></circle>
+<circle class="animate-ping" cx="220" cy="200" fill="none" opacity="0.3" r="26" stroke="#F59E0B" stroke-width="1.5" style="transform-origin: 220px 200px; animation-duration: 3s;"></circle>
+<!-- Influencer Hub 2 -->
+<circle cx="560" cy="210" fill="#F59E0B" r="20" stroke="#FFFFFF" stroke-width="3"></circle>
+<circle class="animate-ping" cx="560" cy="210" fill="none" opacity="0.4" r="32" stroke="#F59E0B" stroke-width="1.5" style="transform-origin: 560px 210px; animation-duration: 2.5s;"></circle>
+<!-- Champion Nodes (Lavender) -->
+<circle cx="310" cy="130" fill="#756BBF" r="12" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="390" cy="190" fill="#887FCE" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="270" cy="270" fill="#887FCE" r="10" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="140" cy="280" fill="#887FCE" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="420" cy="110" fill="#887FCE" r="7" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="650" cy="120" fill="#756BBF" r="13" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="690" cy="220" fill="#887FCE" r="11" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="610" cy="320" fill="#887FCE" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="780" cy="180" fill="#887FCE" r="10" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="820" cy="90" fill="#887FCE" r="7" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="890" cy="160" fill="#887FCE" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Detractor/Skeptic Nodes (Red tint) -->
+<circle cx="130" cy="140" fill="#DC2626" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="480" cy="290" fill="#DC2626" r="11" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="420" cy="350" fill="#F87171" r="6" stroke="#FFFFFF" stroke-width="1.5"></circle>
+<circle cx="790" cy="270" fill="#DC2626" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="870" cy="240" fill="#DC2626" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+</svg>
+<!-- Floating Inspector Pill for Selected Node -->
+<div class="absolute bottom-4 left-4 bg-surface-white/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-border-warm shadow-md flex items-center gap-3 z-10 max-w-sm">
+<div class="w-8 h-8 rounded-full bg-honey-tint text-honey-dark flex items-center justify-center font-code-badge font-bold text-xs shrink-0">
+                #A2
+              </div>
+<div class="text-xs">
+<div class="font-body-semibold text-body-semibold text-text-primary flex items-center gap-1.5">
+<span>Persona: Lead Arch @ Enterprise Fintech</span>
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+</div>
+<div class="text-text-muted mt-0.5">Degree: 14 edges • Shared link into 3 engineering slacks</div>
+</div>
+</div>
+<!-- Graph Controls Overlay -->
+<div class="absolute top-4 right-4 flex items-center gap-2 bg-surface-white/90 backdrop-blur-sm p-1.5 rounded-xl border border-border-warm shadow-sm">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-cream transition-colors" title="Zoom in">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-cream transition-colors" title="Zoom out">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-cream transition-colors" title="Center view">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_center_focus">filter_center_focus</span>
+</button>
+<div class="h-4 w-px bg-border-warm"></div>
+<span class="font-code-badge text-code-badge text-text-tertiary px-2">Physics: On</span>
+</div>
+</div>
+<!-- Network Summary Bar -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-border-subtle">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]" data-icon="hub">hub</span>
+<div>
+<div class="font-body-semibold text-body-semibold text-text-primary">Cluster Density: 0.64</div>
+<div class="font-body-sm text-body-sm text-text-muted">High interconnectedness accelerates loop closure.</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-honey-dark text-[24px]" data-icon="repeat">repeat</span>
+<div>
+<div class="font-body-semibold text-body-semibold text-text-primary">Cascade Multiplier: 2.8x</div>
+<div class="font-body-sm text-body-sm text-text-muted">Every 100 seeds generate 280 peer trials.</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success text-[24px]" data-icon="verified">verified</span>
+<div>
+<div class="font-body-semibold text-body-semibold text-text-primary">Organic Decay Half-life: 18.4 days</div>
+<div class="font-body-sm text-body-sm text-text-muted">High retention preserves WOM dialogue momentum.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== 3 & 4. SOCIAL NARRATIVE & SENSITIVITY CONTROLS ==================== -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column (7 cols): Social Narrative & Channel Breakdown -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Channel Share Distribution -->
+<div class="squircle-card bg-surface-white border border-border-warm p-6">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">
+                    Channel Referral Propagation
+                  </h3>
+<p class="font-body-sm text-body-sm text-text-muted">Where synthetic agents trigger conversation and share links.</p>
+</div>
+<span class="font-code-badge text-code-badge text-text-tertiary">Real-time Attribution</span>
+</div>
+<!-- Channel Bars -->
+<div class="space-y-3.5">
+<!-- Channel 1 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-body-semibold text-body-semibold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="forum">forum</span>
+                      Developer &amp; Team Slacks
+                    </span>
+<span class="font-code-badge font-bold text-text-primary">42% (630 referrals)</span>
+</div>
+<div class="w-full bg-surface-cream h-2.5 rounded-full overflow-hidden">
+<div class="bg-lavender-light h-full rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<!-- Channel 2 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-body-semibold text-body-semibold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-sky-500" data-icon="chat">chat</span>
+                      X / Twitter Tech Threads
+                    </span>
+<span class="font-code-badge font-bold text-text-primary">31% (465 referrals)</span>
+</div>
+<div class="w-full bg-surface-cream h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 31%"></div>
+</div>
+</div>
+<!-- Channel 3 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-body-semibold text-body-semibold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-honey-dark" data-icon="mail">mail</span>
+                      Direct Email &amp; 1-on-1 Referrals
+                    </span>
+<span class="font-code-badge font-bold text-text-primary">18% (270 referrals)</span>
+</div>
+<div class="w-full bg-surface-cream h-2.5 rounded-full overflow-hidden">
+<div class="bg-honey-light h-full rounded-full" style="width: 18%"></div>
+</div>
+</div>
+<!-- Channel 4 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-body-semibold text-body-semibold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-emerald-600" data-icon="rocket_launch">rocket_launch</span>
+                      Product Hunt / Hacker News
+                    </span>
+<span class="font-code-badge font-bold text-text-primary">9% (135 referrals)</span>
+</div>
+<div class="w-full bg-surface-cream h-2.5 rounded-full overflow-hidden">
+<div class="bg-status-success h-full rounded-full" style="width: 9%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Simulated Conversation Quotes / Transcripts -->
+<div class="squircle-card bg-surface-white border border-border-warm p-6">
+<div class="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="record_voice_over">record_voice_over</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">
+                    Simulated Persona Dialogue Transcripts
+                  </h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase text-status-success bg-status-success-bg border border-status-success-border px-2.5 py-1 rounded-full">
+                  Authentic Tone
+                </span>
+</div>
+<!-- Transcripts Stack -->
+<div class="space-y-4">
+<!-- Quote 1: Twitter Thread Advocate -->
+<div class="p-4 rounded-2xl bg-surface-panel-alt border border-border-warm border-l-4 border-l-primary">
+<div class="flex items-center justify-between text-xs mb-2">
+<div class="flex items-center gap-2">
+<span class="font-code-badge text-code-badge font-bold bg-lavender-tint text-primary px-2 py-0.5 rounded">
+                        #p-devrel-8472
+                      </span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Tech Lead • Platform Infrastructure</span>
+</div>
+<span class="text-text-tertiary">X / Twitter Thread</span>
+</div>
+<p class="font-body-base text-body-base text-text-primary italic">
+                    "Honestly didn’t expect our test cycle to drop from 4 days to 45 minutes using synthetic agent clusters. Dropped the repo link into our infra channel and 3 architects spun it up within the hour."
+                  </p>
+<div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+<span class="flex items-center gap-1 font-semibold text-status-success">
+<span class="material-symbols-outlined text-[14px]" data-icon="thumb_up">thumb_up</span> High Impact Advocate
+                    </span>
+<span>Referrals Triggered: 7</span>
+<span>Sentiment Score: +0.92</span>
+</div>
+</div>
+<!-- Quote 2: Slack Recommendation -->
+<div class="p-4 rounded-2xl bg-surface-panel-alt border border-border-warm border-l-4 border-l-honey-light">
+<div class="flex items-center justify-between text-xs mb-2">
+<div class="flex items-center gap-2">
+<span class="font-code-badge text-code-badge font-bold bg-honey-tint text-honey-dark px-2 py-0.5 rounded">
+                        #p-uxdir-3190
+                      </span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Head of Product Research</span>
+</div>
+<span class="text-text-tertiary">#general-design Slack</span>
+</div>
+<p class="font-body-base text-body-base text-text-primary italic">
+                    "The telemetry on checkout drop-off caught edge cases our manual tester cohorts completely missed last sprint. Recommended it to the Mobile squad during lunch sync."
+                  </p>
+<div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+<span class="flex items-center gap-1 font-semibold text-honey-dark">
+<span class="material-symbols-outlined text-[14px]" data-icon="group_add">group_add</span> Organic Team Spread
+                    </span>
+<span>Referrals Triggered: 4</span>
+<span>Sentiment Score: +0.76</span>
+</div>
+</div>
+<!-- Quote 3: Detractor/Skeptic Insight -->
+<div class="p-4 rounded-2xl bg-surface-panel-alt border border-border-warm border-l-4 border-l-rose-400">
+<div class="flex items-center justify-between text-xs mb-2">
+<div class="flex items-center gap-2">
+<span class="font-code-badge text-code-badge font-bold bg-status-error-bg text-status-error px-2 py-0.5 rounded">
+                        #p-seceng-1029
+                      </span>
+<span class="font-body-semibold text-body-semibold text-text-primary">Staff Security Architect</span>
+</div>
+<span class="text-text-tertiary">Internal Memo Review</span>
+</div>
+<p class="font-body-base text-body-base text-text-primary italic">
+                    "Behavioral simulation is impressively accurate, but I need explicit guarantees on synthetic data residency before I approve department-wide expansion."
+                  </p>
+<div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+<span class="flex items-center gap-1 font-semibold text-status-error">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span> Friction: SOC2 Assurance
+                    </span>
+<span>Referrals Triggered: 0</span>
+<span>Sentiment Score: -0.18</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (5 cols): Virality Sensitivity Controls & Loop Diagnostics -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Virality Sensitivity Controls -->
+<div class="squircle-card bg-surface-white border border-border-warm p-6">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="sliders">sliders</span>
+                  Virality Sensitivity Controls
+                </h3>
+<button class="font-label-caps text-label-caps uppercase text-primary hover:underline">Reset</button>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mb-6">
+                Adjust agent behavioral weights to stress-test word-of-mouth loops under varied market conditions.
+              </p>
+<!-- Controls Stack -->
+<div class="space-y-6">
+<!-- Slider 1: Product Wow-Factor -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-body-semibold text-body-semibold text-text-primary" for="slider-wow">Product Wow-Factor Threshold</label>
+<span class="font-code-badge font-bold text-primary bg-lavender-tint px-2 py-0.5 rounded text-xs">84% (High)</span>
+</div>
+<input class="w-full h-2 bg-surface-cream rounded-lg appearance-none cursor-pointer" id="slider-wow" max="100" min="0" type="range" value="84"/>
+<div class="flex justify-between text-[11px] text-text-tertiary mt-1">
+<span>Subtle Utility (30%)</span>
+<span>Transformative Eureka (90%)</span>
+</div>
+</div>
+<!-- Slider 2: Referral Friction Decay -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-body-semibold text-body-semibold text-text-primary" for="slider-friction">Referral Friction Decay</label>
+<span class="font-code-badge font-bold text-honey-dark bg-honey-tint px-2 py-0.5 rounded text-xs">28% (Low)</span>
+</div>
+<input class="w-full h-2 bg-surface-cream rounded-lg appearance-none cursor-pointer" id="slider-friction" max="100" min="0" type="range" value="28"/>
+<div class="flex justify-between text-[11px] text-text-tertiary mt-1">
+<span>Frictionless (1-Click)</span>
+<span>High Gate (Sign-up Required)</span>
+</div>
+</div>
+<!-- Slider 3: Social Proof Sensitivity -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-body-semibold text-body-semibold text-text-primary" for="slider-social">Social Proof Sensitivity</label>
+<span class="font-code-badge font-bold text-status-success bg-status-success-bg px-2 py-0.5 rounded text-xs">72% (Strong)</span>
+</div>
+<input class="w-full h-2 bg-surface-cream rounded-lg appearance-none cursor-pointer" id="slider-social" max="100" min="0" type="range" value="72"/>
+<div class="flex justify-between text-[11px] text-text-tertiary mt-1">
+<span>Independent Decision</span>
+<span>Peer-Validate Dependent</span>
+</div>
+</div>
+</div>
+<!-- Re-simulate CTA -->
+<div class="mt-8 pt-5 border-t border-border-subtle">
+<button class="w-full py-3 rounded-2xl bg-primary-container text-surface-white font-body-semibold text-body-semibold shadow-sm hover:opacity-95 transition-all flex items-center justify-center gap-2 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="refresh">refresh</span>
+                  Re-compute Diffusion Cascade
+                </button>
+<div class="text-center font-caption text-caption text-text-muted mt-2">
+                  Simulation estimated runtime: ~1.2 seconds across 1,000 agents
+                </div>
+</div>
+</div>
+<!-- Expansion Diagnostics & Loop Bottlenecks -->
+<div class="squircle-card bg-surface-white border border-border-warm p-6">
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-honey-dark text-[20px]" data-icon="insights">insights</span>
+                Viral Loop Bottleneck Analysis
+              </h3>
+<ul class="space-y-3 font-body-sm text-body-sm">
+<li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-surface-cream/70 border border-border-warm/60">
+<span class="material-symbols-outlined text-status-success text-[18px] mt-0.5" data-icon="check_circle">check_circle</span>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary">Invitation Link Hook:</span>
+<span class="text-text-muted"> 89% conversion when seed agents include specific sandbox dashboard snapshots.</span>
+</div>
+</li>
+<li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-surface-cream/70 border border-border-warm/60">
+<span class="material-symbols-outlined text-status-warning text-[18px] mt-0.5" data-icon="report_problem">report_problem</span>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary">Enterprise Sign-up Gate:</span>
+<span class="text-text-muted"> Mandatory corporate email verification drops peer invitation completion by 14%.</span>
+</div>
+</li>
+<li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-surface-cream/70 border border-border-warm/60">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5" data-icon="trending_up">trending_up</span>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary">Advocacy Longevity:</span>
+<span class="text-text-muted"> Active champions continue sending referral pulses for an average of 4.3 weeks.</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

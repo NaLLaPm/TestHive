@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TestHive - Synthetic Testing Platform</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Verbatim Tailwind Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f5f3f6",
+            "text-tertiary": "#71717A",
+            "error": "#ba1a1a",
+            "tertiary-container": "#5e7b81",
+            "surface": "#fbf8fc",
+            "secondary-fixed": "#ffddb8",
+            "inverse-surface": "#303033",
+            "on-secondary-fixed": "#2a1700",
+            "lavender-tint": "#EDEBF9",
+            "on-secondary-fixed-variant": "#653e00",
+            "surface-dim": "#dcd9dd",
+            "status-error-bg": "#FEF2F2",
+            "canvas-ivory": "#FBF9F5",
+            "surface-variant": "#e4e1e5",
+            "text-primary": "#18181B",
+            "status-warning-border": "#FDE68A",
+            "status-error-border": "#FECACA",
+            "secondary": "#855300",
+            "border-warm": "#E6E0D8",
+            "honey-tint": "#FEF3C7",
+            "honey-light": "#FBBF24",
+            "primary-fixed-dim": "#c7bfff",
+            "primary-fixed": "#e5deff",
+            "on-surface-variant": "#474551",
+            "lavender-light": "#887FCE",
+            "on-tertiary-container": "#ffffff",
+            "surface-cream": "#F5F1EA",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#eae7eb",
+            "on-tertiary": "#ffffff",
+            "surface-white": "#FFFFFF",
+            "inverse-on-surface": "#f3f0f4",
+            "cyan-tint": "#E6F3F5",
+            "tertiary": "#456267",
+            "border-subtle": "#ECE7E1",
+            "surface-tint": "#5d53a5",
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "outline": "#787582",
+            "tertiary-fixed": "#c9e8ee",
+            "surface-panel-alt": "#FAF6F0",
+            "border-accent-tint": "rgba(136, 127, 206, 0.35)",
+            "status-success-border": "#A5D6A7",
+            "status-warning-bg": "#FFFBEB",
+            "honey-dark": "#D97706",
+            "background": "#fbf8fc",
+            "secondary-container": "#fea619",
+            "on-primary-container": "#ffffff",
+            "status-success-bg": "#E8F5E9",
+            "outline-variant": "#c9c4d3",
+            "status-success": "#1C6938",
+            "status-warning": "#F59E0B",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed": "#001f24",
+            "cyan-dark": "#1C5B66",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#180460",
+            "primary-container": "#756bbf",
+            "secondary-fixed-dim": "#ffb95f",
+            "on-tertiary-fixed-variant": "#2e4b50",
+            "text-muted": "#52525B",
+            "on-primary-fixed-variant": "#453b8c",
+            "on-secondary-container": "#684000",
+            "inverse-primary": "#c7bfff",
+            "surface-container": "#f0edf1",
+            "primary": "#5c52a4",
+            "status-error": "#DC2626",
+            "surface-container-highest": "#e4e1e5",
+            "error-container": "#ffdad6",
+            "surface-bright": "#fbf8fc",
+            "on-surface": "#1b1b1e",
+            "tertiary-fixed-dim": "#adccd2",
+            "on-background": "#1b1b1e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter-lg": "2rem",
+            "gutter-sm": "1rem",
+            "margin-lg": "3rem",
+            "margin-sm": "1rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "display-hero-mobile": ["Inter"],
+            "code-badge": ["JetBrains Mono"],
+            "caption": ["Inter"],
+            "label-caps": ["Inter"],
+            "body-semibold": ["Inter"],
+            "body-base": ["Inter"],
+            "display-hero": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-lg-mobile": ["Inter"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }],
+            "display-hero-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "code-badge": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "body-semibold": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-base": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "display-hero": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .soft-card-shadow {
+      box-shadow: 0 4px 20px -3px rgba(136, 127, 206, 0.08), 0 1px 4px 0 rgba(24, 24, 27, 0.02);
+    }
+    .soft-card-shadow:hover {
+      box-shadow: 0 10px 28px -5px rgba(136, 127, 206, 0.14), 0 3px 8px -1px rgba(24, 24, 27, 0.04);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.04); }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-canvas-ivory text-text-primary antialiased font-body-base text-body-base min-h-screen flex flex-col selection:bg-lavender-tint selection:text-primary">
+<!-- TOP APP BAR -->
+<header class="w-full bg-canvas-ivory border-b border-border-subtle sticky top-0 z-30 backdrop-blur-md bg-opacity-95">
+<div class="max-w-[1280px] mx-auto px-6 py-3.5 flex items-center justify-between">
+<!-- Brand & Telemetry Chip -->
+<div class="flex items-center gap-5">
+<a class="font-headline-lg text-headline-lg font-bold text-text-primary flex items-center gap-2.5 tracking-tight group" href="/">
+<div class="w-9 h-9 rounded-2xl bg-surface-white border border-border-warm flex items-center justify-center soft-card-shadow group-hover:border-lavender-light transition-all">
+<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 2L20 7V17L12 22L4 17V7L12 2Z" fill="#FAF6F0" stroke="#887FCE" stroke-width="1.8"></path>
+<circle cx="12" cy="12" fill="#F59E0B" r="3.2"></circle>
+<circle cx="9" cy="8.5" fill="#756BBF" r="1"></circle>
+<circle cx="15" cy="8.5" fill="#756BBF" r="1"></circle>
+</svg>
+</div>
+<span class="flex items-center text-[22px]">
+            Test<span class="text-lavender-light">Hive</span>
+<span class="w-2 h-2 rounded-full bg-status-warning inline-block ml-1.5 animate-pulse"></span>
+</span>
+</a>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-surface-white border border-border-warm rounded-full soft-card-shadow">
+<span class="w-2 h-2 rounded-full bg-status-success animate-ping"></span>
+<span class="font-code-badge text-code-badge text-text-primary font-semibold">1,000 Agents Armed</span>
+<span class="text-text-muted font-caption text-caption">• Ready</span>
+</div>
+</div>
+<!-- Right Controls -->
+<div class="flex items-center gap-2.5">
+<button class="w-9 h-9 rounded-full bg-surface-white border border-border-warm flex items-center justify-center text-text-muted hover:text-primary hover:border-lavender-light transition-all active:scale-95 shadow-sm" title="Notifications">
+<span class="material-symbols-outlined text-[19px]" data-icon="notifications">notifications</span>
+</button>
+<button class="w-9 h-9 rounded-full bg-surface-white border border-border-warm flex items-center justify-center text-text-muted hover:text-primary hover:border-lavender-light transition-all active:scale-95 shadow-sm" title="Configuration Tune">
+<span class="material-symbols-outlined text-[19px]" data-icon="tune">tune</span>
+</button>
+<button class="hidden md:flex items-center gap-2 bg-lavender-light hover:bg-primary text-surface-white font-body-semibold text-body-semibold px-4 py-2 rounded-full shadow-sm hover:shadow active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
+          Deploy Agents
+        </button>
+<div class="w-9 h-9 rounded-full bg-lavender-tint border-2 border-surface-white ring-1 ring-border-warm flex items-center justify-center text-primary font-headline-sm text-headline-sm overflow-hidden" title="Researcher Profile">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN APP WRAPPER -->
+<div class="max-w-[1280px] w-full mx-auto px-4 sm:px-6 py-6 flex-1 flex gap-6 relative">
+<!-- FLOATING SIDE NAVIGATION RAIL -->
+<aside class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40 hidden lg:flex">
+<a class="w-12 h-12 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-transform" href="/" title="Dashboard">
+<span class="material-symbols-outlined text-[22px]" data-icon="grid_view">grid_view</span>
+</a>
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint hover:border-lavender-light transition-all duration-200 active:scale-95 shadow-sm" href="/library" title="Library">
+<span class="material-symbols-outlined text-[22px]" data-icon="description">description</span>
+</a>
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint hover:border-lavender-light transition-all duration-200 active:scale-95 shadow-sm" href="/personas" title="Personas">
+<span class="material-symbols-outlined text-[22px]" data-icon="group">group</span>
+</a>
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint hover:border-lavender-light transition-all duration-200 active:scale-95 shadow-sm" href="/runs" title="Test Runs">
+<span class="material-symbols-outlined text-[22px]" data-icon="play_arrow">play_arrow</span>
+</a>
+</aside>
+<!-- MAIN CENTRAL CONTENT CANVAS -->
+<main class="w-full lg:pl-16 space-y-6">
+<!-- HEADER ROW: TITLE & MINI TELEMETRY PILLS -->
+<div class="bg-surface-white border border-border-warm rounded-[28px] p-6 soft-card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="font-display-hero text-[28px] sm:text-display-hero text-text-primary tracking-tight leading-tight">
+            Simulate 100 Real Users in Parallel
+          </h1>
+</div>
+<div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-panel-alt border border-border-subtle text-text-primary text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+<span>Cluster 4 Ready</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-honey-tint/80 border border-status-warning-border text-secondary text-xs font-semibold">
+<span class="material-symbols-outlined text-[15px] text-honey-dark" data-icon="bolt">bolt</span>
+<span>12ms Latency</span>
+</div>
+</div>
+</div>
+<!-- 4-STAGE INTERACTIVE STEPPER -->
+<nav aria-label="Simulation Workflow Stages" class="flex flex-wrap items-center gap-2.5">
+<a class="bg-lavender-light text-surface-white font-body-semibold text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full shadow-sm flex items-center gap-2 transition-all" href="#launchpad">
+<span class="w-5 h-5 rounded-full bg-surface-white/20 text-[11px] font-bold flex items-center justify-center">1</span>
+<span>Launch Pad</span>
+</a>
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 sm:px-5 py-2 rounded-full border border-border-warm hover:border-lavender-light text-xs sm:text-sm font-medium flex items-center gap-2 transition-all shadow-sm" href="#analytics">
+<span class="w-5 h-5 rounded-full bg-surface-cream text-[11px] text-text-muted font-bold flex items-center justify-center">2</span>
+<span>Analytics &amp; UX Frictions</span>
+</a>
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 sm:px-5 py-2 rounded-full border border-border-warm hover:border-lavender-light text-xs sm:text-sm font-medium flex items-center gap-2 transition-all shadow-sm" href="#spread">
+<span class="w-5 h-5 rounded-full bg-surface-cream text-[11px] text-text-muted font-bold flex items-center justify-center">3</span>
+<span>Word-of-Mouth Spread</span>
+</a>
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 sm:px-5 py-2 rounded-full border border-border-warm hover:border-lavender-light text-xs sm:text-sm font-medium flex items-center gap-2 transition-all shadow-sm" href="#report">
+<span class="w-5 h-5 rounded-full bg-surface-cream text-[11px] text-text-muted font-bold flex items-center justify-center">4</span>
+<span>Executive Report</span>
+</a>
+</nav>
+<!-- MAIN ANALYTICAL GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- =================================================================== -->
+<!-- LEFT COLUMN: Configure Test Run (7 Cols)                            -->
+<!-- =================================================================== -->
+<section class="lg:col-span-7 bg-surface-white border border-border-warm rounded-[28px] p-6 sm:p-7 soft-card-shadow space-y-6">
+<!-- Card Header with Mini Status Pill -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-lavender-tint flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[19px]" data-icon="tune">tune</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-text-primary">
+                Configure Test Run
+              </h2>
+</div>
+<span class="font-code-badge text-code-badge text-primary bg-lavender-tint px-2.5 py-1 rounded-full border border-border-accent-tint">
+              Kernel v2.4 Active
+            </span>
+</div>
+<!-- VISUAL POOL SELECTOR TILES -->
+<div class="space-y-2.5">
+<div class="flex items-center justify-between text-xs font-semibold text-text-tertiary uppercase tracking-wider">
+<span>Select Active Persona Pool</span>
+<a class="text-lavender-light hover:text-primary normal-case font-body-semibold text-xs transition-colors flex items-center gap-1" href="/library">
+<span>Pool Library</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+<!-- Pool Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<!-- Selected Pool Option -->
+<div class="relative bg-lavender-tint/40 border-2 border-lavender-light rounded-2xl p-4 flex flex-col justify-between cursor-pointer transition-all hover:shadow-sm">
+<div class="flex items-start justify-between">
+<!-- Stacked Avatars -->
+<div class="flex -space-x-2 overflow-hidden items-center">
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-lavender-light text-surface-white text-[10px] font-bold flex items-center justify-center">SA</div>
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-honey-light text-surface-white text-[10px] font-bold flex items-center justify-center">PM</div>
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-primary text-surface-white text-[10px] font-bold flex items-center justify-center">UX</div>
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-surface-white text-[9px] font-bold text-text-muted flex items-center justify-center border border-border-warm">+311</div>
+</div>
+<span class="w-5 h-5 rounded-full bg-lavender-light text-surface-white flex items-center justify-center text-[12px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="font-headline-sm text-sm font-bold text-text-primary">SaaS Early Adopters</div>
+<div class="flex items-center gap-2 mt-1 font-code-badge text-[11px] text-text-muted">
+<span class="text-primary font-bold">314 nodes</span>
+<span>• High Intent</span>
+</div>
+</div>
+</div>
+<!-- Unselected Pool Option -->
+<div class="relative bg-surface-panel-alt hover:bg-surface-cream border border-border-warm rounded-2xl p-4 flex flex-col justify-between cursor-pointer transition-all">
+<div class="flex items-start justify-between">
+<div class="flex -space-x-2 overflow-hidden items-center opacity-85">
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-cyan-dark text-surface-white text-[10px] font-bold flex items-center justify-center">SO</div>
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-tertiary text-surface-white text-[10px] font-bold flex items-center justify-center">IT</div>
+<div class="inline-block h-7 w-7 rounded-full ring-2 ring-surface-white bg-surface-white text-[9px] font-bold text-text-muted flex items-center justify-center border border-border-warm">+224</div>
+</div>
+<span class="w-5 h-5 rounded-full border border-border-warm bg-surface-white flex items-center justify-center text-transparent"></span>
+</div>
+<div class="mt-3">
+<div class="font-headline-sm text-sm font-bold text-text-primary">Enterprise SecOps</div>
+<div class="flex items-center gap-2 mt-1 font-code-badge text-[11px] text-text-muted">
+<span>226 nodes</span>
+<span>• Strict Compliance</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TARGET URL INPUT WITH QUICK ACCESS -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between text-xs font-semibold text-text-tertiary uppercase tracking-wider">
+<span>Target Flow URL</span>
+<span class="text-status-success font-code-badge font-semibold text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span> Endpoint reachable
+              </span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3.5 text-lavender-light material-symbols-outlined text-[19px]" data-icon="link">link</span>
+<input class="w-full h-11 pl-10 pr-24 bg-surface-cream border border-border-warm rounded-2xl text-text-primary font-code-badge text-xs sm:text-sm focus:border-lavender-light focus:bg-surface-white focus:ring-2 focus:ring-lavender-tint focus:outline-none transition-all shadow-inner" placeholder="https://app.example.com/onboarding-flow" type="url" value="https://app.example.com/onboarding-flow"/>
+<button class="absolute right-2 px-3 py-1 rounded-xl bg-surface-white hover:bg-lavender-tint border border-border-warm text-text-primary text-xs font-semibold transition-all">
+                Test Ping
+              </button>
+</div>
+</div>
+<!-- CONCURRENT DENSITY & HARDWARE SLIDER -->
+<div class="p-4 bg-surface-panel-alt rounded-2xl border border-border-subtle space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-body-semibold text-sm text-text-primary block">Swarm Concurrency</span>
+<span class="text-xs text-text-muted">Virtual headless browser instances</span>
+</div>
+<span class="font-code-badge text-xs font-bold text-lavender-light bg-surface-white px-3 py-1 rounded-xl border border-border-warm shadow-sm">
+                100 Agents
+              </span>
+</div>
+<!-- Slider Bar -->
+<div class="space-y-1.5">
+<div class="w-full bg-surface-white h-2.5 rounded-full overflow-hidden border border-border-subtle relative cursor-pointer">
+<div class="bg-gradient-to-r from-lavender-light to-primary h-full rounded-full" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between font-code-badge text-[11px] text-text-muted">
+<span>10 (Smoke)</span>
+<span>50 (Cluster)</span>
+<span class="font-bold text-lavender-light">100 (Full Swarm)</span>
+</div>
+</div>
+<!-- Visual Toggles -->
+<div class="pt-2 border-t border-border-subtle flex flex-wrap items-center justify-between gap-3 text-xs">
+<div class="flex items-center gap-2">
+<!-- Toggle switch -->
+<button aria-pressed="true" class="w-9 h-5 bg-lavender-light rounded-full p-0.5 transition-colors flex items-center justify-end" type="button">
+<div class="w-4 h-4 rounded-full bg-surface-white shadow-sm"></div>
+</button>
+<span class="font-medium text-text-primary">Friction Recording</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-pressed="true" class="w-9 h-5 bg-lavender-light rounded-full p-0.5 transition-colors flex items-center justify-end" type="button">
+<div class="w-4 h-4 rounded-full bg-surface-white shadow-sm"></div>
+</button>
+<span class="font-medium text-text-primary">Entropy Drift</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-pressed="false" class="w-9 h-5 bg-border-warm rounded-full p-0.5 transition-colors flex items-center justify-start" type="button">
+<div class="w-4 h-4 rounded-full bg-surface-white shadow-sm"></div>
+</button>
+<span class="font-medium text-text-muted">Slow Network (3G)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- =================================================================== -->
+<!-- RIGHT COLUMN: Telemetry Graph & Benchmark Cards (5 Cols)           -->
+<!-- =================================================================== -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Persona Graph Explorer Card -->
+<section class="bg-surface-white border border-border-warm rounded-[28px] p-6 soft-card-shadow space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-lavender-light animate-ping"></div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">
+                  Persona Graph
+                </h3>
+</div>
+<!-- Floating metric pills -->
+<div class="flex items-center gap-1.5">
+<span class="font-code-badge text-[11px] font-semibold text-primary bg-lavender-tint px-2.5 py-0.5 rounded-full border border-border-accent-tint">
+                  1,000 Nodes
+                </span>
+<span class="font-code-badge text-[11px] font-semibold text-honey-dark bg-honey-tint px-2 py-0.5 rounded-full border border-status-warning-border">
+                  98.4%
+                </span>
+</div>
+</div>
+<!-- EXPANSIVE GLOWING FORCE-GRAPH PREVIEW -->
+<div class="h-52 w-full bg-[#FAF7F2] border border-border-subtle rounded-2xl relative overflow-hidden flex items-center justify-center group cursor-pointer">
+<!-- Radial Glow Backdrop -->
+<div class="absolute w-72 h-72 rounded-full bg-lavender-tint/50 blur-2xl animate-pulse-slow"></div>
+<div class="absolute w-48 h-48 rounded-full bg-honey-tint/60 blur-xl"></div>
+<!-- Atmospheric Rings -->
+<div class="absolute w-56 h-56 rounded-full border border-border-accent-tint/40"></div>
+<div class="absolute w-36 h-36 rounded-full border border-lavender-light/30"></div>
+<!-- Interactive network visual SVG -->
+<svg class="w-full h-full relative z-10" fill="none" viewbox="0 0 340 190">
+<!-- Constellation Edges with Gradients -->
+<line stroke="#887FCE" stroke-opacity="0.5" stroke-width="1.5" x1="50" x2="110" y1="50" y2="80"></line>
+<line stroke="#887FCE" stroke-dasharray="3 3" stroke-opacity="0.6" stroke-width="1.2" x1="110" x2="180" y1="80" y2="55"></line>
+<line stroke="#F59E0B" stroke-opacity="0.6" stroke-width="1.6" x1="180" x2="245" y1="55" y2="105"></line>
+<line stroke="#887FCE" stroke-opacity="0.4" stroke-width="1.2" x1="245" x2="300" y1="105" y2="70"></line>
+<line stroke="#887FCE" stroke-opacity="0.5" stroke-width="1.5" x1="110" x2="145" y1="80" y2="145"></line>
+<line stroke="#F59E0B" stroke-opacity="0.7" stroke-width="1.8" x1="145" x2="245" y1="145" y2="105"></line>
+<line stroke="#887FCE" stroke-opacity="0.35" stroke-width="1" x1="180" x2="145" y1="55" y2="145"></line>
+<line stroke="#887FCE" stroke-opacity="0.4" stroke-width="1.2" x1="70" x2="145" y1="135" y2="145"></line>
+<line stroke="#887FCE" stroke-opacity="0.3" stroke-width="1.2" x1="245" x2="290" y1="105" y2="150"></line>
+<!-- Cluster Pulse Rings -->
+<circle cx="145" cy="145" fill="none" r="16" stroke="#F59E0B" stroke-opacity="0.35" stroke-width="1.5"></circle>
+<circle cx="245" cy="105" fill="none" r="15" stroke="#887FCE" stroke-opacity="0.35" stroke-width="1.5"></circle>
+<circle cx="180" cy="55" fill="none" r="11" stroke="#F59E0B" stroke-opacity="0.25" stroke-width="1.2"></circle>
+<!-- Agent Nodes (Lavender & Honey Glow) -->
+<circle cx="50" cy="50" fill="#887FCE" r="4.5"></circle>
+<circle cx="110" cy="80" fill="#756BBF" r="7"></circle>
+<circle cx="180" cy="55" fill="#F59E0B" r="5.5"></circle>
+<circle cx="245" cy="105" fill="#887FCE" r="8"></circle>
+<circle cx="300" cy="70" fill="#756BBF" r="4"></circle>
+<circle cx="145" cy="145" fill="#F59E0B" r="7"></circle>
+<circle cx="70" cy="135" fill="#887FCE" r="4"></circle>
+<circle cx="290" cy="150" fill="#c7bfff" r="4.5"></circle>
+<circle cx="215" cy="160" fill="#887FCE" r="3.5"></circle>
+<!-- Inner node cores -->
+<circle cx="145" cy="145" fill="#FFFFFF" r="2.5"></circle>
+<circle cx="245" cy="105" fill="#FFFFFF" r="3"></circle>
+</svg>
+<!-- Floating Micro Status Tag -->
+<div class="absolute bottom-3 left-3 bg-surface-white/95 backdrop-blur-md px-2.5 py-1 rounded-xl border border-border-warm shadow-sm flex items-center gap-2 font-code-badge text-[11px] text-text-primary">
+<span class="w-2 h-2 rounded-full bg-honey-light"></span>
+<span>Active Force Simulation</span>
+</div>
+<!-- Top Right Action Hint -->
+<div class="absolute top-3 right-3 bg-surface-white/90 px-2 py-0.5 rounded-lg border border-border-warm text-[10px] font-semibold text-text-muted">
+                11,953 Edges
+              </div>
+</div>
+<!-- Mini Metrics Row -->
+<div class="grid grid-cols-3 gap-2 text-center pt-1">
+<div class="p-2 bg-surface-panel-alt rounded-xl border border-border-subtle">
+<span class="block font-caption text-[10px] text-text-tertiary uppercase">Clusters</span>
+<span class="font-headline-sm text-xs font-bold text-text-primary">8 Cohorts</span>
+</div>
+<div class="p-2 bg-surface-panel-alt rounded-xl border border-border-subtle">
+<span class="block font-caption text-[10px] text-text-tertiary uppercase">Avg Affinity</span>
+<span class="font-headline-sm text-xs font-bold text-text-primary">87.2%</span>
+</div>
+<div class="p-2 bg-surface-panel-alt rounded-xl border border-border-subtle">
+<span class="block font-caption text-[10px] text-text-tertiary uppercase">Entropy</span>
+<span class="font-headline-sm text-xs font-bold text-lavender-light">0.94</span>
+</div>
+</div>
+</section>
+<!-- SLEEK TELEMETRY & WORKER FLEET STATUS -->
+<section class="bg-surface-white border border-border-warm rounded-[28px] p-6 soft-card-shadow space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="insights">insights</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">
+                  Worker Telemetry
+                </h3>
+</div>
+<a class="font-code-badge text-[11px] font-semibold text-lavender-light hover:text-primary transition-colors flex items-center gap-1" href="/runs">
+<span>All Runs</span>
+<span class="material-symbols-outlined text-[13px]" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+<!-- Visual Fleet Readiness Card -->
+<div class="p-4 bg-surface-panel-alt rounded-2xl border border-border-subtle space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-3 h-3 rounded-full bg-status-success animate-pulse"></div>
+<div>
+<span class="font-body-semibold text-xs text-text-primary block leading-none">Worker Fleet 01</span>
+<span class="font-code-badge text-[10px] text-text-muted">16 vCPU Pods • US-East</span>
+</div>
+</div>
+<span class="font-code-badge text-xs font-bold text-status-success bg-status-success-bg border border-status-success-border px-2.5 py-0.5 rounded-full">
+                  100% Armed
+                </span>
+</div>
+<!-- Sparkline Activity Bars -->
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px] text-text-muted">
+<span>Readiness Distribution</span>
+<span class="font-code-badge font-semibold text-text-primary">100 / 100</span>
+</div>
+<div class="flex items-end gap-1 h-7 pt-1">
+<div class="flex-1 bg-lavender-light/40 rounded-t h-4"></div>
+<div class="flex-1 bg-lavender-light/50 rounded-t h-5"></div>
+<div class="flex-1 bg-lavender-light/60 rounded-t h-6"></div>
+<div class="flex-1 bg-lavender-light/70 rounded-t h-5"></div>
+<div class="flex-1 bg-lavender-light/80 rounded-t h-7"></div>
+<div class="flex-1 bg-lavender-light rounded-t h-full"></div>
+<div class="flex-1 bg-lavender-light rounded-t h-full"></div>
+<div class="flex-1 bg-honey-light rounded-t h-6"></div>
+<div class="flex-1 bg-lavender-light rounded-t h-full"></div>
+<div class="flex-1 bg-lavender-light rounded-t h-5"></div>
+<div class="flex-1 bg-primary rounded-t h-7"></div>
+<div class="flex-1 bg-lavender-light rounded-t h-full"></div>
+</div>
+</div>
+</div>
+<!-- Mini Live Indicators Bar -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="p-3 bg-surface-cream rounded-xl border border-border-subtle flex items-center justify-between">
+<div>
+<span class="text-[10px] font-caption text-text-tertiary block">API Quota</span>
+<span class="font-code-badge text-xs font-bold text-text-primary">982k / 1M</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-white border border-border-warm flex items-center justify-center text-primary text-xs font-bold">
+                  98%
+                </div>
+</div>
+<div class="p-3 bg-surface-cream rounded-xl border border-border-subtle flex items-center justify-between">
+<div>
+<span class="text-[10px] font-caption text-text-tertiary block">Warm Cache</span>
+<span class="font-code-badge text-xs font-bold text-text-primary">Synced</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-honey-tint border border-status-warning-border flex items-center justify-center text-honey-dark">
+<span class="material-symbols-outlined text-[16px]" data-icon="speed">speed</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('button, a');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          if (btn.getAttribute('href') && btn.getAttribute('href').startsWith('#')) {
+            e.preventDefault();
+          }
+        });
+      });
+    });
+  </script>
+</body></html>

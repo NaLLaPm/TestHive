@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TestHive - Word-of-Mouth Spread</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with container-queries and forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "canvas-ivory": "#F7F4EE",
+            "surface-cream": "#EFECE4",
+            "surface-white": "#FFFFFF",
+            "surface-panel-alt": "#FAF7F2",
+            "border-subtle": "#EBE6DC",
+            "border-warm": "#E4DDD1",
+            "border-accent-tint": "rgba(117, 107, 191, 0.25)",
+            "primary": "#5C52A4",
+            "primary-container": "#756BBF",
+            "lavender-light": "#887FCE",
+            "lavender-tint": "#EDEBF9",
+            "honey-light": "#FBBF24",
+            "honey-dark": "#D97706",
+            "honey-tint": "#FEF3C7",
+            "cyan-dark": "#1C5B66",
+            "cyan-tint": "#E6F3F5",
+            "status-success": "#16A34A",
+            "status-success-bg": "#DCFCE7",
+            "status-success-border": "#BBF7D0",
+            "status-warning": "#F59E0B",
+            "status-warning-bg": "#FFFBEB",
+            "status-warning-border": "#FDE68A",
+            "status-error": "#DC2626",
+            "status-error-bg": "#FEE2E2",
+            "text-primary": "#18181B",
+            "text-muted": "#52525B",
+            "text-tertiary": "#71717A"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "sans": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-base": ["Inter"],
+            "body-semibold": ["Inter"],
+            "label-caps": ["Inter"],
+            "code-badge": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F7F4EE;
+      color: #18181B;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .glass-card {
+      background: #FFFFFF;
+      border: 1px solid #E4DDD1;
+      border-radius: 20px;
+      box-shadow: 0 4px 18px -4px rgba(117, 107, 191, 0.07), 0 1px 3px 0 rgba(24, 24, 27, 0.03);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      box-shadow: 0 10px 25px -6px rgba(117, 107, 191, 0.12), 0 3px 8px -1px rgba(24, 24, 27, 0.04);
+    }
+    /* Ambient Glow on Hub Nodes */
+    .glow-amber {
+      filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.55));
+    }
+    .glow-lavender {
+      filter: drop-shadow(0 0 14px rgba(136, 127, 206, 0.5));
+    }
+    .glow-pulse {
+      animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.18); opacity: 0.15; }
+      100% { transform: scale(0.95); opacity: 0.7; }
+    }
+  </style>
+</head>
+<body class="h-full bg-canvas-ivory text-text-primary antialiased flex flex-col">
+<!-- ==================== TOP NAVIGATION BAR ==================== -->
+<header class="w-full bg-canvas-ivory/95 backdrop-blur-md border-b border-border-subtle sticky top-0 z-30">
+<div class="w-full px-6 py-3.5 flex items-center justify-between">
+<!-- Left: Logo & Wordmark & Live Diffusion Chip -->
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2.5 font-bold tracking-tight text-text-primary text-xl" href="#">
+<span class="w-8 h-8 rounded-xl bg-primary-container text-surface-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</span>
+<span class="font-extrabold tracking-tight">TestHive</span>
+</a>
+<div class="hidden sm:flex items-center gap-2 pl-3 border-l border-border-warm">
+<span class="w-2.5 h-2.5 rounded-full bg-honey-light animate-ping"></span>
+<span class="text-[11px] font-code-badge text-honey-dark font-bold tracking-wide bg-honey-tint/80 px-2.5 py-1 rounded-full border border-status-warning-border">
+            Diffusion Active • 1,000 Agents
+          </span>
+</div>
+</div>
+<!-- Center: Stepper Navigation (Visual / Compact) -->
+<nav class="hidden md:flex items-center gap-1.5 bg-surface-cream/80 p-1.5 rounded-full border border-border-warm">
+<a class="bg-surface-white/70 text-text-muted hover:text-text-primary px-3.5 py-1.5 rounded-full text-xs font-medium hover:border-lavender-light border border-transparent transition-all" href="#">
+          Launch Pad
+        </a>
+<a class="bg-surface-white/70 text-text-muted hover:text-text-primary px-3.5 py-1.5 rounded-full text-xs font-medium hover:border-lavender-light border border-transparent transition-all" href="#">
+          Analytics
+        </a>
+<!-- Active Tab -->
+<a class="bg-lavender-light text-surface-white text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[15px]">share</span>
+          Word-of-Mouth
+        </a>
+<a class="bg-surface-white/70 text-text-muted hover:text-text-primary px-3.5 py-1.5 rounded-full text-xs font-medium hover:border-lavender-light border border-transparent transition-all" href="#">
+          Executive Report
+        </a>
+</nav>
+<!-- Right: Action Icons & Simulator Trigger -->
+<div class="flex items-center gap-3">
+<button class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-white border border-border-warm text-text-muted hover:text-text-primary text-xs font-semibold shadow-sm hover:bg-surface-cream transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export SVG</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary-container text-surface-white text-xs font-bold shadow-sm hover:opacity-95 transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Run Simulation</span>
+</button>
+<div class="flex items-center gap-1.5 pl-2 border-l border-border-warm">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-lavender-tint border border-border-accent-tint flex items-center justify-center text-xs font-code-badge text-primary font-bold">
+            LR
+          </div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN VIEWPORT WITH LEFT ICON RAIL ==================== -->
+<div class="flex-1 flex overflow-hidden relative">
+<!-- Persistent Left Icon Rail -->
+<aside aria-label="Icon rail navigation" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-40 hidden md:flex">
+<a class="w-11 h-11 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all" href="#" title="Dashboard">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</a>
+<a class="w-11 h-11 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all" href="#" title="Library">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</a>
+<a class="w-11 h-11 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm shadow-sm hover:bg-lavender-tint transition-all" href="#" title="Personas">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</a>
+<!-- Active -->
+<a class="w-11 h-11 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-sm" href="#" title="Simulation Dynamics">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</a>
+</aside>
+<!-- Scrollable Content Canvas -->
+<main class="flex-1 overflow-y-auto pl-4 md:pl-20 pr-4 md:pr-8 py-5">
+<div class="max-w-[1360px] mx-auto space-y-5">
+<!-- Top Header Strip: Ultra-lean -->
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<h1 class="text-xl md:text-2xl font-bold tracking-tight text-text-primary flex items-center gap-2">
+<span>Viral Coefficient &amp; Organic Network</span>
+</h1>
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-code-badge bg-lavender-tint text-primary font-semibold border border-border-accent-tint">
+              Barabási–Albert Graph
+            </span>
+</div>
+<div class="flex items-center gap-2">
+<!-- Timeline Step Pill -->
+<div class="flex items-center gap-1.5 bg-surface-white border border-border-warm rounded-full px-3 py-1 text-xs">
+<span class="text-text-muted font-medium">Epoch:</span>
+<span class="font-code-badge font-bold text-primary">Day 14.5</span>
+<span class="text-text-tertiary">/ 30</span>
+</div>
+<!-- Live Status -->
+<div class="flex items-center gap-1.5 bg-status-success-bg border border-status-success-border px-3 py-1 rounded-full text-[11px] font-semibold text-status-success">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+              Cascade Converging
+            </div>
+</div>
+</div>
+<!-- ==================== 1. GRAPHICAL KPI WIDGETS ROW ==================== -->
+<section aria-label="Key Performance Visual Indicators" class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+<!-- Card 1: K-Factor Radial Gauge -->
+<div class="glass-card p-4 flex items-center justify-between relative overflow-hidden">
+<div class="space-y-1">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-muted">Viral K-Factor</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary">1.24</span>
+<span class="text-xs font-code-badge text-status-success font-bold">+18%</span>
+</div>
+<span class="inline-flex items-center gap-1 text-[10px] font-bold text-status-success bg-status-success-bg px-2 py-0.5 rounded-full border border-status-success-border">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> EXPONENTIAL
+              </span>
+</div>
+<!-- Mini Radial Gauge SVG -->
+<div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-cream stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3.5"></path>
+<path class="text-primary-container stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="78, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="material-symbols-outlined text-primary text-[20px] absolute">all_inclusive</span>
+</div>
+</div>
+<!-- Card 2: Synthetic NPS Dial -->
+<div class="glass-card p-4 flex items-center justify-between relative overflow-hidden">
+<div class="space-y-1">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-muted">Synthetic NPS</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary">+46</span>
+<span class="text-[11px] text-text-muted font-medium">pts</span>
+</div>
+<!-- Segmented Tri-color pill -->
+<div class="flex items-center gap-1 pt-0.5">
+<div class="w-9 h-1.5 rounded-full bg-status-success" title="Promoters 62%"></div>
+<div class="w-4 h-1.5 rounded-full bg-honey-light" title="Passives 22%"></div>
+<div class="w-2.5 h-1.5 rounded-full bg-status-error" title="Detractors 16%"></div>
+<span class="text-[10px] font-code-badge text-status-success font-bold ml-1">62% P</span>
+</div>
+</div>
+<!-- Radial NPS Graphic -->
+<div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-cream stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3.5"></path>
+<path class="text-honey-dark stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="64, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="material-symbols-outlined text-honey-dark text-[20px] absolute">sentiment_satisfied</span>
+</div>
+</div>
+<!-- Card 3: Velocity Sparkline Widget -->
+<div class="glass-card p-4 flex items-center justify-between relative overflow-hidden">
+<div class="space-y-1">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-muted">Referral Velocity</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl font-extrabold tracking-tight text-text-primary">3.4</span>
+<span class="text-[11px] text-text-muted font-medium">inv/wk</span>
+</div>
+<span class="inline-flex items-center gap-1 text-[10px] font-bold text-cyan-dark bg-cyan-tint px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px]">bolt</span> 41.2h CYCLE
+              </span>
+</div>
+<!-- Mini SVG Area Sparkline -->
+<div class="w-20 h-12 flex items-end shrink-0">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 80 40">
+<defs>
+<lineargradient id="velocityFill" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1C5B66" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#1C5B66" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0,34 Q 15,30 25,24 T 50,15 T 80,4 L 80,40 L 0,40 Z" fill="url(#velocityFill)"></path>
+<path d="M 0,34 Q 15,30 25,24 T 50,15 T 80,4" fill="none" stroke="#1C5B66" stroke-linecap="round" stroke-width="2.5"></path>
+<circle cx="80" cy="4" fill="#1C5B66" r="3.5"></circle>
+</svg>
+</div>
+</div>
+<!-- Card 4: Sentiment Valence Donut / Arc -->
+<div class="glass-card p-4 flex items-center justify-between relative overflow-hidden">
+<div class="space-y-1">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-muted">Positive Valence</span>
+<div class="flex items-baseline gap-1.5">
+<span class="text-3xl font-extrabold tracking-tight text-status-success">78%</span>
+<span class="text-[10px] font-code-badge text-text-tertiary">7% CRIT</span>
+</div>
+<span class="inline-flex items-center gap-1 text-[10px] font-bold text-primary bg-lavender-tint px-2 py-0.5 rounded-full">
+                HIGH ADVOCACY
+              </span>
+</div>
+<!-- Mini Radial Dial -->
+<div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-cream stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3.5"></path>
+<path class="text-status-success stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="78, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="material-symbols-outlined text-status-success text-[20px] absolute">thumb_up</span>
+</div>
+</div>
+</section>
+<!-- ==================== 2. MAIN VISUAL SHOWCASE: INTERACTIVE NETWORK CANVAS ==================== -->
+<section class="glass-card p-5 relative overflow-hidden">
+<!-- Top Control Header in Canvas Card -->
+<div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border-subtle">
+<!-- Node Cluster Indicators as Sleek Chips -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-honey-tint/70 border border-status-warning-border text-xs font-semibold text-honey-dark">
+<span class="w-2.5 h-2.5 rounded-full bg-honey-light shadow-sm"></span>
+<span>Seed Champions</span>
+<span class="font-code-badge text-[11px] font-bold text-text-primary ml-1">150</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lavender-tint/70 border border-border-accent-tint text-xs font-semibold text-primary">
+<span class="w-2.5 h-2.5 rounded-full bg-lavender-light shadow-sm"></span>
+<span>2nd-Degree Peers</span>
+<span class="font-code-badge text-[11px] font-bold text-text-primary ml-1">540</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-status-error-bg/70 border border-status-error border-opacity-20 text-xs font-semibold text-status-error">
+<span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm"></span>
+<span>Skeptics</span>
+<span class="font-code-badge text-[11px] font-bold text-text-primary ml-1">310</span>
+</div>
+</div>
+<!-- View Modes & Canvas Controls -->
+<div class="flex items-center gap-1.5 bg-surface-cream/80 p-1 rounded-xl border border-border-warm">
+<button class="px-2.5 py-1 rounded-lg text-xs font-bold bg-surface-white text-primary shadow-sm flex items-center gap-1" title="Cluster View">
+<span class="material-symbols-outlined text-[15px]">bubble_chart</span>
+<span>Clusters</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-text-muted hover:text-text-primary hover:bg-surface-white/60 transition-all flex items-center gap-1" title="Flow View">
+<span class="material-symbols-outlined text-[15px]">schema</span>
+<span>Cascade</span>
+</button>
+<div class="h-3.5 w-px bg-border-warm mx-0.5"></div>
+<button class="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-white transition-all" title="Zoom in">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+<button class="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-white transition-all" title="Zoom out">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<button class="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-white transition-all" title="Reset View">
+<span class="material-symbols-outlined text-[16px]">filter_center_focus</span>
+</button>
+</div>
+</div>
+<!-- THE HIGH-VISUAL NETWORK GRAPH CANVAS -->
+<div class="relative w-full h-[430px] mt-4 bg-canvas-ivory/80 rounded-2xl border border-border-warm overflow-hidden flex items-center justify-center cursor-crosshair">
+<!-- Subtle Coordinate Grid Background -->
+<div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(#887FCE 1.2px, transparent 1.2px); background-size: 32px 32px;"></div>
+<!-- SVG Graph Structure -->
+<svg class="absolute inset-0 w-full h-full" fill="none" viewbox="0 0 1100 430" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Gradients for active propagation flow -->
+<lineargradient id="edgeGoldPurple" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#F59E0B" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#887FCE" stop-opacity="0.8"></stop>
+</lineargradient>
+<lineargradient id="edgePurpleRed" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#887FCE" stop-opacity="0.7"></stop>
+<stop offset="100%" stop-color="#EF4444" stop-opacity="0.75"></stop>
+</lineargradient>
+<lineargradient id="edgeCenterBridge" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#F59E0B" stop-opacity="0.95"></stop>
+<stop offset="50%" stop-color="#756BBF" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#F59E0B" stop-opacity="0.95"></stop>
+</lineargradient>
+<!-- Radiant Glow Filter -->
+<filter height="200%" id="hubGlowAmber" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur" stddeviation="12"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+<filter height="200%" id="hubGlowLavender" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur" stddeviation="8"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- ================= DYNAMIC CONNECTING EDGES ================= -->
+<!-- Cluster Left connections -->
+<line opacity="0.65" stroke="#EF4444" stroke-dasharray="3 3" stroke-width="1.5" x1="280" x2="160" y1="215" y2="130"></line>
+<line opacity="0.8" stroke="#887FCE" stroke-width="2.2" x1="280" x2="180" y1="215" y2="305"></line>
+<line stroke="url(#edgeGoldPurple)" stroke-width="3" x1="280" x2="380" y1="215" y2="125"></line>
+<line opacity="0.85" stroke="#887FCE" stroke-width="2.2" x1="280" x2="350" y1="215" y2="295"></line>
+<line opacity="0.6" stroke="#887FCE" stroke-width="1.5" x1="180" x2="110" y1="305" y2="340"></line>
+<line opacity="0.75" stroke="#887FCE" stroke-width="2" x1="380" x2="480" y1="125" y2="90"></line>
+<line opacity="0.85" stroke="#887FCE" stroke-width="2.2" x1="380" x2="460" y1="125" y2="185"></line>
+<!-- Central Mega Bridge (Backbone of virality) -->
+<line stroke="url(#edgeCenterBridge)" stroke-linecap="round" stroke-width="4.5" x1="280" x2="620" y1="215" y2="225"></line>
+<line stroke="url(#edgeGoldPurple)" stroke-width="2.8" x1="380" x2="620" y1="125" y2="225"></line>
+<line opacity="0.8" stroke="#756BBF" stroke-width="2.5" x1="460" x2="620" y1="185" y2="225"></line>
+<!-- Cluster Right connections -->
+<line stroke="url(#edgePurpleRed)" stroke-width="2.2" x1="620" x2="550" y1="225" y2="320"></line>
+<line opacity="0.7" stroke="#EF4444" stroke-dasharray="2 2" stroke-width="1.8" x1="550" x2="480" y1="320" y2="380"></line>
+<line stroke="url(#edgeGoldPurple)" stroke-width="3.2" x1="620" x2="735" y1="225" y2="115"></line>
+<line opacity="0.85" stroke="#887FCE" stroke-width="2.5" x1="620" x2="770" y1="225" y2="235"></line>
+<line opacity="0.75" stroke="#887FCE" stroke-width="2" x1="620" x2="690" y1="225" y2="345"></line>
+<!-- Far Right Tertiary Cluster connections -->
+<line opacity="0.75" stroke="#887FCE" stroke-width="2" x1="735" x2="890" y1="115" y2="85"></line>
+<line opacity="0.8" stroke="#756BBF" stroke-width="2.4" x1="735" x2="860" y1="115" y2="175"></line>
+<line opacity="0.75" stroke="#887FCE" stroke-width="2" x1="770" x2="860" y1="235" y2="175"></line>
+<line opacity="0.8" stroke="#887FCE" stroke-width="2.2" x1="770" x2="945" y1="235" y2="230"></line>
+<line stroke="url(#edgePurpleRed)" stroke-width="2" x1="770" x2="880" y1="235" y2="310"></line>
+<line opacity="0.6" stroke="#EF4444" stroke-dasharray="2 2" stroke-width="1.5" x1="880" x2="975" y1="310" y2="340"></line>
+<line opacity="0.7" stroke="#887FCE" stroke-width="1.8" x1="860" x2="980" y1="175" y2="140"></line>
+<!-- ================= NODES ================= -->
+<!-- INFLUENCER HUB 1 (Left Major Seed) -->
+<circle class="glow-pulse" cx="280" cy="215" fill="#F59E0B" opacity="0.18" r="32"></circle>
+<circle cx="280" cy="215" fill="#F59E0B" filter="url(#hubGlowAmber)" r="22"></circle>
+<circle cx="280" cy="215" fill="#FBBF24" r="16" stroke="#FFFFFF" stroke-width="3"></circle>
+<!-- INFLUENCER HUB 2 (Center Core Hub) -->
+<circle class="glow-pulse" cx="620" cy="225" fill="#F59E0B" opacity="0.22" r="38" style="animation-delay: 1s;"></circle>
+<circle cx="620" cy="225" fill="#F59E0B" filter="url(#hubGlowAmber)" r="26"></circle>
+<circle cx="620" cy="225" fill="#FBBF24" r="18" stroke="#FFFFFF" stroke-width="3.5"></circle>
+<!-- INFLUENCER HUB 3 (Far Right Pivot Node) -->
+<circle class="glow-pulse" cx="735" cy="115" fill="#756BBF" opacity="0.25" r="24" style="animation-delay: 1.5s;"></circle>
+<circle cx="735" cy="115" fill="#756BBF" filter="url(#hubGlowLavender)" r="16"></circle>
+<circle cx="735" cy="115" fill="#887FCE" r="13" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<!-- Peer Conversions (Lavender Tier 1 & 2) -->
+<circle cx="380" cy="125" fill="#756BBF" r="12" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="180" cy="305" fill="#887FCE" r="11" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="460" cy="185" fill="#887FCE" r="10" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="350" cy="295" fill="#887FCE" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="480" cy="90" fill="#887FCE" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="110" cy="340" fill="#887FCE" r="7" stroke="#FFFFFF" stroke-width="1.8"></circle>
+<circle cx="770" cy="235" fill="#756BBF" r="12" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="860" cy="175" fill="#887FCE" r="11" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="690" cy="345" fill="#887FCE" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="890" cy="85" fill="#887FCE" r="8" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="945" cy="230" fill="#887FCE" r="9" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="980" cy="140" fill="#887FCE" r="7" stroke="#FFFFFF" stroke-width="1.8"></circle>
+<!-- Skeptic / Detractor Nodes (Ruby/Coral) -->
+<circle cx="160" cy="130" fill="#EF4444" r="10" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="550" cy="320" fill="#EF4444" r="11" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="480" cy="380" fill="#F87171" r="7" stroke="#FFFFFF" stroke-width="1.8"></circle>
+<circle cx="880" cy="310" fill="#EF4444" r="10" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="975" cy="340" fill="#F87171" r="8" stroke="#FFFFFF" stroke-width="1.8"></circle>
+</svg>
+<!-- Minimal Interactive Inspection Card (Hovered Node Overlay) -->
+<div class="absolute bottom-3 left-3 bg-surface-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-border-warm shadow-md flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-honey-tint text-honey-dark flex items-center justify-center font-code-badge font-bold text-xs">
+                #A2
+              </div>
+<div class="text-xs">
+<div class="font-bold text-text-primary flex items-center gap-1.5">
+<span>Lead Architect • Enterprise Fintech</span>
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+</div>
+<div class="text-text-muted text-[11px] font-medium flex items-center gap-2 mt-0.5">
+<span>14 peer connections</span>
+<span>•</span>
+<span class="text-primary font-bold">18 shares sent</span>
+</div>
+</div>
+</div>
+<!-- Minimal Quick Cascade Telemetry Pill -->
+<div class="absolute top-3 right-3 bg-surface-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-border-warm shadow-sm flex items-center gap-2.5 text-xs">
+<span class="text-text-muted font-medium">Density:</span>
+<span class="font-code-badge font-bold text-primary">0.64</span>
+<span class="text-border-warm">|</span>
+<span class="text-text-muted font-medium">Cascade:</span>
+<span class="font-code-badge font-bold text-honey-dark">2.8x</span>
+</div>
+</div>
+</section>
+<!-- ==================== 3. TELEMETRY, PROPAGATION & SENSITIVITY PANELS ==================== -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+<!-- Column 1: Visual Channel Attribution & Sentiment Flow (7 Cols) -->
+<div class="lg:col-span-7 space-y-5">
+<!-- Graphic Channel Heat & Distribution -->
+<div class="glass-card p-5">
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[19px]">alt_route</span>
+<h3 class="text-sm font-bold text-text-primary uppercase tracking-wider">Channel Referral Heatmap</h3>
+</div>
+<span class="text-[11px] font-code-badge text-text-tertiary">1,500 Total Invocations</span>
+</div>
+<!-- Visual Proportion Stack Bar -->
+<div class="w-full h-3 rounded-full overflow-hidden flex bg-surface-cream mb-4">
+<div class="bg-lavender-light h-full" style="width: 42%" title="Developer Slacks (42%)"></div>
+<div class="bg-primary h-full" style="width: 31%" title="X / Tech Threads (31%)"></div>
+<div class="bg-honey-light h-full" style="width: 18%" title="Direct Invites (18%)"></div>
+<div class="bg-status-success h-full" style="width: 9%" title="Product Hunt / HN (9%)"></div>
+</div>
+<!-- Interactive Graphical Channels Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+<!-- Ch 1 -->
+<div class="bg-surface-panel-alt p-3 rounded-xl border border-border-warm/70 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs mb-2">
+<span class="material-symbols-outlined text-primary text-[18px]">forum</span>
+<span class="font-code-badge font-bold text-text-primary text-xs">42%</span>
+</div>
+<div class="text-[11px] font-semibold text-text-primary truncate">Dev Slacks</div>
+<div class="text-[10px] text-text-tertiary font-code-badge mt-0.5">630 refs</div>
+</div>
+<!-- Ch 2 -->
+<div class="bg-surface-panel-alt p-3 rounded-xl border border-border-warm/70 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs mb-2">
+<span class="material-symbols-outlined text-sky-500 text-[18px]">chat</span>
+<span class="font-code-badge font-bold text-text-primary text-xs">31%</span>
+</div>
+<div class="text-[11px] font-semibold text-text-primary truncate">X Threads</div>
+<div class="text-[10px] text-text-tertiary font-code-badge mt-0.5">465 refs</div>
+</div>
+<!-- Ch 3 -->
+<div class="bg-surface-panel-alt p-3 rounded-xl border border-border-warm/70 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs mb-2">
+<span class="material-symbols-outlined text-honey-dark text-[18px]">mail</span>
+<span class="font-code-badge font-bold text-text-primary text-xs">18%</span>
+</div>
+<div class="text-[11px] font-semibold text-text-primary truncate">Direct 1-on-1</div>
+<div class="text-[10px] text-text-tertiary font-code-badge mt-0.5">270 refs</div>
+</div>
+<!-- Ch 4 -->
+<div class="bg-surface-panel-alt p-3 rounded-xl border border-border-warm/70 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs mb-2">
+<span class="material-symbols-outlined text-emerald-600 text-[18px]">rocket_launch</span>
+<span class="font-code-badge font-bold text-text-primary text-xs">9%</span>
+</div>
+<div class="text-[11px] font-semibold text-text-primary truncate">Hacker News</div>
+<div class="text-[10px] text-text-tertiary font-code-badge mt-0.5">135 refs</div>
+</div>
+</div>
+</div>
+<!-- Sentiment Distribution Curve & Highlight Quotes (Visualized) -->
+<div class="glass-card p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[19px]">equalizer</span>
+<h3 class="text-sm font-bold text-text-primary uppercase tracking-wider">Advocacy vs Friction Pulse</h3>
+</div>
+<div class="flex items-center gap-2 text-[11px]">
+<span class="flex items-center gap-1 font-semibold text-status-success">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> Advocacy 78%
+                  </span>
+<span class="flex items-center gap-1 font-semibold text-status-error">
+<span class="w-2 h-2 rounded-full bg-status-error"></span> Friction 22%
+                  </span>
+</div>
+</div>
+<!-- Visual Snippets Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+<div class="p-3.5 rounded-xl bg-surface-panel-alt border-l-4 border-l-primary border border-border-warm/80">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[10px] font-code-badge font-bold text-primary bg-lavender-tint px-2 py-0.5 rounded">DEVREL CHAMPION</span>
+<span class="text-xs font-bold text-status-success flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">thumb_up</span> +0.92
+                    </span>
+</div>
+<p class="text-xs text-text-primary italic line-clamp-2">
+                    "Cut test cycle from 4 days to 45 mins using synthetic clusters. 3 architects spun it up within the hour."
+                  </p>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-panel-alt border-l-4 border-l-rose-400 border border-border-warm/80">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[10px] font-code-badge font-bold text-status-error bg-status-error-bg px-2 py-0.5 rounded">SECURITY GATE</span>
+<span class="text-xs font-bold text-status-error flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">warning</span> -0.18
+                    </span>
+</div>
+<p class="text-xs text-text-primary italic line-clamp-2">
+                    "Behavioral simulation is accurate, but requires explicit guarantees on synthetic data residency."
+                  </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Virality Sensitivity Controls & Loop Diagnostics (5 Cols) -->
+<div class="lg:col-span-5 space-y-5">
+<!-- Sleek Virality Sensitivity Tuning Widget -->
+<div class="glass-card p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[19px]">tune</span>
+<h3 class="text-sm font-bold text-text-primary uppercase tracking-wider">Sensitivity Weights</h3>
+</div>
+<button class="text-[11px] font-bold text-primary hover:underline">Reset</button>
+</div>
+<!-- Compact Sliders with Live Feedback Badges -->
+<div class="space-y-4 my-3">
+<!-- Slider 1 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-semibold text-text-primary">Eureka / Wow Threshold</span>
+<span class="font-code-badge font-bold text-primary bg-lavender-tint px-2 py-0.5 rounded text-[11px]">84%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-cream rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="84"/>
+</div>
+<!-- Slider 2 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-semibold text-text-primary">Referral Friction Decay</span>
+<span class="font-code-badge font-bold text-honey-dark bg-honey-tint px-2 py-0.5 rounded text-[11px]">28%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-cream rounded-lg appearance-none cursor-pointer accent-amber-500" max="100" min="0" type="range" value="28"/>
+</div>
+<!-- Slider 3 -->
+<div>
+<div class="flex justify-between items-center text-xs mb-1">
+<span class="font-semibold text-text-primary">Social Proof Sensitivity</span>
+<span class="font-code-badge font-bold text-status-success bg-status-success-bg px-2 py-0.5 rounded text-[11px]">72%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-cream rounded-lg appearance-none cursor-pointer accent-green-600" max="100" min="0" type="range" value="72"/>
+</div>
+</div>
+<!-- Action button -->
+<button class="w-full mt-3 py-2.5 rounded-xl bg-primary-container text-surface-white font-bold text-xs shadow-sm hover:opacity-95 transition-all flex items-center justify-center gap-1.5 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Re-compute Cascade</span>
+</button>
+</div>
+<!-- Loop Diagnostics / Bottlenecks: Compact & Visual -->
+<div class="glass-card p-5">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-honey-dark text-[19px]">insights</span>
+<h3 class="text-sm font-bold text-text-primary uppercase tracking-wider">Loop Bottlenecks</h3>
+</div>
+<div class="space-y-2.5 text-xs">
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-cream/50 border border-border-warm/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-status-success text-[17px]">check_circle</span>
+<span class="font-semibold text-text-primary">Sandbox Visual Hook</span>
+</div>
+<span class="font-code-badge text-status-success font-bold">+89% Conv</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-cream/50 border border-border-warm/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-status-warning text-[17px]">report_problem</span>
+<span class="font-semibold text-text-primary">SSO Auth Gate</span>
+</div>
+<span class="font-code-badge text-status-warning font-bold">-14% Drop</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-cream/50 border border-border-warm/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[17px]">trending_up</span>
+<span class="font-semibold text-text-primary">Advocacy Half-life</span>
+</div>
+<span class="font-code-badge text-primary font-bold">18.4 Days</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

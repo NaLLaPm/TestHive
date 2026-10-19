@@ -129,3 +129,19 @@ html, body {
 .animate-panel-shiver {
   animation: panel-shiver 0.6s ease-in-out infinite;
 }
+
+/* Ambient glow and pulse for network nodes */
+.glow-amber {
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.55));
+}
+.glow-lavender {
+  filter: drop-shadow(0 0 14px rgba(136, 127, 206, 0.5));
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.18); opacity: 0.15; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+.glow-pulse {
+  animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}

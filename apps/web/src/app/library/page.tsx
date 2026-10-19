@@ -32,12 +32,12 @@ export default function LibraryPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">Persona Library</h1>
           <p className="text-muted text-sm mt-1">Built once, reused by every run and every test kind.</p>
         </div>
-        <button onClick={() => setOpen((v) => !v)} className="bg-accent text-cream font-bold px-4 py-2 rounded-lg">
+        <button onClick={() => setOpen((v) => !v)} className="bg-accent text-cream font-bold px-4 py-2 rounded-lg self-start sm:self-auto">
           {open ? "Cancel" : "Build new pool"}
         </button>
       </div>

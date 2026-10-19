@@ -2,6 +2,9 @@
 
 set -e
 
+# Ensure bun is on PATH
+export PATH="$HOME/.bun/bin:$PATH"
+
 echo "=========================================================="
 echo "   TestHive - Launching All Services"
 echo "=========================================================="

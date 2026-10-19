@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TestHive — Executive Report</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#180460",
+            "outline-variant": "#c9c4d3",
+            "status-warning-border": "#FDE68A",
+            "outline": "#787582",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#adccd2",
+            "border-accent-tint": "rgba(136, 127, 206, 0.35)",
+            "inverse-on-surface": "#f3f0f4",
+            "on-tertiary-container": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "status-success-border": "#A5D6A7",
+            "surface-container-high": "#eae7eb",
+            "on-primary": "#ffffff",
+            "honey-light": "#FBBF24",
+            "on-secondary-container": "#684000",
+            "tertiary-fixed": "#c9e8ee",
+            "on-error-container": "#93000a",
+            "surface-tint": "#5d53a5",
+            "on-tertiary": "#ffffff",
+            "surface-cream": "#F5F1EA",
+            "status-error-bg": "#FEF2F2",
+            "on-tertiary-fixed-variant": "#2e4b50",
+            "error": "#ba1a1a",
+            "text-muted": "#52525B",
+            "background": "#fbf8fc",
+            "inverse-primary": "#c7bfff",
+            "secondary-fixed-dim": "#ffb95f",
+            "border-subtle": "#ECE7E1",
+            "on-tertiary-fixed": "#001f24",
+            "border-warm": "#E6E0D8",
+            "cyan-tint": "#E6F3F5",
+            "surface-panel-alt": "#FAF6F0",
+            "surface-container-low": "#f5f3f6",
+            "surface-variant": "#e4e1e5",
+            "secondary": "#855300",
+            "primary-container": "#756bbf",
+            "status-success-bg": "#E8F5E9",
+            "on-background": "#1b1b1e",
+            "lavender-tint": "#EDEBF9",
+            "secondary-fixed": "#ffddb8",
+            "status-error": "#DC2626",
+            "text-tertiary": "#71717A",
+            "surface": "#fbf8fc",
+            "surface-container-highest": "#e4e1e5",
+            "surface-dim": "#dcd9dd",
+            "on-primary-container": "#ffffff",
+            "canvas-ivory": "#FBF9F5",
+            "surface-white": "#FFFFFF",
+            "status-warning": "#F59E0B",
+            "honey-tint": "#FEF3C7",
+            "status-warning-bg": "#FFFBEB",
+            "primary": "#5c52a4",
+            "on-error": "#ffffff",
+            "status-success": "#1C6938",
+            "surface-container": "#f0edf1",
+            "tertiary-container": "#5e7b81",
+            "on-secondary-fixed-variant": "#653e00",
+            "on-primary-fixed-variant": "#453b8c",
+            "on-secondary-fixed": "#2a1700",
+            "on-surface": "#1b1b1e",
+            "honey-dark": "#D97706",
+            "on-surface-variant": "#474551",
+            "lavender-light": "#887FCE",
+            "primary-fixed-dim": "#c7bfff",
+            "inverse-surface": "#303033",
+            "error-container": "#ffdad6",
+            "status-error-border": "#FECACA",
+            "cyan-dark": "#1C5B66",
+            "primary-fixed": "#e5deff",
+            "tertiary": "#456267",
+            "secondary-container": "#fea619",
+            "surface-bright": "#fbf8fc",
+            "text-primary": "#18181B"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "display-hero-mobile": ["Inter"],
+            "display-hero": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-base": ["Inter"],
+            "label-caps": ["Inter"],
+            "body-semibold": ["Inter"],
+            "code-badge": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "caption": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "display-hero": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-base": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "body-semibold": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "code-badge": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    body {
+      background-color: #FBF9F5;
+      color: #18181B;
+      font-family: 'Inter', sans-serif;
+    }
+    .ambient-card-shadow {
+      box-shadow: 0 2px 10px -2px rgba(136, 127, 206, 0.08), 0 1px 4px 0 rgba(24, 24, 27, 0.03);
+    }
+    .ambient-glow-sm {
+      box-shadow: 0 4px 16px -2px rgba(136, 127, 206, 0.18);
+    }
+  </style>
+</head>
+<body class="bg-canvas-ivory text-text-primary antialiased selection:bg-lavender-tint selection:text-primary min-h-screen flex flex-col">
+<!-- LEFT FLOATING ICON RAIL (Shared Component: SideNavBar) -->
+<aside aria-label="Primary Navigation" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40 hidden md:flex">
+<!-- Tab 1: Dashboard (Inactive) -->
+<button class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 active:scale-95 shadow-sm" title="Dashboard">
+<span class="material-symbols-outlined text-[22px]">grid_view</span>
+</button>
+<!-- Tab 2: Library (Inactive) -->
+<button class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 active:scale-95 shadow-sm" title="Library">
+<span class="material-symbols-outlined text-[22px]">description</span>
+</button>
+<!-- Tab 3: Personas (Inactive) -->
+<button class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 active:scale-95 shadow-sm" title="Personas">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</button>
+<!-- Tab 4: Test Runs (Active / Current Context) -->
+<button class="w-12 h-12 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-sm active:scale-95 transition-transform duration-150" title="Test Runs">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</aside>
+<!-- TOP APP BAR / BRAND HEADER -->
+<header class="w-full bg-canvas-ivory border-b border-border-subtle sticky top-0 z-30">
+<div class="max-w-[1360px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+<!-- Brand Cluster -->
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-primary text-surface-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[20px]">bubble_chart</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-text-primary tracking-tight">TestHive</span>
+<span class="font-code-badge text-code-badge px-2 py-0.5 rounded-full bg-lavender-tint text-primary border border-border-accent-tint">SIM-RUN #4088</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted hidden sm:block">Multi-Agent Behavioral Modeling &amp; Telemetry</p>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-3">
+<!-- Notification button -->
+<button aria-label="Notifications" class="w-10 h-10 rounded-full bg-surface-white border border-border-warm text-text-muted hover:text-text-primary hover:bg-surface-cream flex items-center justify-center transition-all duration-150">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<!-- Tune button -->
+<button aria-label="Settings and Parameters" class="w-10 h-10 rounded-full bg-surface-white border border-border-warm text-text-muted hover:text-text-primary hover:bg-surface-cream flex items-center justify-center transition-all duration-150">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<!-- Primary Trailing Action: Deploy Agents / Export Deck -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary hover:bg-lavender-light text-surface-white font-body-semibold text-body-semibold transition-all duration-150 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+<span class="hidden md:inline">Executive Summary v2.4 • Export PDF / Deck</span>
+<span class="md:hidden">Export</span>
+</button>
+</div>
+</div>
+</header>
+<!-- WORKSPACE WRAPPER (accounting for desktop rail offset) -->
+<div class="flex-1 w-full max-w-[1360px] mx-auto md:pl-20 px-4 sm:px-8 py-6 flex flex-col gap-8">
+<!-- SUB-NAV / HORIZONTAL STEPPER (TopNavBar Segmented Navigation) -->
+<nav aria-label="Simulation Workflow Tabs" class="w-full flex items-center justify-between pb-2 overflow-x-auto no-scrollbar">
+<div class="flex items-center gap-2 p-1.5 rounded-full bg-surface-cream border border-border-warm">
+<!-- Step 1 -->
+<button class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base whitespace-nowrap hover:border-lavender-light transition-all duration-150 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+<span>Launch Pad</span>
+</button>
+<!-- Step 2 -->
+<button class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base whitespace-nowrap hover:border-lavender-light transition-all duration-150 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+<span>Analytics &amp; UX Frictions</span>
+</button>
+<!-- Step 3 -->
+<button class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base whitespace-nowrap hover:border-lavender-light transition-all duration-150 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+<span>Word-of-Mouth Spread</span>
+</button>
+<!-- Step 4: ACTIVE EXECUTIVE REPORT -->
+<button class="bg-lavender-light text-surface-white font-body-semibold text-body-semibold px-4 py-2 rounded-full shadow-sm whitespace-nowrap flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">assessment</span>
+<span>Executive Report</span>
+</button>
+</div>
+<!-- Quick Session Meta -->
+<div class="hidden lg:flex items-center gap-4 text-text-muted font-body-sm text-body-sm">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">groups</span>
+<span>1,200 Synthetic Agents</span>
+</span>
+<span class="text-border-warm">•</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">timer</span>
+<span>Completed 42m ago</span>
+</span>
+<span class="text-border-warm">•</span>
+<span class="font-code-badge text-code-badge text-primary bg-lavender-tint px-2.5 py-1 rounded-full">Confidence 96.8%</span>
+</div>
+</nav>
+<!-- PAGE HERO HEADER -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 text-primary font-label-caps text-label-caps mb-1.5">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>MULTI-AGENT SYNTHETIC SIMULATION REPORT</span>
+</div>
+<h1 class="font-display-hero text-display-hero font-extrabold text-text-primary tracking-tight">Synthetic Testing Executive Debrief</h1>
+<p class="font-body-base text-body-base text-text-muted mt-1.5 max-w-2xl">
+          Actionable product recommendations, conversion risks, and release readiness verdict compiled across 1,200 autonomous behavioral personas.
+        </p>
+</div>
+<!-- Quick Action Group -->
+<div class="flex items-center gap-2.5 self-start lg:self-auto">
+<button class="px-3.5 py-2 rounded-2xl bg-surface-white border border-border-warm hover:bg-surface-cream text-text-primary font-body-semibold text-body-semibold text-[13px] flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span>Compare vs v2.3</span>
+</button>
+<button class="px-3.5 py-2 rounded-2xl bg-surface-white border border-border-warm hover:bg-surface-cream text-text-primary font-body-semibold text-body-semibold text-[13px] flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Share Debrief Link</span>
+</button>
+</div>
+</section>
+<!-- 1. EXECUTIVE VERDICT BANNER -->
+<section class="w-full bg-surface-white border border-border-warm rounded-3xl p-6 md:p-8 ambient-card-shadow relative overflow-hidden">
+<!-- Ambient background decoration -->
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-honey-tint/40 blur-3xl pointer-events-none"></div>
+<div class="absolute right-64 -bottom-16 w-64 h-64 rounded-full bg-lavender-tint/30 blur-2xl pointer-events-none"></div>
+<div class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Verdict Callout (Col 1-8) -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-label-caps text-label-caps bg-status-warning-bg text-honey-dark border border-status-warning-border">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+              RELEASE READINESS: CONDITIONAL APPROVAL
+            </span>
+<span class="font-code-badge text-code-badge text-text-tertiary">STAGING BUILD #9822</span>
+<span class="font-code-badge text-code-badge text-status-success bg-status-success-bg border border-status-success-border px-2 py-0.5 rounded-full">CORE FLOWS VALIDATED</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-text-primary">
+              Recommended for targeted patch release prior to wide general deployment.
+            </h2>
+<p class="font-body-base text-body-base text-text-muted mt-2 leading-relaxed">
+              While core end-to-end task flows succeed at an acceptable 88.4% threshold, critical behavioral telemetry detected high cognitive friction and drop-offs during initial team invitation flows. Remediating workspace configuration latency before public release is strongly advised.
+            </p>
+</div>
+<!-- Quick Metrics Bar -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle">
+<div class="font-label-caps text-label-caps text-text-tertiary">RETENTION HAZARD</div>
+<div class="font-headline-md text-headline-md font-bold text-status-error mt-0.5">High (Step 3)</div>
+</div>
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle">
+<div class="font-label-caps text-label-caps text-text-tertiary">CONVERSION IMPACT</div>
+<div class="font-headline-md text-headline-md font-bold text-status-warning mt-0.5">-14.2% Est.</div>
+</div>
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle">
+<div class="font-label-caps text-label-caps text-text-tertiary">ESTIMATED FIX TIME</div>
+<div class="font-headline-md text-headline-md font-bold text-text-primary mt-0.5">1 Sprint (3d)</div>
+</div>
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle">
+<div class="font-label-caps text-label-caps text-text-tertiary">SIMULATION ACCURACY</div>
+<div class="font-headline-md text-headline-md font-bold text-primary mt-0.5">99.1%</div>
+</div>
+</div>
+</div>
+<!-- Health Dial Card (Col 9-12) -->
+<div class="lg:col-span-4 bg-surface-panel-alt rounded-2xl border border-border-warm p-6 flex flex-col items-center justify-center text-center relative">
+<span class="font-label-caps text-label-caps text-text-tertiary">OVERALL UX HEALTH SCORE</span>
+<!-- Circular Score Representation -->
+<div class="relative w-36 h-36 my-4 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 120 120">
+<circle cx="60" cy="60" fill="transparent" r="50" stroke="#ECE7E1" stroke-width="10"></circle>
+<!-- 79% stroke-dasharray calculated for r=50 (perimeter ~314px) -> 314 * 0.79 = 248 -->
+<circle cx="60" cy="60" fill="transparent" r="50" stroke="#756BBF" stroke-dasharray="248 314" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-hero text-display-hero font-extrabold text-text-primary leading-none">79</span>
+<span class="font-code-badge text-code-badge text-text-muted">/ 100 PTS</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-status-success font-body-semibold text-body-semibold">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+<span>+4.2 pts vs Baseline v2.3</span>
+</div>
+<span class="font-caption text-caption text-text-tertiary mt-1">Acceptable release cutoff is 82/100</span>
+</div>
+</div>
+</section>
+<!-- 2. KEY FINDINGS & STRATEGIC TAKEAWAYS (3-Column Bento Grid) -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-text-primary">Key Findings &amp; Strategic Takeaways</h2>
+<p class="font-body-sm text-body-sm text-text-muted">Top systemic behavioral blockers and unexpected viral opportunities identified by the agent collective.</p>
+</div>
+<span class="font-code-badge text-code-badge text-text-tertiary bg-surface-white border border-border-warm px-3 py-1 rounded-full hidden sm:block">3 CRITICAL SYNTHESES</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Finding 1: Onboarding Cliff -->
+<article class="bg-surface-white border border-border-warm rounded-3xl p-6 ambient-card-shadow flex flex-col justify-between hover:border-lavender-light transition-all duration-200">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps px-2.5 py-1 rounded-full bg-status-error-bg text-status-error border border-status-error-border flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                FRICTION CRITICAL
+              </span>
+<span class="font-code-badge text-code-badge text-text-tertiary">#FINDING-01</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">Onboarding Cliff at Step 3</h3>
+<div class="flex items-baseline gap-2 my-2">
+<span class="font-display-hero text-display-hero font-extrabold text-status-error">48%</span>
+<span class="font-body-sm text-body-sm text-text-muted">synthetic cohort abandonment rate</span>
+</div>
+<p class="font-body-base text-body-base text-text-muted leading-relaxed">
+              48% drop-off caused by workspace configuration latency and multi-tenant domain verification loops. Agents flagged "cognitive fatigue with ambiguous permissions".
+            </p>
+<!-- Persona Micro Quote -->
+<div class="mt-4 p-3.5 rounded-2xl bg-surface-panel-alt border-l-4 border-l-primary border border-border-subtle">
+<p class="font-body-sm text-body-sm italic text-text-primary leading-snug">
+                "I spent 45 seconds waiting for DNS propagation without feedback, so I closed the setup tab."
+              </p>
+<div class="flex items-center justify-between mt-2 font-code-badge text-code-badge text-text-tertiary">
+<span>Agent #p-8ab7497f</span>
+<span>Tech Lead Persona</span>
+</div>
+</div>
+</div>
+<!-- Prescribed Action Container -->
+<div class="mt-6 pt-4 border-t border-border-subtle flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-primary">RECOMMENDED REMEDIATION</span>
+<div class="flex items-start gap-2.5 bg-lavender-tint/60 p-3 rounded-2xl border border-border-accent-tint">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">bolt</span>
+<span class="font-body-sm text-body-sm font-medium text-text-primary">Implement instant 1-click workspace defaults with lazy background domain sync.</span>
+</div>
+</div>
+</article>
+<!-- Finding 2: Organic WOM -->
+<article class="bg-surface-white border border-border-warm rounded-3xl p-6 ambient-card-shadow flex flex-col justify-between hover:border-lavender-light transition-all duration-200">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps px-2.5 py-1 rounded-full bg-status-success-bg text-status-success border border-status-success-border flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">rocket_launch</span>
+                VIRAL UPSIDE
+              </span>
+<span class="font-code-badge text-code-badge text-text-tertiary">#FINDING-02</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">Strong Organic WOM in Early Adopters</h3>
+<div class="flex items-baseline gap-2 my-2">
+<span class="font-display-hero text-display-hero font-extrabold text-status-success">1.24</span>
+<span class="font-body-sm text-body-sm text-text-muted">K-factor virality coefficient</span>
+</div>
+<p class="font-body-base text-body-base text-text-muted leading-relaxed">
+              Synthetic agents modeling seed-stage technical founders exhibited spontaneous colleague invites post query-builder usage, achieving an organic viral loop.
+            </p>
+<!-- Persona Micro Quote -->
+<div class="mt-4 p-3.5 rounded-2xl bg-surface-panel-alt border-l-4 border-l-status-success border border-border-subtle">
+<p class="font-body-sm text-body-sm italic text-text-primary leading-snug">
+                "The instant SQL preview was so clean I sent a snippet directly to my co-founder on Slack."
+              </p>
+<div class="flex items-center justify-between mt-2 font-code-badge text-code-badge text-text-tertiary">
+<span>Agent #p-423fc10a</span>
+<span>Founder / Dev Persona</span>
+</div>
+</div>
+</div>
+<!-- Prescribed Action Container -->
+<div class="mt-6 pt-4 border-t border-border-subtle flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-status-success">RECOMMENDED ACCELERATION</span>
+<div class="flex items-start gap-2.5 bg-status-success-bg/60 p-3 rounded-2xl border border-status-success-border">
+<span class="material-symbols-outlined text-status-success text-[18px] mt-0.5">add_link</span>
+<span class="font-body-sm text-body-sm font-medium text-text-primary">Add frictionless in-product referral prompts right after successful SQL query runs.</span>
+</div>
+</div>
+</article>
+<!-- Finding 3: Feature Blindspot -->
+<article class="bg-surface-white border border-border-warm rounded-3xl p-6 ambient-card-shadow flex flex-col justify-between hover:border-lavender-light transition-all duration-200">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps px-2.5 py-1 rounded-full bg-honey-tint text-honey-dark border border-status-warning-border flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">visibility_off</span>
+                DISCOVERY GAP
+              </span>
+<span class="font-code-badge text-code-badge text-text-tertiary">#FINDING-03</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">Feature Blindspot: Integrations</h3>
+<div class="flex items-baseline gap-2 my-2">
+<span class="font-display-hero text-display-hero font-extrabold text-honey-dark">72%</span>
+<span class="font-body-sm text-body-sm text-text-muted">bypassed secondary integrations tab</span>
+</div>
+<p class="font-body-base text-body-base text-text-muted leading-relaxed">
+              72% of agents completely bypassed the secondary integrations panel due to nested navigation hierarchy and low visual affordance in the sidebar.
+            </p>
+<!-- Persona Micro Quote -->
+<div class="mt-4 p-3.5 rounded-2xl bg-surface-panel-alt border-l-4 border-l-honey-dark border border-border-subtle">
+<p class="font-body-sm text-body-sm italic text-text-primary leading-snug">
+                "I looked for GitHub sync in the dashboard root and gave up when it wasn't visible."
+              </p>
+<div class="flex items-center justify-between mt-2 font-code-badge text-code-badge text-text-tertiary">
+<span>Agent #p-9118e27c</span>
+<span>DevOps Lead Persona</span>
+</div>
+</div>
+</div>
+<!-- Prescribed Action Container -->
+<div class="mt-6 pt-4 border-t border-border-subtle flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-honey-dark">RECOMMENDED ARCHITECTURE CHANGE</span>
+<div class="flex items-start gap-2.5 bg-honey-tint/60 p-3 rounded-2xl border border-status-warning-border">
+<span class="material-symbols-outlined text-honey-dark text-[18px] mt-0.5">tab_unselected</span>
+<span class="font-body-sm text-body-sm font-medium text-text-primary">Surface top 3 integrations (GitHub, Slack, Jira) directly inside the setup modal.</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- 3. COMPARATIVE BENCHMARKS TABLE -->
+<section class="w-full bg-surface-white border border-border-warm rounded-3xl p-6 md:p-8 ambient-card-shadow flex flex-col gap-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md font-bold text-text-primary">Comparative Simulation Benchmarks</h2>
+<span class="font-code-badge text-code-badge px-2 py-0.5 rounded-full bg-lavender-tint text-primary border border-border-accent-tint">DELTA TELEMETRY</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Rigorous delta telemetry comparing Current Candidate (Build #9822) vs Previous Baseline (v2.3).</p>
+</div>
+<!-- Metric Filter Segment -->
+<div class="flex items-center gap-1 p-1 rounded-xl bg-surface-cream border border-border-subtle self-start sm:self-auto">
+<button class="px-3 py-1.5 rounded-lg bg-surface-white text-text-primary font-body-semibold text-body-semibold text-[12px] shadow-sm">All Personas (1.2k)</button>
+<button class="px-3 py-1.5 rounded-lg text-text-muted hover:text-text-primary font-body-base text-body-base text-[12px]">Technical</button>
+<button class="px-3 py-1.5 rounded-lg text-text-muted hover:text-text-primary font-body-base text-body-base text-[12px]">Executive</button>
+</div>
+</div>
+<!-- Clean Tabular Layout -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-border-subtle text-text-tertiary font-label-caps text-label-caps">
+<th class="py-3 px-4 font-bold">CORE SIMULATION KPI</th>
+<th class="py-3 px-4 font-bold">CURRENT CANDIDATE (v2.4)</th>
+<th class="py-3 px-4 font-bold">PREVIOUS BASELINE (v2.3)</th>
+<th class="py-3 px-4 font-bold">DELTA &amp; TRAJECTORY</th>
+<th class="py-3 px-4 font-bold text-right">THRESHOLD STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle font-body-base text-body-base">
+<!-- Row 1: Task Completion -->
+<tr class="hover:bg-surface-cream/50 transition-colors">
+<td class="py-4 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-status-success-bg text-status-success flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Task Completion Rate</span>
+<span class="font-body-sm text-body-sm text-text-muted">End-to-end multi-step checkout &amp; deploy</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 font-headline-sm text-headline-sm font-bold text-text-primary">88.4%</td>
+<td class="py-4 px-4 text-text-muted font-body-base text-body-base">81.1%</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 font-body-semibold text-body-semibold text-status-success">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                  +7.3%
+                </span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-caps text-label-caps bg-status-success-bg text-status-success border border-status-success-border">PASS</span>
+</td>
+</tr>
+<!-- Row 2: Frustration Frequency -->
+<tr class="hover:bg-surface-cream/50 transition-colors">
+<td class="py-4 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-status-error-bg text-status-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">sentiment_dissatisfied</span>
+</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Frustration Frequency</span>
+<span class="font-body-sm text-body-sm text-text-muted">Rage clicks, loops, and rapid back-tracks</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 font-headline-sm text-headline-sm font-bold text-status-error">3.4 events / run</td>
+<td class="py-4 px-4 text-text-muted font-body-base text-body-base">1.8 events / run</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 font-body-semibold text-body-semibold text-status-error">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                  +88.9% (Degraded)
+                </span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-caps text-label-caps bg-status-error-bg text-status-error border border-status-error-border">CRITICAL</span>
+</td>
+</tr>
+<!-- Row 3: Time to Value -->
+<tr class="hover:bg-surface-cream/50 transition-colors">
+<td class="py-4 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-lavender-tint text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Time to First Value (TTV)</span>
+<span class="font-body-sm text-body-sm text-text-muted">First query generated &amp; visualized</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 font-headline-sm text-headline-sm font-bold text-text-primary">2m 44s</td>
+<td class="py-4 px-4 text-text-muted font-body-base text-body-base">4m 12s</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 font-body-semibold text-body-semibold text-status-success">
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+                  -34.9% (Faster)
+                </span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-caps text-label-caps bg-status-success-bg text-status-success border border-status-success-border">EXCEEDS</span>
+</td>
+</tr>
+<!-- Row 4: Synthetic NPS -->
+<tr class="hover:bg-surface-cream/50 transition-colors">
+<td class="py-4 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-honey-tint text-honey-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Synthetic NPS (sNPS)</span>
+<span class="font-body-sm text-body-sm text-text-muted">Aggregated agent sentiment weighting</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 font-headline-sm text-headline-sm font-bold text-text-primary">+42 sNPS</td>
+<td class="py-4 px-4 text-text-muted font-body-base text-body-base">+38 sNPS</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 font-body-semibold text-body-semibold text-status-success">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                  +4 pts
+                </span>
+</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-caps text-label-caps bg-status-warning-bg text-honey-dark border border-status-warning-border">NEAR GOAL</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 4. AI SYNTHESIS & RECOMMENDATION ENGINE -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+<!-- Executive AI Summary Memo (Col 1-7) -->
+<div class="lg:col-span-7 bg-surface-white border border-border-warm rounded-3xl p-6 md:p-8 ambient-card-shadow flex flex-col gap-6">
+<div class="flex items-center justify-between border-b border-border-subtle pb-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-lavender-tint text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">Executive Synthesis Memo</h3>
+<span class="font-caption text-caption text-text-muted">Generated by TestHive Consensus Engine v4.1</span>
+</div>
+</div>
+<span class="font-code-badge text-code-badge text-text-tertiary">CONFIDENCE: 98.4%</span>
+</div>
+<div class="font-body-base text-body-base text-text-primary leading-relaxed space-y-4">
+<p>
+<strong>To:</strong> Product Council &amp; Engineering Leads<br/>
+<strong>Subject:</strong> Release Candidate Assessment — Version 2.4.0-rc3
+          </p>
+<p class="text-text-muted">
+            The behavioral simulation across our standard 1,200 agent swarm reveals marked usability gains in core product analytics, reducing time-to-value by over 34%. However, the high-severity friction loop in Workspace Setup (Step 3) presents a statistically validated conversion leak that will disproportionately harm self-serve onboarding.
+          </p>
+<div class="p-4 rounded-2xl bg-surface-panel-alt border border-border-warm">
+<h4 class="font-body-semibold text-body-semibold text-text-primary mb-1">Recommended Sequence of Action:</h4>
+<ol class="list-decimal list-inside space-y-1.5 text-text-muted font-body-sm text-body-sm">
+<li>Deploy hotfix PR #892 bypassing secondary domain handshakes for single-seat workspaces.</li>
+<li>Expose GitHub/Slack integrations directly in the welcome modal with pre-ticked toggles.</li>
+<li>Re-run targeted 200-agent validation sweep on staging prior to full 100% production traffic roll.</li>
+</ol>
+</div>
+</div>
+<!-- Memo Signature -->
+<div class="pt-4 border-t border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-canvas-ivory border border-border-warm flex items-center justify-center text-primary font-bold text-sm">
+              TH
+            </div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block text-sm">Dr. Elena Rostova &amp; Behavioral Swarm AI</span>
+<span class="font-caption text-caption text-text-muted">Lead Synthetic Researcher • TestHive Core</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-status-success font-code-badge text-code-badge">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>CRYPTOGRAPHICALLY SIGNED</span>
+</div>
+</div>
+</div>
+<!-- Action Engine & Linear Sync (Col 8-12) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Linear / Jira Sync Card -->
+<div class="bg-surface-white border border-border-warm rounded-3xl p-6 ambient-card-shadow flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-tertiary">BACKLOG ORCHESTRATION</span>
+<span class="w-2.5 h-2.5 rounded-full bg-status-success animate-pulse"></span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-text-primary">1-Click Issue Dispatch</h3>
+<p class="font-body-sm text-body-sm text-text-muted">
+            Directly translate synthetic friction telemetry into ranked issue cards with attached playback clips and reproduction code.
+          </p>
+<div class="space-y-2">
+<!-- Issue Preview 1 -->
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-lg bg-status-error-bg text-status-error font-code-badge text-code-badge flex items-center justify-center text-[10px] font-bold">P0</span>
+<div>
+<span class="font-body-sm text-body-sm font-medium text-text-primary block">Fix Step 3 domain stall</span>
+<span class="font-code-badge text-code-badge text-text-tertiary">48% drop-off impact</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-tertiary text-[18px]">check_box</span>
+</div>
+<!-- Issue Preview 2 -->
+<div class="p-3 rounded-2xl bg-surface-cream border border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-lg bg-honey-tint text-honey-dark font-code-badge text-code-badge flex items-center justify-center text-[10px] font-bold">P1</span>
+<div>
+<span class="font-body-sm text-body-sm font-medium text-text-primary block">Expose GitHub integration tab</span>
+<span class="font-code-badge text-code-badge text-text-tertiary">72% bypass mitigation</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-tertiary text-[18px]">check_box</span>
+</div>
+</div>
+<button class="w-full py-3 px-4 rounded-2xl bg-primary hover:bg-lavender-light text-surface-white font-body-semibold text-body-semibold flex items-center justify-center gap-2 transition-all shadow-sm active:scale-98">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+<span>Sync to Jira / Linear Backlog</span>
+</button>
+</div>
+<!-- Exportable Slide Deck Preview Card -->
+<div class="bg-surface-white border border-border-warm rounded-3xl p-6 ambient-card-shadow flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-tertiary">BOARD PRESENTATION ASSET</span>
+<span class="font-code-badge text-code-badge text-primary bg-lavender-tint px-2 py-0.5 rounded-full">16:9 SLIDES</span>
+</div>
+<!-- Slide Mockup Visual -->
+<div class="aspect-video w-full rounded-2xl bg-surface-panel-alt border border-border-warm p-4 flex flex-col justify-between relative overflow-hidden group cursor-pointer hover:border-lavender-light transition-all">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-caption text-caption text-text-tertiary uppercase">TestHive Synthesis Deck</span>
+<div class="font-headline-sm text-headline-sm font-bold text-text-primary mt-0.5">Executive Release Audit</div>
+</div>
+<div class="w-7 h-7 rounded-lg bg-surface-white border border-border-warm flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">slideshow</span>
+</div>
+</div>
+<!-- Mini chart graphics mockup inside slide -->
+<div class="flex items-end gap-2 h-12 w-full pt-2">
+<div class="w-1/4 h-full bg-primary/20 rounded-t-md"></div>
+<div class="w-1/4 h-3/4 bg-primary/40 rounded-t-md"></div>
+<div class="w-1/4 h-5/6 bg-lavender-light rounded-t-md"></div>
+<div class="w-1/4 h-full bg-primary rounded-t-md"></div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-text-tertiary pt-2 border-t border-border-subtle">
+<span>Prepared for Q3 Product Review</span>
+<span class="text-primary font-semibold">12 Slides ready</span>
+</div>
+<!-- Hover overlay -->
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="px-3 py-1.5 rounded-xl bg-surface-white font-body-semibold text-body-semibold text-text-primary shadow-sm text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">visibility</span> Preview Slide Deck
+              </span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2.5 px-3 rounded-2xl bg-surface-cream border border-border-warm hover:bg-lavender-tint hover:border-lavender-light text-text-primary font-body-semibold text-body-semibold text-[13px] flex items-center justify-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download PDF</span>
+</button>
+<button class="flex-1 py-2.5 px-3 rounded-2xl bg-surface-cream border border-border-warm hover:bg-lavender-tint hover:border-lavender-light text-text-primary font-body-semibold text-body-semibold text-[13px] flex items-center justify-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[16px]">present_to_all</span>
+<span>Open in Keynote</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- LIGHT FOOTER -->
+<footer class="w-full bg-surface-white border-t border-border-subtle mt-auto py-4">
+<div class="max-w-[1360px] mx-auto md:pl-20 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-text-muted font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">TestHive</span>
+<span class="text-border-warm">•</span>
+<span>Synthetic Behavioral Testing Engine v2.4</span>
+</div>
+<div class="flex items-center gap-4 text-caption text-caption text-text-tertiary">
+<span>ISO 27001 Certified Simulation Grid</span>
+<span>•</span>
+<span>Privacy Shield Validated</span>
+<span>•</span>
+<span>All 1,200 Agents Anonymized</span>
+</div>
+</div>
+</footer>
+</body></html>

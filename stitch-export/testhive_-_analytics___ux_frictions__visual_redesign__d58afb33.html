@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TestHive - Analytics &amp; UX Frictions</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#180460",
+            "outline-variant": "#c9c4d3",
+            "status-warning-border": "#FDE68A",
+            "outline": "#787582",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#adccd2",
+            "border-accent-tint": "rgba(136, 127, 206, 0.35)",
+            "inverse-on-surface": "#f3f0f4",
+            "on-tertiary-container": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "status-success-border": "#A5D6A7",
+            "surface-container-high": "#eae7eb",
+            "on-primary": "#ffffff",
+            "honey-light": "#FBBF24",
+            "on-secondary-container": "#684000",
+            "tertiary-fixed": "#c9e8ee",
+            "on-error-container": "#93000a",
+            "surface-tint": "#5d53a5",
+            "on-tertiary": "#ffffff",
+            "surface-cream": "#F5F1EA",
+            "status-error-bg": "#FEF2F2",
+            "on-tertiary-fixed-variant": "#2e4b50",
+            "error": "#ba1a1a",
+            "text-muted": "#52525B",
+            "background": "#fbf8fc",
+            "inverse-primary": "#c7bfff",
+            "secondary-fixed-dim": "#ffb95f",
+            "border-subtle": "#ECE7E1",
+            "on-tertiary-fixed": "#001f24",
+            "border-warm": "#E6E0D8",
+            "cyan-tint": "#E6F3F5",
+            "surface-panel-alt": "#FAF6F0",
+            "surface-container-low": "#f5f3f6",
+            "surface-variant": "#e4e1e5",
+            "secondary": "#855300",
+            "primary-container": "#756bbf",
+            "status-success-bg": "#E8F5E9",
+            "on-background": "#1b1b1e",
+            "lavender-tint": "#EDEBF9",
+            "secondary-fixed": "#ffddb8",
+            "status-error": "#DC2626",
+            "text-tertiary": "#71717A",
+            "surface": "#fbf8fc",
+            "surface-container-highest": "#e4e1e5",
+            "surface-dim": "#dcd9dd",
+            "on-primary-container": "#ffffff",
+            "canvas-ivory": "#FBF9F5",
+            "surface-white": "#FFFFFF",
+            "status-warning": "#F59E0B",
+            "honey-tint": "#FEF3C7",
+            "status-warning-bg": "#FFFBEB",
+            "primary": "#5c52a4",
+            "on-error": "#ffffff",
+            "status-success": "#1C6938",
+            "surface-container": "#f0edf1",
+            "tertiary-container": "#5e7b81",
+            "on-secondary-fixed-variant": "#653e00",
+            "on-primary-fixed-variant": "#453b8c",
+            "on-secondary-fixed": "#2a1700",
+            "on-surface": "#1b1b1e",
+            "honey-dark": "#D97706",
+            "on-surface-variant": "#474551",
+            "lavender-light": "#887FCE",
+            "primary-fixed-dim": "#c7bfff",
+            "inverse-surface": "#303033",
+            "error-container": "#ffdad6",
+            "status-error-border": "#FECACA",
+            "cyan-dark": "#1C5B66",
+            "primary-fixed": "#e5deff",
+            "tertiary": "#456267",
+            "secondary-container": "#fea619",
+            "surface-bright": "#fbf8fc",
+            "text-primary": "#18181B"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "margin-lg": "3rem",
+            "margin": "2rem",
+            "gutter-sm": "1rem",
+            "margin-sm": "1rem",
+            "gutter-lg": "2rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "display-hero-mobile": ["Inter"],
+            "display-hero": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-base": ["Inter"],
+            "label-caps": ["Inter"],
+            "body-semibold": ["Inter"],
+            "code-badge": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "caption": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "display-hero-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "display-hero": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-base": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "body-semibold": ["14px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "code-badge": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-card-shadow {
+      box-shadow: 0 4px 16px -2px rgba(136, 127, 206, 0.09), 0 1px 3px 0 rgba(24, 24, 27, 0.03);
+    }
+    .custom-card-shadow:hover {
+      box-shadow: 0 10px 24px -4px rgba(136, 127, 206, 0.18), 0 3px 8px -1px rgba(24, 24, 27, 0.05);
+    }
+    .waveform-bar {
+      animation: pulseBar 1.6s ease-in-out infinite alternate;
+    }
+    @keyframes pulseBar {
+      0% { transform: scaleY(0.35); }
+      100% { transform: scaleY(1); }
+    }
+  </style>
+</head>
+<body class="bg-canvas-ivory text-text-primary min-h-screen flex flex-col font-body-base antialiased selection:bg-lavender-tint selection:text-primary">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-canvas-ivory border-b border-border-subtle w-full px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-6">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-2xl" data-icon="hive">hive</span>
+</div>
+<div>
+<span class="font-headline-lg text-headline-lg font-bold text-text-primary tracking-tight">TestHive</span>
+</div>
+</div>
+<!-- Live Execution Telemetry Pill -->
+<div class="hidden lg:flex items-center gap-2 bg-surface-cream px-3.5 py-1.5 rounded-full border border-border-warm">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-status-success opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-status-success"></span>
+</span>
+<span class="font-body-sm text-body-sm text-text-muted font-medium">1,000 Agents Simulated • Analysis Complete</span>
+</div>
+</div>
+<!-- Center Stage Navigation Links (Semantic Nav Cluster) -->
+<nav class="hidden md:flex items-center gap-2">
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150" href="#">
+        Launch Pad
+      </a>
+<a class="bg-lavender-light text-surface-white font-body-semibold text-body-semibold px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5 active:scale-98 transition-all duration-200" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-white"></span>
+        Analytics &amp; UX Frictions
+      </a>
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150" href="#">
+        Word-of-Mouth Spread
+      </a>
+<a class="bg-surface-white text-text-muted hover:text-text-primary px-4 py-2 rounded-full border border-border-warm font-body-base text-body-base hover:border-lavender-light transition-all duration-150" href="#">
+        Executive Report
+      </a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200" title="Notifications">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200" title="Filter &amp; View Config">
+<span class="material-symbols-outlined text-xl" data-icon="tune">tune</span>
+</button>
+<button class="rounded-2xl bg-surface-white hover:bg-surface-cream text-text-primary px-4 py-2 font-body-semibold text-body-semibold border border-border-warm hover:border-lavender-light transition-all duration-150 flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="ios_share">ios_share</span>
+<span>Export Findings</span>
+</button>
+<div class="w-9 h-9 rounded-2xl bg-lavender-tint border border-border-accent-tint flex items-center justify-center text-primary font-headline-sm text-headline-sm">
+        LR
+      </div>
+</div>
+</header>
+<!-- SideNavBar Rail (Shared Component - Desktop Docked Left Rail) -->
+<aside class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40 hidden md:flex">
+<!-- Tab 1: Dashboard -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 shadow-sm active:scale-95" href="#" title="Dashboard">
+<span class="material-symbols-outlined text-2xl" data-icon="grid_view">grid_view</span>
+</a>
+<!-- Tab 2: Library -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 shadow-sm active:scale-95" href="#" title="Library">
+<span class="material-symbols-outlined text-2xl" data-icon="description">description</span>
+</a>
+<!-- Tab 3: Personas -->
+<a class="w-12 h-12 rounded-2xl bg-surface-white text-text-muted hover:text-primary flex items-center justify-center border border-border-warm hover:bg-lavender-tint transition-all duration-200 shadow-sm active:scale-95" href="#" title="Personas">
+<span class="material-symbols-outlined text-2xl" data-icon="group">group</span>
+</a>
+<!-- Tab 4: Test Runs (Active Test Run View) -->
+<a class="w-12 h-12 rounded-2xl bg-lavender-light text-surface-white flex items-center justify-center shadow-sm active:scale-95 transition-all duration-150" href="#" title="Test Runs">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</a>
+</aside>
+<!-- Main Canvas Container -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:pl-24 md:pr-8 py-8 space-y-8">
+<!-- Hero Header & Filter Controls -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2 border-b border-border-subtle">
+<div class="space-y-1.5">
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-0.5 rounded-full bg-lavender-tint border border-border-accent-tint text-primary font-code-badge text-code-badge">COHORT RUN #TR-9428</span>
+<span class="font-body-sm text-body-sm text-text-muted flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span> Multi-agent Telemetry Cycle 3</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">UX Friction &amp; Conversion Drop-off Analysis</h1>
+<p class="font-body-base text-body-base text-text-muted">Aggregated multi-agent path telemetry across 1,000 synthetic test runs</p>
+</div>
+<!-- Segmented Demographic Filter Bar -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-surface-cream p-1.5 rounded-2xl border border-border-warm">
+<span class="font-body-sm text-body-sm text-text-muted px-2.5 font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base" data-icon="filter_alt">filter_alt</span> Persona:
+        </span>
+<div class="flex flex-wrap items-center gap-1">
+<button class="bg-surface-white text-text-primary font-body-semibold text-body-semibold px-3 py-1.5 rounded-xl shadow-sm border border-border-warm text-xs flex items-center gap-1">
+<span>All Personas (1k)</span>
+</button>
+<button class="text-text-muted hover:text-text-primary font-body-base text-body-base px-3 py-1.5 rounded-xl hover:bg-surface-white/60 text-xs transition-colors">
+            Early Adopter SaaS
+          </button>
+<button class="text-text-muted hover:text-text-primary font-body-base text-body-base px-3 py-1.5 rounded-xl hover:bg-surface-white/60 text-xs transition-colors">
+            Enterprise IT Buyers
+          </button>
+<button class="text-text-muted hover:text-text-primary font-body-base text-body-base px-3 py-1.5 rounded-xl hover:bg-surface-white/60 text-xs transition-colors">
+            Non-Technical Ops
+          </button>
+</div>
+</div>
+</div>
+<!-- 4 KPI Summary Cards (Bold, Graphical, Radial + Trend Sparklines) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- KPI 1: Completion Radial Dial -->
+<div class="bg-surface-white p-5 rounded-3xl border border-border-warm custom-card-shadow transition-all duration-200 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-muted font-medium">Task Completion</span>
+<span class="font-code-badge text-[10px] text-status-error font-bold bg-status-error-bg px-2 py-0.5 rounded-full border border-status-error-border">-12% vs Target</span>
+</div>
+<div class="flex items-center justify-between my-3">
+<div>
+<div class="font-display-hero text-display-hero text-text-primary tracking-tight font-extrabold leading-none">68.4%</div>
+<div class="text-[11px] font-caption text-text-muted mt-1 font-semibold uppercase tracking-wider">684 / 1,000 Reached Goal</div>
+</div>
+<!-- Circular Progress Ring SVG -->
+<div class="relative w-14 h-14 shrink-0 flex items-center justify-center">
+<svg class="w-14 h-14 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-cream stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3.5"></path>
+<path class="text-status-warning stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="68.4, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="material-symbols-outlined text-lg text-honey-dark absolute" data-icon="flag">flag</span>
+</div>
+</div>
+<!-- Mini Heat Segments -->
+<div class="grid grid-cols-4 gap-1.5 pt-2 border-t border-border-subtle">
+<div class="h-1.5 rounded-full bg-status-success"></div>
+<div class="h-1.5 rounded-full bg-status-success"></div>
+<div class="h-1.5 rounded-full bg-status-warning"></div>
+<div class="h-1.5 rounded-full bg-surface-cream"></div>
+</div>
+</div>
+<!-- KPI 2: Friction Points Severity Graph -->
+<div class="bg-surface-white p-5 rounded-3xl border border-border-warm custom-card-shadow transition-all duration-200 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-muted font-medium">Critical Friction Gates</span>
+<span class="font-code-badge text-[10px] text-status-error font-bold bg-status-error-bg px-2 py-0.5 rounded-full border border-status-error-border animate-pulse">Action Required</span>
+</div>
+<div class="flex items-center justify-between my-3">
+<div>
+<div class="font-display-hero text-display-hero text-status-error tracking-tight font-extrabold leading-none">14</div>
+<div class="text-[11px] font-caption text-text-muted mt-1 font-semibold uppercase tracking-wider">5 Severity P0 Blockers</div>
+</div>
+<!-- Mini sparkline distribution bars -->
+<div class="flex items-end gap-1 h-10 w-16 justify-end">
+<div class="w-2.5 bg-status-error rounded-t h-full"></div>
+<div class="w-2.5 bg-honey-light rounded-t h-3/5"></div>
+<div class="w-2.5 bg-lavender-light rounded-t h-4/5"></div>
+<div class="w-2.5 bg-border-warm rounded-t h-1/4"></div>
+</div>
+</div>
+<!-- Severity Breakdown Dots -->
+<div class="flex items-center justify-between pt-2 border-t border-border-subtle text-[11px] font-code-badge text-text-muted">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-status-error"></span> 5 P0</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-honey-dark"></span> 6 P1</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 3 P2</span>
+</div>
+</div>
+<!-- KPI 3: Mean Time Sparkline -->
+<div class="bg-surface-white p-5 rounded-3xl border border-border-warm custom-card-shadow transition-all duration-200 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-muted font-medium">Mean Completion Time</span>
+<span class="font-code-badge text-[10px] text-text-muted font-bold bg-surface-cream px-2 py-0.5 rounded-full border border-border-warm">+48s Lag</span>
+</div>
+<div class="flex items-center justify-between my-3">
+<div>
+<div class="font-display-hero text-display-hero text-text-primary tracking-tight font-extrabold leading-none">3m 42s</div>
+<div class="text-[11px] font-caption text-text-muted mt-1 font-semibold uppercase tracking-wider">Target: 2m 54s</div>
+</div>
+<!-- Micro trend curve SVG -->
+<svg class="w-16 h-10 stroke-primary fill-none shrink-0" viewbox="0 0 64 36">
+<path d="M2 28 C 16 26, 24 16, 38 22 C 48 26, 54 8, 62 4" stroke-linecap="round" stroke-width="2.5"></path>
+<circle class="fill-primary" cx="62" cy="4" r="3"></circle>
+</svg>
+</div>
+<!-- Progress Target Marker -->
+<div class="pt-2 border-t border-border-subtle flex items-center justify-between text-[11px] font-code-badge text-text-muted">
+<span>P50: 3m 12s</span>
+<span class="text-honey-dark font-semibold">P95: 5m 48s</span>
+</div>
+</div>
+<!-- KPI 4: Frustration Gauge Card -->
+<div class="bg-surface-white p-5 rounded-3xl border border-border-warm custom-card-shadow transition-all duration-200 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-muted font-medium">Frustration Index</span>
+<span class="font-code-badge text-[10px] font-bold uppercase tracking-wider bg-status-warning-bg border border-status-warning-border text-honey-dark px-2 py-0.5 rounded-full">High Stress</span>
+</div>
+<div class="flex items-center justify-between my-3">
+<div>
+<div class="flex items-baseline gap-1">
+<span class="font-display-hero text-display-hero text-honey-dark tracking-tight font-extrabold leading-none">0.74</span>
+<span class="text-sm font-semibold text-text-muted">/1.0</span>
+</div>
+<div class="text-[11px] font-caption text-text-muted mt-1 font-semibold uppercase tracking-wider">Workspace Setup Stage</div>
+</div>
+<!-- Semicircle Frustration Arc SVG -->
+<div class="relative w-14 h-14 shrink-0 flex items-center justify-center">
+<svg class="w-14 h-14 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-cream stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3.5"></path>
+<path class="text-honey-dark stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="74, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<span class="material-symbols-outlined text-lg text-honey-dark absolute" data-icon="sentiment_dissatisfied">sentiment_dissatisfied</span>
+</div>
+</div>
+<!-- Visual gauge scale bar -->
+<div class="h-1.5 w-full bg-gradient-to-r from-status-success via-status-warning to-status-error rounded-full relative">
+<div class="absolute -top-1 left-[74%] w-3.5 h-3.5 bg-surface-white border-2 border-honey-dark rounded-full shadow-sm -translate-x-1/2"></div>
+</div>
+</div>
+</div>
+<!-- Main Diagnostic Section: Visual Funnel & Telemetry Stream -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: High-Impact Visual Funnel Flow (7 Cols) -->
+<section class="lg:col-span-7 bg-surface-white rounded-3xl border border-border-warm p-6 md:p-7 custom-card-shadow space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-border-subtle">
+<div>
+<h2 class="font-headline-md text-headline-md text-text-primary tracking-tight">Conversion Funnel &amp; Drop-off Flow</h2>
+<p class="font-body-sm text-body-sm text-text-muted">Simulated multi-agent sequential progression through onboarding</p>
+</div>
+<span class="rounded-full py-1 px-3 text-11px font-bold uppercase tracking-wider bg-lavender-tint border border-border-accent-tint text-primary font-code-badge">N = 1,000 AGENTS</span>
+</div>
+<!-- Visual Funnel Matrix -->
+<div class="space-y-4">
+<!-- Stage 1 -->
+<div class="relative bg-surface-panel-alt p-4 rounded-2xl border border-border-subtle hover:border-lavender-light transition-all group">
+<div class="flex items-center justify-between gap-4 mb-2.5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-surface-white border border-border-warm flex items-center justify-center font-bold text-xs text-primary shadow-xs">01</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Step 1: Landing Page Initial Touch</span>
+<span class="font-caption text-[11px] text-text-muted">All synthetic nodes initialized</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-headline-sm text-headline-sm text-text-primary font-bold">100%</div>
+<div class="font-code-badge text-[11px] text-text-muted">1,000 agents</div>
+</div>
+</div>
+<!-- Multi-layered Visual Metric Bar -->
+<div class="h-3.5 w-full bg-surface-cream rounded-full overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-primary-container shadow-xs transition-all duration-700" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 font-caption text-caption">
+<span class="flex items-center gap-1.5 text-text-muted font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span> Full cohort entry
+</span>
+<span class="font-code-badge text-status-success font-semibold bg-status-success-bg px-2 py-0.5 rounded-md border border-status-success-border">0% Drop-off</span>
+</div>
+</div>
+<!-- Funnel Connector 1 -->
+<div class="flex justify-center -my-2 relative z-10">
+<div class="w-7 h-7 rounded-full bg-surface-white border border-border-warm shadow-xs flex items-center justify-center text-text-muted text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_downward">arrow_downward</span>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="relative bg-surface-panel-alt p-4 rounded-2xl border border-border-subtle hover:border-lavender-light transition-all group">
+<div class="flex items-center justify-between gap-4 mb-2.5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-surface-white border border-border-warm flex items-center justify-center font-bold text-xs text-primary shadow-xs">02</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Step 2: Signup Modal &amp; Auth</span>
+<span class="font-caption text-[11px] text-text-muted">Credential submission gate</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-headline-sm text-headline-sm text-text-primary font-bold">84.2%</div>
+<div class="font-code-badge text-[11px] text-text-muted">842 agents</div>
+</div>
+</div>
+<div class="h-3.5 w-full bg-surface-cream rounded-full overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-lavender-light shadow-xs transition-all duration-700" style="width: 84.2%"></div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 font-caption text-caption">
+<span class="flex items-center gap-1.5 text-text-muted font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-honey-light"></span> 158 modal bounces
+</span>
+<span class="font-code-badge text-honey-dark font-semibold bg-status-warning-bg px-2 py-0.5 rounded-md border border-status-warning-border">-15.8% drop</span>
+</div>
+</div>
+<!-- Funnel Connector 2 (High Drop Indicator) -->
+<div class="flex justify-center -my-2 relative z-10">
+<div class="px-2.5 py-0.5 rounded-full bg-status-error text-surface-white text-[10px] font-code-badge font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-xs" data-icon="priority_high">priority_high</span>
+CRITICAL LEAK
+</div>
+</div>
+<!-- Stage 3: Major Dropoff (Hero Styled) -->
+<div class="relative bg-gradient-to-br from-status-error-bg/40 via-surface-panel-alt to-surface-white p-4.5 rounded-2xl border-2 border-status-error-border shadow-xs overflow-hidden">
+<div class="flex items-center justify-between gap-4 mb-2.5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-status-error text-surface-white flex items-center justify-center font-bold text-xs shadow-sm">03</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-body-semibold text-body-semibold text-text-primary">Step 3: Workspace Config &amp; SSO</span>
+<span class="font-code-badge text-[10px] text-status-error font-extrabold bg-status-error-bg px-2 py-0.5 rounded-full border border-status-error-border">CHOKEPOINT</span>
+</div>
+<span class="font-caption text-[11px] text-status-error font-medium">Confusing 2FA &amp; Workspace naming collision</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-headline-sm text-headline-sm text-status-error font-bold">41.2%</div>
+<div class="font-code-badge text-[11px] text-text-muted">412 agents</div>
+</div>
+</div>
+<!-- Funnel Loss Gauge with Split Visual -->
+<div class="relative h-4 w-full bg-surface-cream rounded-full overflow-hidden p-0.5 flex">
+<div class="h-full rounded-l-full bg-status-error transition-all duration-700" style="width: 41.2%"></div>
+<div class="h-full rounded-r-full bg-status-error/20 repeating-linear-stripes" style="width: 43.0%"></div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 font-caption text-caption">
+<div class="flex items-center gap-2 text-status-error font-medium">
+<span class="material-symbols-outlined text-base" data-icon="error">error</span>
+<span>430 agents dropped during SSO verification</span>
+</div>
+<span class="font-code-badge text-status-error font-bold bg-status-error-bg px-2.5 py-0.5 rounded-md border border-status-error-border">-43.0% loss</span>
+</div>
+</div>
+<!-- Funnel Connector 3 -->
+<div class="flex justify-center -my-2 relative z-10">
+<div class="w-7 h-7 rounded-full bg-surface-white border border-border-warm shadow-xs flex items-center justify-center text-text-muted text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_downward">arrow_downward</span>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="relative bg-surface-panel-alt p-4 rounded-2xl border border-border-subtle hover:border-lavender-light transition-all group">
+<div class="flex items-center justify-between gap-4 mb-2.5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-surface-white border border-border-warm flex items-center justify-center font-bold text-xs text-primary shadow-xs">04</div>
+<div>
+<span class="font-body-semibold text-body-semibold text-text-primary block">Step 4: Deployment &amp; SDK Connect</span>
+<span class="font-caption text-[11px] text-text-muted">Final activation &amp; API key binding</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-headline-sm text-headline-sm text-text-primary font-bold">28.0%</div>
+<div class="font-code-badge text-[11px] text-text-muted">280 completed</div>
+</div>
+</div>
+<div class="h-3.5 w-full bg-surface-cream rounded-full overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-primary shadow-xs transition-all duration-700" style="width: 28%"></div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1 font-caption text-caption">
+<span class="flex items-center gap-1.5 text-text-muted font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-honey-light"></span> 132 failed at API token paste
+</span>
+<span class="font-code-badge text-honey-dark font-semibold bg-status-warning-bg px-2 py-0.5 rounded-md border border-status-warning-border">-13.2% drop</span>
+</div>
+</div>
+</div>
+<!-- Visual Sankey / Cohort Status Pill Strip -->
+<div class="bg-surface-cream p-4 rounded-2xl border border-border-warm flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-lavender-tint flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="hub">hub</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary font-semibold">Live Telemetry Graph Synchronization</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-badge text-xs px-2.5 py-1 rounded-lg bg-surface-white border border-border-warm text-status-success font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> 280 Pass
+</span>
+<span class="font-code-badge text-xs px-2.5 py-1 rounded-lg bg-surface-white border border-border-warm text-status-error font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-error"></span> 588 Blocked
+</span>
+<span class="font-code-badge text-xs px-2.5 py-1 rounded-lg bg-surface-white border border-border-warm text-honey-dark font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-honey-light"></span> 132 Retrying
+</span>
+</div>
+</div>
+</section>
+<!-- Right Column: Agent Thoughts & Heuristic Matrix (5 Cols) -->
+<section class="lg:col-span-5 space-y-6">
+<!-- Visual Telemetry & Compact Agent Audio/Chat Stream -->
+<div class="bg-surface-white rounded-3xl border border-border-warm p-6 custom-card-shadow space-y-4">
+<div class="flex items-center justify-between pb-3 border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="psychology">psychology</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Agent Telemetry Stream</h3>
+</div>
+<span class="font-code-badge text-[10px] text-text-muted bg-surface-cream px-2.5 py-1 rounded-full border border-border-warm font-semibold">LIVE REPLAY</span>
+</div>
+<!-- Stream Card 1: Enterprise Buyer Chokepoint -->
+<div class="bg-surface-white p-4 rounded-2xl border border-border-warm border-l-4 border-l-status-error shadow-xs space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-lg bg-lavender-tint text-primary text-[10px] font-code-badge font-bold flex items-center justify-center">#8A</span>
+<span class="font-body-semibold text-xs text-text-primary">Enterprise IT Buyer</span>
+</div>
+<span class="font-code-badge text-[10px] text-status-error font-bold bg-status-error-bg px-2 py-0.5 rounded border border-status-error-border">STEP 3 ABORT</span>
+</div>
+<!-- Compact 1-line Quote -->
+<p class="font-body-base text-body-base text-text-primary font-medium italic">
+              "SSO button stayed disabled with silent 409 subdomain collision."
+            </p>
+<!-- Audio Waveform + Frustration Heat Meters -->
+<div class="bg-surface-panel-alt p-2.5 rounded-xl border border-border-subtle flex items-center justify-between gap-3">
+<!-- Simulated Audio Waveform -->
+<div class="flex items-center gap-1 h-5 shrink-0">
+<div class="w-1 bg-lavender-light rounded-full h-2 waveform-bar"></div>
+<div class="w-1 bg-primary rounded-full h-4 waveform-bar" style="animation-delay: 0.15s"></div>
+<div class="w-1 bg-primary rounded-full h-5 waveform-bar" style="animation-delay: 0.3s"></div>
+<div class="w-1 bg-status-error rounded-full h-3 waveform-bar" style="animation-delay: 0.45s"></div>
+<div class="w-1 bg-lavender-light rounded-full h-2 waveform-bar" style="animation-delay: 0.6s"></div>
+</div>
+<!-- Telemetry Dials -->
+<div class="flex items-center gap-3 text-xs font-code-badge">
+<div class="flex items-center gap-1.5">
+<span class="text-text-muted">Frustration:</span>
+<span class="px-1.5 py-0.5 rounded bg-status-error-bg text-status-error font-bold border border-status-error-border">0.91</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="text-text-muted">Confusion:</span>
+<span class="px-1.5 py-0.5 rounded bg-status-warning-bg text-honey-dark font-bold border border-status-warning-border">0.88</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stream Card 2: Ops Timeout -->
+<div class="bg-surface-white p-4 rounded-2xl border border-border-warm border-l-4 border-l-honey-dark shadow-xs space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-lg bg-surface-cream text-honey-dark text-[10px] font-code-badge font-bold flex items-center justify-center">#31</span>
+<span class="font-body-semibold text-xs text-text-primary">Non-Technical Ops</span>
+</div>
+<span class="font-code-badge text-[10px] text-honey-dark font-bold bg-status-warning-bg px-2 py-0.5 rounded border border-status-warning-border">STEP 4 TIMEOUT</span>
+</div>
+<!-- Compact 1-line Quote -->
+<p class="font-body-base text-body-base text-text-primary font-medium italic">
+              "Missing copy icon for API secret generated in prior step."
+            </p>
+<!-- Visual Waveform + Tags -->
+<div class="bg-surface-panel-alt p-2.5 rounded-xl border border-border-subtle flex items-center justify-between gap-3">
+<div class="flex items-center gap-1 h-5 shrink-0">
+<div class="w-1 bg-honey-light rounded-full h-3 waveform-bar"></div>
+<div class="w-1 bg-honey-dark rounded-full h-4 waveform-bar" style="animation-delay: 0.2s"></div>
+<div class="w-1 bg-honey-light rounded-full h-2 waveform-bar" style="animation-delay: 0.4s"></div>
+</div>
+<div class="flex items-center gap-3 text-xs font-code-badge">
+<div class="flex items-center gap-1.5">
+<span class="text-text-muted">Frustration:</span>
+<span class="px-1.5 py-0.5 rounded bg-status-warning-bg text-honey-dark font-bold border border-status-warning-border">0.64</span>
+</div>
+<span class="text-text-muted text-[11px]">Clipboard Missing</span>
+</div>
+</div>
+</div>
+<!-- Visual Code Snippet Badge -->
+<div class="bg-surface-panel-alt px-3 py-2 rounded-xl border border-border-subtle font-code-badge text-[11px] text-text-muted flex items-center justify-between">
+<span class="text-text-primary font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-error"></span> HTTP 409 CONFLICT
+</span>
+<span class="text-text-tertiary">retry_count: 3 • TASK_ABANDONED</span>
+</div>
+</div>
+<!-- Heuristic Violations: Visual Severity Matrix Cards -->
+<div class="bg-surface-white rounded-3xl border border-border-warm p-6 custom-card-shadow space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Heuristic Violations Matrix</h3>
+<span class="rounded-full py-1 px-3 text-11px font-bold uppercase tracking-wider bg-status-error-bg border border-status-error-border text-status-error font-code-badge">3 Critical</span>
+</div>
+<div class="space-y-3">
+<!-- Matrix Item 1 (Red) -->
+<div class="p-3.5 rounded-2xl bg-surface-panel-alt border border-border-subtle hover:border-status-error-border transition-all flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-status-error-bg border border-status-error-border text-status-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lg" data-icon="cancel">cancel</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-2">
+<span class="font-body-semibold text-xs text-text-primary truncate">Infinite team invite spinner</span>
+<span class="font-code-badge text-[9px] font-bold bg-status-error text-surface-white px-1.5 py-0.2 rounded">CRITICAL</span>
+</div>
+<div class="w-32 bg-surface-cream rounded-full h-1.5 mt-2">
+<div class="bg-status-error h-1.5 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</div>
+<button class="shrink-0 p-1.5 rounded-xl hover:bg-surface-white text-text-muted hover:text-primary border border-transparent hover:border-border-warm transition-all" title="Quick Fix">
+<span class="material-symbols-outlined text-lg" data-icon="build">build</span>
+</button>
+</div>
+<!-- Matrix Item 2 (Amber) -->
+<div class="p-3.5 rounded-2xl bg-surface-panel-alt border border-border-subtle hover:border-status-warning-border transition-all flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-status-warning-bg border border-status-warning-border text-honey-dark flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lg" data-icon="warning">warning</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-2">
+<span class="font-body-semibold text-xs text-text-primary truncate">Generic API 400 validation error</span>
+<span class="font-code-badge text-[9px] font-bold bg-honey-light text-text-primary px-1.5 py-0.2 rounded">HIGH</span>
+</div>
+<div class="w-32 bg-surface-cream rounded-full h-1.5 mt-2">
+<div class="bg-honey-dark h-1.5 rounded-full" style="width: 62%"></div>
+</div>
+</div>
+</div>
+<button class="shrink-0 p-1.5 rounded-xl hover:bg-surface-white text-text-muted hover:text-primary border border-transparent hover:border-border-warm transition-all" title="Quick Fix">
+<span class="material-symbols-outlined text-lg" data-icon="build">build</span>
+</button>
+</div>
+<!-- Matrix Item 3 (Lavender / Medium) -->
+<div class="p-3.5 rounded-2xl bg-surface-panel-alt border border-border-subtle hover:border-lavender-light transition-all flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-lavender-tint border border-border-accent-tint text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lg" data-icon="info">info</span>
+</div>
+<div class="truncate">
+<div class="flex items-center gap-2">
+<span class="font-body-semibold text-xs text-text-primary truncate">13-inch viewport CTA below fold</span>
+<span class="font-code-badge text-[9px] font-bold bg-lavender-light text-surface-white px-1.5 py-0.2 rounded">MED</span>
+</div>
+<div class="w-32 bg-surface-cream rounded-full h-1.5 mt-2">
+<div class="bg-primary-container h-1.5 rounded-full" style="width: 44%"></div>
+</div>
+</div>
+</div>
+<button class="shrink-0 p-1.5 rounded-xl hover:bg-surface-white text-text-muted hover:text-primary border border-transparent hover:border-border-warm transition-all" title="Quick Fix">
+<span class="material-symbols-outlined text-lg" data-icon="build">build</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Remediation Guidance & Action Trigger Strip -->
+<div class="bg-surface-white rounded-3xl border border-border-warm p-6 custom-card-shadow flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-lavender-tint border border-border-accent-tint text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="auto_fix_high">auto_fix_high</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-text-primary">Synthesize Automated Recommendations</h4>
+<p class="font-body-sm text-body-sm text-text-muted">TestHive AI has generated 3 suggested interface modifications to resolve Step 3 drop-off.</p>
+</div>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none rounded-2xl bg-surface-cream hover:bg-lavender-tint text-text-primary px-5 py-2.5 font-body-semibold text-body-semibold border border-border-warm transition-all duration-150">
+          Preview Variant A/B
+        </button>
+<button class="flex-1 md:flex-none rounded-2xl bg-primary-container hover:bg-primary text-surface-white px-6 py-2.5 font-body-semibold text-body-semibold shadow-sm transition-all duration-150 flex items-center justify-center gap-2">
+<span>Apply Recommendations</span>
+<span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Sticky Footer / Bottom Navigation for Mobile Screens -->
+<div class="md:hidden sticky bottom-0 bg-surface-white border-t border-border-warm px-4 py-2.5 flex items-center justify-around z-30 shadow-lg">
+<button class="flex flex-col items-center text-text-muted hover:text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="grid_view">grid_view</span>
+<span class="font-caption text-caption">Dashboard</span>
+</button>
+<button class="flex flex-col items-center text-text-muted hover:text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="description">description</span>
+<span class="font-caption text-caption">Library</span>
+</button>
+<button class="flex flex-col items-center text-text-muted hover:text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="group">group</span>
+<span class="font-caption text-caption">Personas</span>
+</button>
+<button class="flex flex-col items-center text-primary font-body-semibold">
+<span class="material-symbols-outlined text-xl" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-caption text-caption">Test Runs</span>
+</button>
+</div>
+</body></html>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 export interface SegmentBarDatum {
@@ -18,22 +19,38 @@ function colorFor(rate: number, isLowSample?: boolean): string {
 }
 
 export function SegmentBarChart({ data }: { data: SegmentBarDatum[] }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const chartData = data.map((d) => {
     const pct = Math.round(d.successRate * 100);
     const moe = d.marginOfError !== undefined ? Math.round(d.marginOfError * 100) : null;
     const isLow = d.isLowSample ?? d.n < 10;
+    const rawLabel = isLow ? `${d.label} (n=${d.n})` : d.label;
+    const displayLabel = isMobile && rawLabel.length > 14 ? rawLabel.slice(0, 13) + "…" : rawLabel;
+
     return {
       ...d,
       pct,
       moe,
       isLow,
-      displayLabel: isLow ? `${d.label} (low n=${d.n})` : d.label,
+      rawLabel,
+      displayLabel,
     };
   });
 
+  const yAxisWidth = isMobile ? 105 : 220;
+  const chartMargin = isMobile ? { left: 0, right: 16 } : { left: 16, right: 36 };
+
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-4 text-xs text-muted mb-2">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-muted mb-2">
         <span className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#81C995]" /> ≥ 60%
         </span>
@@ -48,13 +65,13 @@ export function SegmentBarChart({ data }: { data: SegmentBarDatum[] }) {
         </span>
       </div>
 
-      <ResponsiveContainer width="100%" height={Math.max(240, chartData.length * 44)}>
-        <BarChart data={chartData} layout="vertical" margin={{ left: 16, right: 36 }}>
-          <XAxis type="number" domain={[0, 100]} tick={{ fill: "#635B77", fontSize: 12 }} unit="%" />
+      <ResponsiveContainer width="100%" height={Math.max(220, chartData.length * (isMobile ? 38 : 44))}>
+        <BarChart data={chartData} layout="vertical" margin={chartMargin}>
+          <XAxis type="number" domain={[0, 100]} tick={{ fill: "#635B77", fontSize: 11 }} unit="%" />
           <YAxis
             type="category"
             dataKey="displayLabel"
-            width={230}
+            width={yAxisWidth}
             tick={(props) => {
               const item = chartData[props.index];
               const fill = item?.isLow ? "#8C849C" : "#241E33";
@@ -65,7 +82,7 @@ export function SegmentBarChart({ data }: { data: SegmentBarDatum[] }) {
                   dy={4}
                   textAnchor="end"
                   fill={fill}
-                  fontSize={12}
+                  fontSize={isMobile ? 11 : 12}
                   fontStyle={item?.isLow ? "italic" : "normal"}
                 >
                   {props.payload.value}

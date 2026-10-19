@@ -229,7 +229,7 @@ export default function PersonasDirectoryPage() {
 
       {/* Persona cards grid */}
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-4">
           <h2 className="text-sm font-bold text-text uppercase tracking-wider">
             Showing {filteredPersonas.length} Prebuilt Personas
           </h2>
