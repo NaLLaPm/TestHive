@@ -1,0 +1,13 @@
+.turbo
+.next
+apps/web/.next
+data
+stitch-export
+node_modules
+.git
+.gemini
+*.tsbuildinfo
+.env*
+!apps/web
+!apps/api
+!packages
